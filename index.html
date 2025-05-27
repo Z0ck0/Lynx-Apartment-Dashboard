@@ -40,7 +40,43 @@
     <button onclick="saveChecklist()">Save Checklist</button>
   </div>
 
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
+    async function saveChecklist() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      let y = 10;
+      const datetime = document.getElementById("datetime").value;
+      const notes = document.getElementById("notes").value;
+      const checkboxes = document.querySelectorAll("input[type='checkbox']");
+
+      doc.setFontSize(16);
+      doc.text("Lynx Apartment Host Checklist", 10, y);
+      y += 10;
+      doc.setFontSize(12);
+      doc.text(`Date/Time: ${datetime}`, 10, y);
+      y += 10;
+
+      checkboxes.forEach((cb) => {
+        const text = `[${cb.checked ? 'x' : ' '}] ${cb.parentElement.innerText}`;
+        doc.text(text, 10, y);
+        y += 7;
+        if (y > 280) {
+          doc.addPage();
+          y = 10;
+        }
+      });
+
+      doc.text("Notes:", 10, y);
+      y += 7;
+      doc.text(notes, 10, y);
+
+      doc.save(`Lynx_Checklist_${datetime.replace(/[:\s]/g, "_")}.pdf`);
+    }
+  </script>
+  <script>
+
     const sections = {
       "Living Room": ["Couch and chairs", "Coffee table", "Flat-screen TV", "Artwork or decor", "Good lighting and lamps", "Full-length mirror", "Throw blankets and pillows", "Welcome book", "WiFi"],
       "Bedroom": ["Bed with a high-quality mattress", "Mattress cover and bedsheets", "Duvet and duvet cover", "High-quality pillows and pillowcases", "Extra blankets and pillows", "Clothing rails and hangers", "Thick curtains or blinds", "Alarm clock", "Bedside tables", "Reading lamp", "A/C unit", "Ironing board and iron"],
@@ -99,14 +135,7 @@
     window.onload = function() {
       for (const [section, items] of Object.entries(sections)) {
         createSection(section, items);
-      }
-      const password = "lynx2025";
-      const entered = prompt("Enter password to access the checklist:");
-      if (entered !== password) {
-        alert("Access denied.");
-        document.body.innerHTML = "";
-      }
-    }
+      }    }
   </script>
 </body>
 </html>
