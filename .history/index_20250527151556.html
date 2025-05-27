@@ -148,7 +148,14 @@
           "Disposable toothbrushes",
           "Small garbage bin and garbage bags",
         ],
-        "Dining Room": ["Dining table", "Chairs", "Cabinets", "Table settings (2x the number of guests)", "Lighting", "Decor or artwork"],
+        "Dining Room": [
+          "Dining table",
+          "Chairs",
+          "Cabinets",
+          "Table settings (2x the number of guests)",
+          "Lighting",
+          "Decor or artwork"
+        ],
         "Patio or Terrace": [
           "Outdoor couch or chairs",
           "Outdoor dining table",
@@ -271,7 +278,7 @@
         y += 10;
 
         checkboxes.forEach((cb) => {
-          const text = `[${cb.checked ? "x" : " "}] ${cb.parentElement.innerText.replace("✏️", "").replace("🗑️", "").trim()}`;
+          const text = `[${cb.checked ? "x" : " "}] ${cb.parentElement.innerText.replace('✏️','').replace('🗑️','').trim()}`;
           doc.text(text, 10, y);
           y += 7;
           if (y > 280) {
