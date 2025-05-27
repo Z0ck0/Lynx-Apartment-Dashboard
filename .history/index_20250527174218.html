@@ -198,28 +198,26 @@
         renderSectionItems(sectionId, title);
       }
 
-      function renderSectionItems(sectionId, title) {
-        const group = document.getElementById(sectionId);
-        group.innerHTML = "";
-        sections[title].forEach((item, idx) => {
-          const label = document.createElement("label");
-          label.style.display = "flex";
-          label.style.alignItems = "center";
-          label.style.justifyContent = "space-between";
-          label.innerHTML = `
-            <span>
-              <input type="checkbox"> ${item}
-            </span>
-            <span>
-              <!--
-              <button type="button" class="edit-btn" style="margin-left:5px;font-size:12px;" onclick="editItem('${sectionId}', '${title}', ${idx})">✏️</button>
-              <button type="button" class="delete-btn" style="margin-left:5px;font-size:12px;" onclick="deleteItem('${sectionId}', '${title}', ${idx})">🗑️</button>
-              -->
-            </span>
-          `;
-          group.appendChild(label);
-        });
-      }
+      // function renderSectionItems(sectionId, title) {
+      //   const group = document.getElementById(sectionId);
+      //   group.innerHTML = "";
+      //   sections[title].forEach((item, idx) => {
+      //     const label = document.createElement("label");
+      //     label.style.display = "flex";
+      //     label.style.alignItems = "center";
+      //     label.style.justifyContent = "space-between";
+      //     label.innerHTML = `
+      //       <span>
+      //         <input type="checkbox"> ${item}
+      //       </span>
+      //       <span>
+      //         <button type="button" class="edit-btn" style="margin-left:5px;font-size:12px;" onclick="editItem('${sectionId}', '${title}', ${idx})">✏️</button>
+      //         <button type="button" class="delete-btn" style="margin-left:5px;font-size:12px;" onclick="deleteItem('${sectionId}', '${title}', ${idx})">🗑️</button>
+      //       </span>
+      //     `;
+      //     group.appendChild(label);
+      //   });
+      // }
 
       function addItem(sectionId, title) {
         const group = document.getElementById(sectionId);
@@ -230,25 +228,21 @@
         }
       }
 
-      /*
-      // Edit item functionality (commented out)
-      function editItem(sectionId, title, idx) {
-        const current = sections[title][idx];
-        const updated = prompt("Edit item:", current);
-        if (updated !== null && updated.trim() !== "") {
-          sections[title][idx] = updated;
-          renderSectionItems(sectionId, title);
-        }
-      }
+      // function editItem(sectionId, title, idx) {
+      //   const current = sections[title][idx];
+      //   const updated = prompt("Edit item:", current);
+      //   if (updated !== null && updated.trim() !== "") {
+      //     sections[title][idx] = updated;
+      //     renderSectionItems(sectionId, title);
+      //   }
+      // }
 
-      // Delete item functionality (commented out)
-      function deleteItem(sectionId, title, idx) {
-        if (confirm("Are you sure you want to delete this item?")) {
-          sections[title].splice(idx, 1);
-          renderSectionItems(sectionId, title);
-        }
-      }
-      */
+      // function deleteItem(sectionId, title, idx) {
+      //   if (confirm("Are you sure you want to delete this item?")) {
+      //     sections[title].splice(idx, 1);
+      //     renderSectionItems(sectionId, title);
+      //   }
+      // }
 
       function populateDateDropdown() {
         const select = document.getElementById("date");
