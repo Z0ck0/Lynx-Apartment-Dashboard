@@ -23,13 +23,9 @@
       } */
       .tabs {
         display: flex;
-        flex-direction: row;
         justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
         margin-bottom: 20px;
         border-bottom: 2px solid #eee;
-        gap: 0;
       }
       .tab-btn {
         background: none;
@@ -40,11 +36,6 @@
         cursor: pointer;
         border-bottom: 3px solid transparent;
         transition: border 0.2s, color 0.2s;
-        white-space: nowrap;
-        flex: 1 1 auto;
-        text-align: center;
-        min-width: 120px;
-        max-width: 100vw;
       }
       .tab-btn.active {
         border-bottom: 3px solid #0078d7;
@@ -93,13 +84,11 @@
       }
       @media screen and (max-width: 600px) {
         .tabs {
-          flex-direction: row;
-          flex-wrap: wrap;
+          flex-direction: column;
         }
         .tab-btn {
-          font-size: 15px;
-          padding: 10px 8px;
-          min-width: 100px;
+          width: 100%;
+          text-align: left;
         }
         .checkbox-group label {
           display: flex;
