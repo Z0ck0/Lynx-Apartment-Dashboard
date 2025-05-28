@@ -352,14 +352,9 @@
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         // Register and set DejaVu font for Cyrillic support
-        try {
-          doc.addFileToVFS("DejaVuSans.ttf", dejavu_sans_normal);
-          doc.addFont("DejaVuSans.ttf", "DejaVu", "normal");
-          doc.setFont("DejaVu");
-        } catch (e) {
-          console.error("Font loading error:", e);
-          doc.setFont("Tahoma"); // fallback
-        }
+        doc.addFileToVFS("DejaVuSans.ttf", dejavu_sans_normal);
+        doc.addFont("DejaVuSans.ttf", "DejaVu", "normal");
+        doc.setFont("DejaVu");
         doc.setFontSize(16);
         let y = 10;
         const date = document.getElementById("date").value;

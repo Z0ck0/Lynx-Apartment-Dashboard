@@ -142,7 +142,6 @@
       </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="DejaVuSans-normal.js"></script>
     <script>
       // Tab functionality
       const tabBtns = document.querySelectorAll(".tab-btn");
@@ -351,23 +350,12 @@
       function saveChecklist() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        // Register and set DejaVu font for Cyrillic support
-        try {
-          doc.addFileToVFS("DejaVuSans.ttf", dejavu_sans_normal);
-          doc.addFont("DejaVuSans.ttf", "DejaVu", "normal");
-          doc.setFont("DejaVu");
-        } catch (e) {
-          console.error("Font loading error:", e);
-          doc.setFont("Tahoma"); // fallback
-        }
-        doc.setFontSize(16);
         let y = 10;
         const date = document.getElementById("date").value;
         const notes = document.getElementById("notes").value;
-        // Only select checkboxes from the Host Checklist tab
-        const checklistTab = document.getElementById("content-checklist");
-        const checkboxes = checklistTab.querySelectorAll("input[type='checkbox']");
+        const checkboxes = document.querySelectorAll("input[type='checkbox']");
 
+        doc.setFontSize(16);
         doc.text("Lynx Apartment Host Checklist", 10, y);
         y += 10;
         doc.setFontSize(12);
@@ -379,7 +367,7 @@
           doc.text(text, 10, y);
           y += 7;
           if (y > 280) {
-            doc.addPage();
+            doc.addPage();jsPDF
             y = 10;
           }
         });
