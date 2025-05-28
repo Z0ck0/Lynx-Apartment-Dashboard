@@ -13,14 +13,14 @@
       h1 {
         text-align: center;
       }
-      /* .container {
+      .container {
         max-width: 900px;
         margin: auto;
         background: #fff;
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 0 10px #ccc;
-      } */
+      }
       .tabs {
         display: flex;
         justify-content: center;
@@ -105,71 +105,11 @@
   <body>
     <div class="container">
       <img src="logo-lynx.png" alt="Lynx Logo" class="logo" />
-      <h1>Lynx Host Dashboard</h1>
+      <h1>➤ ✅ Lynx Host Dashboard</h1>
       <nav class="tabs" role="tablist">
-        <button class="tab-btn active" id="tab-checklist" role="tab" aria-selected="true" aria-controls="content-checklist" tabindex="0">
-          ✅ Host Checklist
-        </button>
-        <button class="tab-btn" id="tab-inventory" role="tab" aria-selected="false" aria-controls="content-inventory" tabindex="-1">
-          ✅ Inventory List
-        </button>
-      </nav>
-      <div id="content-checklist" class="tab-content active" role="tabpanel" aria-labelledby="tab-checklist">
-        <div class="section">
-          <label for="date">Датум на инспекција:</label>
-          <select id="date"></select>
-        </div>
-        <div id="checklist-sections"></div>
-        <div class="section">
-          <label>Additional Notes</label>
-          <input type="text" id="notes" placeholder="Any extra details..." />
-        </div>
-        <button onclick="saveChecklist()">Save Checklist</button>
-      </div>
-      <div id="content-inventory" class="tab-content" role="tabpanel" aria-labelledby="tab-inventory">
-        <div class="section">
-          <label>Inventory Items</label>
-          <div class="checkbox-group" id="inventory-list"></div>
-        </div>
-      </div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script>
-      // Tab functionality
-      const tabBtns = document.querySelectorAll(".tab-btn");
-      const tabContents = document.querySelectorAll(".tab-content");
-      tabBtns.forEach((btn, idx) => {
-        btn.addEventListener("click", function () {
-          tabBtns.forEach((b) => b.classList.remove("active"));
-          tabContents.forEach((c) => c.classList.remove("active"));
-          btn.classList.add("active");
-          tabContents[idx].classList.add("active");
-          btn.setAttribute("aria-selected", "true");
-          btn.setAttribute("tabindex", "0");
-          tabBtns.forEach((b, i) => {
-            if (i !== idx) {
-              b.setAttribute("aria-selected", "false");
-              b.setAttribute("tabindex", "-1");
-            }
-          });
-        });
-      });
-
-      const sections = {
-        Дневна: [
-          "Провери ТВ и далечински",
-          "Провери WiFi",
-          "Провери минибарот",
-          "Провери Лустер/LED/Лампа",
-          "Провери фиоките",
-          "Провери sofa bed",
-          "Провери 3 книги за Македонија",
-          "Истреси прекривачи/јастуци",
-          "Наводни цвеќе",
-          "Усисај гарнитура",
-          "Усисај тепих",
           "Избриши прашина",
           "Изџогирај под",
+
         ],
         Спална: [
           "Bed with a high-quality mattress",
@@ -227,10 +167,33 @@
           "Disposable toothbrushes",
           "Small garbage bin and garbage bags",
         ],
-        Трпезарија: ["Dining table", "Chairs", "Cabinets", "Table settings (2x the number of guests)", "Lighting", "Decor or artwork"],
-        Тераса: ["Outdoor couch or chairs", "Outdoor dining table", "Throw pillows and blanket", "Lighting", "Outdoor area rug", "Source of shade"],
-        Безбедност: ["First aid kit", "Face masks", "Hand disinfectant", "Fire extinguisher", "Smoke detectors", "Carbon monoxide detectors"],
-        Минибар: ["5 Wines (700ml each)", "5 Spirits (50ml each)", "5 Snacks (chips, nuts, etc.)", "5 Chocolates (50g each)"],
+        Трпезарија: [
+          "Dining table", 
+          "Chairs", 
+          "Cabinets", 
+          "Table settings (2x the number of guests)", 
+          "Lighting", "Decor or artwork"
+        ],
+        Тераса: [
+          "Outdoor couch or chairs", 
+          "Outdoor dining table", 
+          "Throw pillows and blanket", 
+          "Lighting", "Outdoor area rug", 
+          "Source of shade"
+        ],
+        Безбедност: [
+          "First aid kit", 
+          "Face masks", 
+          "Hand disinfectant", 
+          "Fire extinguisher", 
+          "Smoke detectors", 
+          "Carbon monoxide detectors"
+        ],
+        Минибар: [
+          "5 Wines (700ml each)", 
+          "5 Spirits (50ml each)", 
+          "5 Snacks (chips, nuts, etc.)", 
+          "5 Chocolates (50g each)"],
         Extras: [
           "Проверка на клима уредот",
           "Access to streaming services like Netflix, Hulu, etc.",
@@ -253,6 +216,7 @@
           <div class="checkbox-group" id="${sectionId}"></div>
           <button class="add-btn" onclick="addItem('${sectionId}', '${title}')">+ Add item</button>`;
         document.getElementById("checklist-sections").appendChild(section);
+
         renderSectionItems(sectionId, title);
       }
 
@@ -358,36 +322,12 @@
         doc.save(`Lynx_Checklist_${date.replace(/[:\s]/g, "_")}.pdf`);
       }
 
-      // Inventory List sample items
-      const inventoryItems = [
-        "Lorem Spoon 1",
-        "Lorem Fork 2",
-        "Lorem Knife 3",
-        "Lorem Plate 4",
-        "Lorem Cup 5",
-        "Lorem Glass 6",
-        "Lorem Pan 7",
-        "Lorem Pot 8",
-        "Lorem Towel 9",
-        "Lorem Pan 10",
-      ];
-      function renderInventoryList() {
-        const group = document.getElementById("inventory-list");
-        group.innerHTML = "";
-        inventoryItems.forEach((item) => {
-          const label = document.createElement("label");
-          label.innerHTML = `<input type="checkbox"> ${item}`;
-          group.appendChild(label);
-        });
-      }
-
       // Render sections and date dropdown on load
       window.onload = function () {
         populateDateDropdown();
         for (const [section, items] of Object.entries(sections)) {
           createSection(section, items);
         }
-        renderInventoryList();
       };
     </script>
   </body>
