@@ -218,7 +218,7 @@
           aria-controls="content-consumables"
           tabindex="-1"
         >
-          📦 Consumables List
+          📦 Consumables
         </button>
       </nav>
       <div
@@ -289,51 +289,65 @@
         });
       });
 
-      const CleaningSections = {
+      const sections = {
         Општо: [
           "Отвори врата - проветри",
-          "Истреси прекривачи/кебиња/јастуци (дневна/спална)",
+          "Истреси прекривачи/јастуци (дневна/спална)",
           "Усисај теписи, подовите, гарнитура, столице",
           "Избриши прашину од сви површине",
           "Испразнете корпe за ѓубре (кујна/WC)",
           "Изџогирај под",
-          "Исчистете ги прекинувачите за светла и ручке на врата",
-          "Проверете дали има забравени лични работе/храна",
+          "Исчистете ги прекинувачите за светла и рачке на вратите",
+          "Проверете дали има оставени лични работи/храна",
         ],
         Дневна: [
-          "Избриши и провери ТВ, далечински и комоду",
-          "Избриши прашину и стакла од минибар",
-          "Избриши прашина од Лустер/Столна Лампа",
+          "Избриши и провери ТВ и далечински",
+          "Провери WiFi брзина",
+          "Провери минибар",
+          "Провери Лустер/LED/Лампа",
           "Провери sofa bed",
           "Провери книги за Македонија (3)",
           "Наводни цвеќе",
-          "Провери WiFi брзина",
+        ],
+        Минибар: [
+          "5 Вина (700ml секое)",
+          "5 Жестоки пијалоци (50ml секое)",
+          "5 Грицки (чипс, јаткасти плодови итн.)",
+          "2 Чоколада (50g секое)",
         ],
         Спална: [
-          "Собери користену постељину",
-          "Избриши прашину од ноќни ормари и ламби",
-          "Провери и избрши прашину од ТВ и далечински",
-          "Избриши прашина од гардеробер",
-          "Провери кревет и душек",
-          "Провери креветче за деца (Ѓоре)",
-          "Провери резервна постелнина под кревет",
+          "Bed with a high-quality mattress",
+          "Mattress cover and bedsheets",
+          "Duvet and duvet cover",
+          "High-quality pillows and pillowcases",
+          "Extra blankets and pillows",
+          "Clothing rails and hangers",
+          "Thick curtains or blinds",
+          "Alarm clock",
+          "Bedside tables",
+          "Reading lamp",
+          "A/C unit",
+          "Ironing board and iron",
         ],
         Кујна: [
           "Избриши шпорет и рерну",
           "Избриши фрижидер и замрзнувач",
           "Избриши микробранова печка",
-          "Провери машина за садови",
+          "Избриши машина за садови",
           "Избриши електричен бокал",
           "Избриши машина за кафе",
-          "Испразни машину за кафе од искористени капсуле",
-          "Провери тенџериња и тави",
+          "Избриши кујнски апарати",
+          "Избриши садови вклучувајќи тенџериња и тави",
           "Избриши прибор за јадење",
-          "Избриши стакленки чаши",
+          "Избриши чаши и стакленки",
           "Избриши даски за сечење",
+          "Провери залихе на средства за чистење (хемија, sjaj, сунгерчиња)",
+          "Провери залихе на таблети за машина за миење садови",
+          "Провери залихе на кесе за ѓубре",
+          "Провери залихе на брисачи (крпе/ролна хартија)",
+          "Провери залихе на основни состојки (сол, шеќер, масло, оцет)",
         ],
         Купатило: [
-          "Испразни канту за тоалет",
-          "Допуни сапунн",
           "Bath towels (2 per guest)",
           "Hand towels and face towels (2 per guest)",
           "Bath mat",
@@ -374,6 +388,12 @@
           "Smoke detectors",
           "Carbon monoxide detectors",
         ],
+        Минибар: [
+          "5 Wines (700ml each)",
+          "5 Spirits (50ml each)",
+          "5 Snacks (chips, nuts, etc.)",
+          "5 Chocolates (50g each)",
+        ],
         Extras: [
           "Проверка на клима уредот",
           "Access to streaming services like Netflix, Hulu, etc.",
@@ -410,7 +430,7 @@
           "Чаши за виски (6)",
           "Чаши за шток (2)",
           "Чаши за ракија - шот (4)",
-          "Чаши за ракија - дрвен сталак (6)",
+          "Чаши за ракија - сталак (6)",
           "Кригли за пиво (5)",
           "Затворач за шише, 3 парчиња, разнобоен (IKEA: 70573316)",
           "Вадичеп (IKEA: 10149029)",
@@ -434,7 +454,6 @@
           "Кебе дебело (1)",
           "Кревет за деца (Ѓоре)",
           "Навлака за сако (1)",
-          "Малечка ламба за читање (1)",
         ],
         "Кујна Инвентура": [
           "Нож, 3 ком (IKEA: 70257624)",
@@ -515,7 +534,7 @@
       function renderSectionItems(sectionId, title) {
         const group = document.getElementById(sectionId);
         group.innerHTML = "";
-        CleaningSections[title].forEach((item, idx) => {
+        sections[title].forEach((item, idx) => {
           const label = document.createElement("label");
           label.style.display = "flex";
           label.style.alignItems = "center";
@@ -539,7 +558,7 @@
         const group = document.getElementById(sectionId);
         const item = prompt("Enter new item:");
         if (item) {
-          CleaningSections[title].push(item);
+          sections[title].push(item);
           renderSectionItems(sectionId, title);
         }
       }
@@ -768,66 +787,81 @@
 
       // Consumables tab logic (per section)
       const consumablesSections = {
-        Општо: [
+        "Општо": [
           "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
+          "Consectetur adipiscing elit",
+          "Sed do eiusmod tempor",
+          "Incididunt ut labore",
+          "Et dolore magna aliqua"
         ],
-        Дневна: [
-          "Батерии за далечинско управување",
-          "Сијалички за LED светла",
-          "Сијалица за Столна лампа",
+        "Дневна": [
+          "Ut enim ad minim veniam",
+          "Quis nostrud exercitation",
+          "Ullamco laboris nisi",
+          "Ut aliquip ex ea commodo",
+          "Consequat duis aute irure"
         ],
-        Минибар: [
-          "5 Вина (700ml секое)",
-          "5 Жестоки пијалоци (50ml секое)",
-          "5 Грицки (чипс, јаткасти плодови итн.)",
-          "2 Чоколада (50g секое)",
+        "Минибар": [
+          "Dolor in reprehenderit",
+          "In voluptate velit esse",
+          "Cillum dolore eu fugiat",
+          "Nulla pariatur excepteur",
+          "Sint occaecat cupidatat"
         ],
-        Спална: [
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
+        "Спална": [
+          "Non proident sunt in",
+          "Culpa qui officia deserunt",
+          "Mollit anim id est laborum",
+          "Sed ut perspiciatis unde",
+          "Omnis iste natus error"
         ],
-        Кујна: [
-          "Провери залихе на средства за чистење (хемија, сјај за судови, сунгерчиња)",
-          "Провери залихе на таблети за машина за миење садови",
-          "Провери залихе на кесе за ѓубре",
-          "Провери залихе на брисачи (крпе/ролна хартија)",
-          "Провери залихе на основни состојки (сол, шеќер, масло, оцет)",
+        "Кујна": [
+          "Sit voluptatem accusantium",
+          "Doloremque laudantium totam",
+          "Rem aperiam eaque ipsa",
+          "Quae ab illo inventore",
+          "Veritatis et quasi architecto"
         ],
-        Купатило: [
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
+        "Купатило": [
+          "Beatae vitae dicta sunt",
+          "Explicabo nemo enim ipsam",
+          "Voluptatem quia voluptas",
+          "Aspernatur aut odit aut",
+          "Fugit sed quia consequuntur"
         ],
-        Безбедност: [
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
+        "Трпезарија": [
+          "Magni dolores eos qui",
+          "Ratione voluptatem sequi",
+          "Nesciunt neque porro",
+          "Quisquam est qui dolorem",
+          "Ipsum quia dolor sit"
         ],
-        Extras: [
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
+        "Тераса": [
+          "Amet consectetur adipisci",
+          "Velit sed quia non",
+          "Numquam eius modi tempora",
+          "Incidunt ut labore et",
+          "Dolore magnam aliquam quaerat"
         ],
+        "Безбедност": [
+          "Voluptatem ut enim ad",
+          "Minima veniam quis nostrud",
+          "Exercitation ullamco laboris",
+          "Nisi ut aliquip ex",
+          "Ea commodo consequat"
+        ],
+        "Extras": [
+          "Duis aute irure dolor",
+          "In reprehenderit in voluptate",
+          "Velit esse cillum dolore",
+          "Eu fugiat nulla pariatur",
+          "Excepteur sint occaecat"
+        ]
       };
       // Track checked state per section
       let consumablesCheckedSections = {};
       for (const section in consumablesSections) {
-        consumablesCheckedSections[section] = Array(consumablesSections[section].length).fill(
-          false
-        );
+        consumablesCheckedSections[section] = Array(consumablesSections[section].length).fill(false);
       }
 
       function createConsumablesSection(title, items) {
@@ -849,9 +883,7 @@
           label.style.display = "flex";
           label.style.alignItems = "center";
           label.style.justifyContent = "space-between";
-          label.innerHTML = `<span><input type="checkbox" ${
-            consumablesCheckedSections[title][idx] ? "checked" : ""
-          } onchange="toggleConsumableSection('${title}', ${idx})"> ${item}</span>`;
+          label.innerHTML = `<span><input type="checkbox" ${consumablesCheckedSections[title][idx] ? "checked" : ""} onchange="toggleConsumableSection('${title}', ${idx})"> ${item}</span>`;
           group.appendChild(label);
         });
       }
@@ -872,7 +904,7 @@
       // Render sections and date dropdown on load
       window.onload = function () {
         populateDateDropdown();
-        for (const [section, items] of Object.entries(CleaningSections)) {
+        for (const [section, items] of Object.entries(sections)) {
           createSection(section, items);
         }
         for (const [section, items] of Object.entries(inventorySections)) {

@@ -289,10 +289,10 @@
         });
       });
 
-      const CleaningSections = {
+      const sections = {
         Општо: [
           "Отвори врата - проветри",
-          "Истреси прекривачи/кебиња/јастуци (дневна/спална)",
+          "Истреси прекривачи/јастуци (дневна/спална)",
           "Усисај теписи, подовите, гарнитура, столице",
           "Избриши прашину од сви површине",
           "Испразнете корпe за ѓубре (кујна/WC)",
@@ -317,6 +317,20 @@
           "Провери кревет и душек",
           "Провери креветче за деца (Ѓоре)",
           "Провери резервна постелнина под кревет",
+  
+
+          "Bed with a high-quality mattress",
+          "Mattress cover and bedsheets",
+          "Duvet and duvet cover",
+          "High-quality pillows and pillowcases",
+          "Extra blankets and pillows",
+          "Clothing rails and hangers",
+          "Thick curtains or blinds",
+          "Alarm clock",
+          "Bedside tables",
+          "Reading lamp",
+          "A/C unit",
+          "Ironing board and iron",
         ],
         Кујна: [
           "Избриши шпорет и рерну",
@@ -325,15 +339,12 @@
           "Провери машина за садови",
           "Избриши електричен бокал",
           "Избриши машина за кафе",
-          "Испразни машину за кафе од искористени капсуле",
           "Провери тенџериња и тави",
           "Избриши прибор за јадење",
           "Избриши стакленки чаши",
           "Избриши даски за сечење",
         ],
         Купатило: [
-          "Испразни канту за тоалет",
-          "Допуни сапунн",
           "Bath towels (2 per guest)",
           "Hand towels and face towels (2 per guest)",
           "Bath mat",
@@ -434,7 +445,6 @@
           "Кебе дебело (1)",
           "Кревет за деца (Ѓоре)",
           "Навлака за сако (1)",
-          "Малечка ламба за читање (1)",
         ],
         "Кујна Инвентура": [
           "Нож, 3 ком (IKEA: 70257624)",
@@ -515,7 +525,7 @@
       function renderSectionItems(sectionId, title) {
         const group = document.getElementById(sectionId);
         group.innerHTML = "";
-        CleaningSections[title].forEach((item, idx) => {
+        sections[title].forEach((item, idx) => {
           const label = document.createElement("label");
           label.style.display = "flex";
           label.style.alignItems = "center";
@@ -539,7 +549,7 @@
         const group = document.getElementById(sectionId);
         const item = prompt("Enter new item:");
         if (item) {
-          CleaningSections[title].push(item);
+          sections[title].push(item);
           renderSectionItems(sectionId, title);
         }
       }
@@ -872,7 +882,7 @@
       // Render sections and date dropdown on load
       window.onload = function () {
         populateDateDropdown();
-        for (const [section, items] of Object.entries(CleaningSections)) {
+        for (const [section, items] of Object.entries(sections)) {
           createSection(section, items);
         }
         for (const [section, items] of Object.entries(inventorySections)) {
