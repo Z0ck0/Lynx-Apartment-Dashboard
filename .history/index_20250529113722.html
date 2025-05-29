@@ -38,7 +38,7 @@
         padding: 12px 24px;
         font-size: 16px;
         cursor: pointer;
-        border-bottom: 3px solid #ccc;
+        border-bottom: 3px solid transparent;
         transition: border 0.2s, color 0.2s;
         white-space: nowrap;
         flex: 1 1 auto;
@@ -111,69 +111,11 @@
           margin-right: 10px;
         }
       }
-      body.dark-mode {
-        background: #23272a;
-        color: #f3f3f3;
-      }
-      body.dark-mode h1,
-      body.dark-mode label {
-        color: #f3f3f3;
-      }
-      body.dark-mode .container {
-        background: #23272a;
-        /* box-shadow: 0 0 10px #111; */
-      }
-      body.dark-mode .tab-btn {
-        /* color: #f3f3f3; */
-        border-bottom: 3px solid #444;
-      }
-      body.dark-mode .tab-btn.active {
-        color: #ffe066;
-        border-bottom: 3px solid #ffe066;
-      }
-      body.dark-mode .tab-content {
-        background: transparent;
-      }
-      body.dark-mode button,
-      body.dark-mode .add-btn {
-        background: #23272a;
-        color: #ffe066;
-        border: 1px solid #23272a;
-      }
-      body.dark-mode input[type="text"] {
-        background: #23272a;
-        color: #f3f3f3;
-        border: 1px solid #444;
-      }
-      body.dark-mode .checkbox-group label {
-        color: #f3f3f3;
-      }
-      body.dark-mode select {
-        background: #23272a;
-        color: #f3f3f3;
-        border: 1px solid #444;
-      }
     </style>
   </head>
   <body>
     <div class="container">
-      <button
-        id="theme-toggle"
-        aria-label="Toggle dark mode"
-        style="
-          position: absolute;
-          top: 20px;
-          right: 20px;
-          z-index: 10;
-          font-size: 1.5em;
-          background: none;
-          border: none;
-          cursor: pointer;
-        "
-      >
-        🌙
-      </button>
-      <img src="logo-lynx.png" alt="Lynx Logo" class="logo" id="lynx-logo" />
+      <img src="logo-lynx.png" alt="Lynx Logo" class="logo" />
       <h1>Lynx Apartment Dashboard</h1>
       <nav class="tabs" role="tablist">
         <button
@@ -184,7 +126,7 @@
           aria-controls="content-checklist"
           tabindex="0"
         >
-          🧹 Cleaning List
+          ✅ Cleaning List
         </button>
         <button
           class="tab-btn"
@@ -194,7 +136,7 @@
           aria-controls="content-inventory"
           tabindex="-1"
         >
-          📋 Inventory List
+          ✅ Inventory List
         </button>
         <button
           class="tab-btn"
@@ -726,31 +668,6 @@
           renderShoppingList();
         }
       }
-
-      // Dark mode toggle logic
-      const themeToggle = document.getElementById("theme-toggle");
-      const logoImg = document.getElementById("lynx-logo");
-      function setTheme(dark) {
-        if (dark) {
-          document.body.classList.add("dark-mode");
-          themeToggle.textContent = "☀️";
-          logoImg.src = "logo-lynx-dark.png";
-          localStorage.setItem("lynx-theme", "dark");
-        } else {
-          document.body.classList.remove("dark-mode");
-          themeToggle.textContent = "🌙";
-          logoImg.src = "logo-lynx.png";
-          localStorage.setItem("lynx-theme", "light");
-        }
-      }
-      themeToggle.onclick = function () {
-        setTheme(!document.body.classList.contains("dark-mode"));
-      };
-      // Restore theme on load
-      (function () {
-        const saved = localStorage.getItem("lynx-theme");
-        setTheme(saved === "dark");
-      })();
 
       // Render sections and date dropdown on load
       window.onload = function () {
