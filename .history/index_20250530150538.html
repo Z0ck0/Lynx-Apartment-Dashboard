@@ -289,25 +289,17 @@
         });
       });
 
-      // Cleaning sections
       const CleaningSections = {
         Општо: [
           "Отвори врата - проветри",
-          "Собери користену постељину и крпе",
-          "Собери ѓубре (кујна и WC)",
           "Истреси прекривачи/кебиња/јастуци (дневна/спална)",
           "Усисај теписи, подовите, гарнитура, столице",
           "Избриши прашину од сви површине",
+          
+
           "Изџогирај под",
-          "Исчисти прекидачи за светла и ручке на врата",
+          "Исчистете ги прекинувачите за светла и ручке на врата",
           "Проверете дали има забравени лични работе/храна",
-        ],
-        Спална: [
-          "Избриши прашину од ноќни ормари/лампе/ТВ",
-          "Упали и провери ТВ и далечински",
-          "Избриши прашина од гардеробер",
-          "Провери кревет и душек",
-          "Провери резервна постелнина под кревет",
         ],
         Дневна: [
           "Избриши и провери ТВ, далечински и комоду",
@@ -317,6 +309,15 @@
           "Провери книги за Македонија (3)",
           "Наводни цвеќе",
           "Провери WiFi брзина",
+        ],
+        Спална: [
+          "Собери користену постељину",
+          "Избриши прашину од ноќни ормари и ламби",
+          "Провери и избрши прашину од ТВ и далечински",
+          "Избриши прашина од гардеробер",
+          "Провери кревет и душек",
+          "Провери креветче за деца (Ѓоре)",
+          "Провери резервна постелнина под кревет",
         ],
         Кујна: [
           "Избриши шпорет и рерну",
@@ -330,22 +331,14 @@
           "Избриши прибор за јадење",
           "Избриши стакленки чаши",
           "Избриши даски за сечење",
-          "Допуни Чај/Кафе/Бомбоне/Вода",
-          "Допуни кесе за ѓубре",
         ],
         Купатило: [
-          "Исчисти огледало и лавабо",
-          "Исчисти туш кабину и туш ручку",
-          "Исчисти ВЦ шољу и Четку за ВЦ шољу",
-          "Изџогирај под и плочки",
-          "Допуни тоалетна хартија",
+          "Испразни канту за тоалет",
           "Допуни сапунн",
-          "Допуни средство за прање аљишта",
-          "Допуни средство за дезинфекција",
-          "Замени освеживач за ВЦ шољу",
-          "Стави нови крпе (бањање, лице, ноге) (2 по госта)",
-          "Провери фен, машина за прање, бојлер, сушара",
-
+          "Bath towels (2 per guest)",
+          "Hand towels and face towels (2 per guest)",
+          "Bath mat",
+          "Mirror",
           "Toilet paper (plus extra rolls)",
           "Toilet brush set",
           "Hand soap",
@@ -359,13 +352,29 @@
           "Small garbage bin and garbage bags",
         ],
         Трпезарија: [
-          "Пребриши трпезариски астал",
-          "Истреси столице од трошке",
-          "Намести подлоге за вруќо",
-          "Стави лампу на сред стал",
+          "Dining table",
+          "Chairs",
+          "Cabinets",
+          "Table settings (2x the number of guests)",
+          "Lighting",
+          "Decor or artwork",
         ],
-        Тераса: ["Испери терасу", "Пребриши асталче и столице"],
-        Безбедност: ["First aid kit", "Face masks", "Hand disinfectant"],
+        Тераса: [
+          "Outdoor couch or chairs",
+          "Outdoor dining table",
+          "Throw pillows and blanket",
+          "Lighting",
+          "Outdoor area rug",
+          "Source of shade",
+        ],
+        Безбедност: [
+          "First aid kit",
+          "Face masks",
+          "Hand disinfectant",
+          "Fire extinguisher",
+          "Smoke detectors",
+          "Carbon monoxide detectors",
+        ],
         Extras: [
           "Проверка на клима уредот",
           "Access to streaming services like Netflix, Hulu, etc.",
@@ -380,7 +389,7 @@
         ],
       };
 
-      // Inventory sections
+      // Inventory sections with placeholder items
       const inventorySections = {
         "Дневна Инвентура": [
           "Столна лампа (1) (IKEA: 30405042)",
@@ -492,67 +501,6 @@
           "Lorem item 5",
         ],
       };
-
-      // Consumables list
-      const consumablesSections = {
-        Општо: [
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-        ],
-        Дневна: [
-          "Батерии за далечинско управување",
-          "Сијалички за LED светла",
-          "Сијалица за Столна лампа",
-        ],
-        Минибар: [
-          "5 Вина (700ml секое)",
-          "5 Жестоки пијалоци (50ml секое)",
-          "5 Грицки (чипс, јаткасти плодови итн.)",
-          "2 Чоколада (50g секое)",
-        ],
-        Спална: [
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-        ],
-        Кујна: [
-          "Провери залихе на средства за чистење (хемија, сјај за судови, сунгерчиња)",
-          "Провери залихе на таблети за машина за миење садови",
-          "Провери залихе на кесе за ѓубре",
-          "Провери залихе на брисачи (крпе/ролна хартија)",
-          "Провери залихе на основни состојки (сол, шеќер, масло, оцет)",
-        ],
-        Купатило: [
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-        ],
-        Безбедност: [
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-        ],
-        Extras: [
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-          "Lorem ipsum dolor sit amet",
-        ],
-      };
-
-      // Shopping List logic
-      let shoppingList = [];
-      let dragSrcIndex = null;
 
       function createSection(title, items) {
         const sectionId = title.replace(/\s+/g, "_");
@@ -681,6 +629,19 @@
         doc.save(`Lynx_Checklist_${date.replace(/[:\s]/g, "_")}.pdf`);
       }
 
+      // Inventory List sample items
+      const inventoryItems = [
+        "Lorem Spoon 1",
+        "Lorem Fork 2",
+        "Lorem Knife 3",
+        "Lorem Plate 4",
+        "Lorem Cup 5",
+        "Lorem Glass 6",
+        "Lorem Pan 7",
+        "Lorem Pot 8",
+        "Lorem Towel 9",
+        "Lorem Pan 10",
+      ];
       function renderInventoryList() {
         const group = document.getElementById("inventory-list");
         group.innerHTML = "";
@@ -727,6 +688,10 @@
           renderInventorySectionItems(sectionId, title);
         }
       };
+
+      // Shopping List logic
+      let shoppingList = [];
+      let dragSrcIndex = null;
 
       function renderShoppingList() {
         const ul = document.getElementById("shopping-list");
@@ -780,7 +745,6 @@
       // Dark mode toggle logic
       const themeToggle = document.getElementById("theme-toggle");
       const logoImg = document.getElementById("lynx-logo");
-
       function setTheme(dark) {
         if (dark) {
           document.body.classList.add("dark-mode");
@@ -794,7 +758,6 @@
           localStorage.setItem("lynx-theme", "light");
         }
       }
-
       themeToggle.onclick = function () {
         setTheme(!document.body.classList.contains("dark-mode"));
       };
@@ -804,6 +767,62 @@
         setTheme(saved === "dark");
       })();
 
+      // Consumables tab logic (per section)
+      const consumablesSections = {
+        Општо: [
+          "Lorem ipsum dolor sit amet",
+          "Lorem ipsum dolor sit amet",
+          "Lorem ipsum dolor sit amet",
+          "Lorem ipsum dolor sit amet",
+          "Lorem ipsum dolor sit amet",
+        ],
+        Дневна: [
+          "Батерии за далечинско управување",
+          "Сијалички за LED светла",
+          "Сијалица за Столна лампа",
+        ],
+        Минибар: [
+          "5 Вина (700ml секое)",
+          "5 Жестоки пијалоци (50ml секое)",
+          "5 Грицки (чипс, јаткасти плодови итн.)",
+          "2 Чоколада (50g секое)",
+        ],
+        Спална: [
+          "Lorem ipsum dolor sit amet",
+          "Lorem ipsum dolor sit amet",
+          "Lorem ipsum dolor sit amet",
+          "Lorem ipsum dolor sit amet",
+          "Lorem ipsum dolor sit amet",
+        ],
+        Кујна: [
+          "Провери залихе на средства за чистење (хемија, сјај за судови, сунгерчиња)",
+          "Провери залихе на таблети за машина за миење садови",
+          "Провери залихе на кесе за ѓубре",
+          "Провери залихе на брисачи (крпе/ролна хартија)",
+          "Провери залихе на основни состојки (сол, шеќер, масло, оцет)",
+        ],
+        Купатило: [
+          "Lorem ipsum dolor sit amet",
+          "Lorem ipsum dolor sit amet",
+          "Lorem ipsum dolor sit amet",
+          "Lorem ipsum dolor sit amet",
+          "Lorem ipsum dolor sit amet",
+        ],
+        Безбедност: [
+          "Lorem ipsum dolor sit amet",
+          "Lorem ipsum dolor sit amet",
+          "Lorem ipsum dolor sit amet",
+          "Lorem ipsum dolor sit amet",
+          "Lorem ipsum dolor sit amet",
+        ],
+        Extras: [
+          "Lorem ipsum dolor sit amet",
+          "Lorem ipsum dolor sit amet",
+          "Lorem ipsum dolor sit amet",
+          "Lorem ipsum dolor sit amet",
+          "Lorem ipsum dolor sit amet",
+        ],
+      };
       // Track checked state per section
       let consumablesCheckedSections = {};
       for (const section in consumablesSections) {
