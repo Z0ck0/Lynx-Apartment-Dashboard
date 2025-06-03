@@ -150,17 +150,13 @@
   </head>
   <body>
     <div class="container">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-        <label for="date" style="margin: 0 0 0 10px; font-weight: bold;">Датум на инспекција:</label>
-        <select id="date" style="min-width: 140px;"></select>
-        <button
-          id="theme-toggle"
-          aria-label="Toggle dark mode"
-          style="position: static; margin-left: auto; font-size: 1.5em; background: none; border: none; cursor: pointer;"
-        >
-          🌙
-        </button>
-      </div>
+      <button
+        id="theme-toggle"
+        aria-label="Toggle dark mode"
+        style="position: absolute; top: 20px; right: 20px; z-index: 10; font-size: 1.5em; background: none; border: none; cursor: pointer;"
+      >
+        🌙
+      </button>
       <img src="logo-lynx.png" alt="Lynx Logo" class="logo" id="lynx-logo" />
       <h1>Lynx Apartment Dashboard</h1>
       <nav class="tabs" role="tablist">
@@ -171,6 +167,10 @@
       </nav>
       <!-- Cleaning List Section -->
       <div id="content-checklist" class="tab-content active" role="tabpanel" aria-labelledby="tab-checklist">
+        <div class="section">
+          <label for="date">Датум на инспекција:</label>
+          <select id="date"></select>
+        </div>
         <div id="checklist-sections"><!-- Cleaning checklist items rendered here --></div>
         <div class="section">
           <label>Additional Notes</label>
