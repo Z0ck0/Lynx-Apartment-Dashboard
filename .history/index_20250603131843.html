@@ -128,7 +128,7 @@
       body.dark-mode .add-btn {
         background: #23272a;
         color: #ffe066;
-        border: 1px solid #ffe066;
+        border: 1px solid #23272a;
       }
       body.dark-mode input[type="text"] {
         background: #23272a;
@@ -146,27 +146,20 @@
         color: #f3f3f3;
         border: 1px solid #444;
       }
-      body.dark-mode .tab-btn {
-        border: none; /* спречува несакаен оквир */
-        border-bottom: 3px solid #444; /* само долниот раб ако сакате */
-        background: transparent;
-      }
       /* --- Responsive Top Bar for Date & Theme Toggle --- */
       .top-bar {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 16px;
-        margin-bottom: 20px;
-        padding: 0 16px;
-        flex-wrap: wrap;
+        margin-bottom: 18px;
+        padding: 0 4px;
       }
       .top-bar label {
         margin: 0;
         font-weight: 600;
         font-size: 1rem;
         white-space: nowrap;
-        margin-right: 8px;
       }
       .top-bar select {
         min-width: 130px;
@@ -177,14 +170,6 @@
         background: #fff;
         color: #23272a;
         margin: 0 8px;
-      }
-      #theme-toggle {
-        font-size: 1.5rem;
-        background: none;
-        border: none;
-        cursor: pointer;
-        border-radius: 4px;
-        padding: 4px 8px;
       }
       .top-bar button#theme-toggle {
         font-size: 1.6em;
@@ -201,13 +186,12 @@
         background: #eee;
         outline: none;
       }
-
       @media (max-width: 600px) {
         .top-bar {
           flex-direction: column;
           align-items: stretch;
           gap: 8px;
-          padding: 12px;
+          padding: 0;
         }
         .top-bar label,
         .top-bar select,
@@ -215,7 +199,6 @@
           font-size: 1.08em;
           width: 100%;
           margin: 0;
-          text-align: center;
         }
         .top-bar select {
           min-width: 0;
@@ -234,90 +217,31 @@
       body.dark-mode .top-bar button#theme-toggle:focus {
         background: #333;
       }
-      #theme-toggle {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        font-size: 1.5rem;
-        background: #f0f0f0;
-        color: #222;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        padding: 6px 10px;
-        cursor: pointer;
-        z-index: 1000;
-      }
-      body.dark-mode #theme-toggle {
-        background: #23272a;
-        color: #ffe066;
-        border-color: #23272a;
-      }
-      #theme-toggle:hover {
-        background: #ddd;
-      }
     </style>
   </head>
   <body>
     <div class="container">
-      <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
-
       <div class="top-bar">
-        <div class="date-wrapper">
-          <label for="date">Датум на инспекција:</label>
-          <select id="date"></select>
-        </div>
+        <label for="date">Датум на инспекција:</label>
+        <select id="date"></select>
+        <button
+          id="theme-toggle"
+          aria-label="Toggle dark mode"
+          style="position: static; margin-left: auto; font-size: 1.5em; background: none; border: none; cursor: pointer;" -->
+        >
+          🌙
+        </button>
       </div>
       <img src="logo-lynx.png" alt="Lynx Logo" class="logo" id="lynx-logo" />
       <h1>Lynx Apartment Dashboard</h1>
       <nav class="tabs" role="tablist">
-        <button
-          class="tab-btn active"
-          id="tab-checklist"
-          role="tab"
-          aria-selected="true"
-          aria-controls="content-checklist"
-          tabindex="0"
-        >
-          🧹 Cleaning List
-        </button>
-        <button
-          class="tab-btn"
-          id="tab-consumables"
-          role="tab"
-          aria-selected="false"
-          aria-controls="content-consumables"
-          tabindex="-1"
-        >
-          📦 Consumables List
-        </button>
-        <button
-          class="tab-btn"
-          id="tab-inventory"
-          role="tab"
-          aria-selected="false"
-          aria-controls="content-inventory"
-          tabindex="-1"
-        >
-          📋 Inventory List
-        </button>
-        <button
-          class="tab-btn"
-          id="tab-shopping"
-          role="tab"
-          aria-selected="false"
-          aria-controls="content-shopping"
-          tabindex="-1"
-        >
-          🛒 Shopping List
-        </button>
+        <button class="tab-btn active" id="tab-checklist" role="tab" aria-selected="true" aria-controls="content-checklist" tabindex="0">🧹 Cleaning List</button>
+        <button class="tab-btn" id="tab-consumables" role="tab" aria-selected="false" aria-controls="content-consumables" tabindex="-1">📦 Consumables List</button>
+        <button class="tab-btn" id="tab-inventory" role="tab" aria-selected="false" aria-controls="content-inventory" tabindex="-1">📋 Inventory List</button>
+        <button class="tab-btn" id="tab-shopping" role="tab" aria-selected="false" aria-controls="content-shopping" tabindex="-1">🛒 Shopping List</button>
       </nav>
       <!-- Cleaning List Section -->
-      <div
-        id="content-checklist"
-        class="tab-content active"
-        role="tabpanel"
-        aria-labelledby="tab-checklist"
-      >
+      <div id="content-checklist" class="tab-content active" role="tabpanel" aria-labelledby="tab-checklist">
         <div id="checklist-sections"><!-- Cleaning checklist items rendered here --></div>
         <div class="section">
           <label>Additional Notes</label>
@@ -325,37 +249,23 @@
         </div>
       </div>
       <!-- Consumables List Section -->
-      <div
-        id="content-consumables"
-        class="tab-content"
-        role="tabpanel"
-        aria-labelledby="tab-consumables"
-      >
+      <div id="content-consumables" class="tab-content" role="tabpanel" aria-labelledby="tab-consumables">
         <div id="consumables-sections"><!-- Consumables items rendered here --></div>
       </div>
       <!-- Inventory List Section -->
-      <div
-        id="content-inventory"
-        class="tab-content"
-        role="tabpanel"
-        aria-labelledby="tab-inventory"
-      >
+      <div id="content-inventory" class="tab-content" role="tabpanel" aria-labelledby="tab-inventory">
         <div id="inventory-sections"><!-- Inventory items rendered here --></div>
       </div>
       <!-- Shopping List Section -->
       <div id="content-shopping" class="tab-content" role="tabpanel" aria-labelledby="tab-shopping">
         <div class="section">
           <label>Shopping List</label>
-          <ul
-            id="shopping-list"
-            class="checkbox-group"
-            style="list-style: none; padding-left: 0"
-          ></ul>
+          <ul id="shopping-list" class="checkbox-group" style="list-style: none; padding-left: 0"></ul>
           <button class="add-btn" onclick="addShoppingItem()">+ Add item</button>
         </div>
       </div>
       <!-- Global Save Checklist Button -->
-      <div style="text-align: center; margin: 32px 0 0 0">
+      <div style="text-align:center; margin: 32px 0 0 0;">
         <button id="save-checklist-global" onclick="saveChecklist()">Save Checklist</button>
       </div>
     </div>
@@ -471,7 +381,10 @@
           "Намести подлоге за вруќо",
           "Стави вазну на сред стал",
         ],
-        Тераса: ["Испери терасу", "Пребриши асталче и столице"],
+        Тераса: [
+          "Испери терасу", 
+          "Пребриши асталче и столице"
+        ],
       };
       function createSection(title, items) {
         const sectionId = title.replace(/\s+/g, "_");
@@ -551,15 +464,12 @@
           var group = document.getElementById(sectionId);
           if (group) {
             var checkboxes = group.querySelectorAll("input[type='checkbox']");
-            items.forEach(function (item, idx) {
+            items.forEach(function(item, idx) {
               var checked = checkboxes[idx] && checkboxes[idx].checked;
-              var text = "[" + (checked ? "x" : " ") + "] " + item;
+              var text = '[' + (checked ? 'x' : ' ') + '] ' + item;
               doc.text(text, 14, y);
               y += 7;
-              if (y > 280) {
-                doc.addPage();
-                y = 10;
-              }
+              if (y > 280) { doc.addPage(); y = 10; }
             });
           }
           y += 4;
@@ -580,19 +490,16 @@
         for (const [section, items] of Object.entries(consumablesSections)) {
           doc.text(section, 10, y);
           y += 8;
-          var sectionIdC = "consumables_" + section.replace(/\s+/g, "_");
+          var sectionIdC = 'consumables_' + section.replace(/\s+/g, "_");
           var groupC = document.getElementById(sectionIdC);
           if (groupC) {
             var checkboxesC = groupC.querySelectorAll("input[type='checkbox']");
-            items.forEach(function (item, idx) {
+            items.forEach(function(item, idx) {
               var checked = checkboxesC[idx] && checkboxesC[idx].checked;
-              var text = "[" + (checked ? "x" : " ") + "] " + item;
+              var text = '[' + (checked ? 'x' : ' ') + '] ' + item;
               doc.text(text, 14, y);
               y += 7;
-              if (y > 280) {
-                doc.addPage();
-                y = 10;
-              }
+              if (y > 280) { doc.addPage(); y = 10; }
             });
           }
           y += 4;
@@ -612,15 +519,12 @@
           var groupI = document.getElementById(sectionIdI);
           if (groupI) {
             var checkboxesI = groupI.querySelectorAll("input[type='checkbox']");
-            items.forEach(function (item, idx) {
+            items.forEach(function(item, idx) {
               var checked = checkboxesI[idx] && checkboxesI[idx].checked;
-              var text = "[" + (checked ? "x" : " ") + "] " + item;
+              var text = '[' + (checked ? 'x' : ' ') + '] ' + item;
               doc.text(text, 14, y);
               y += 7;
-              if (y > 280) {
-                doc.addPage();
-                y = 10;
-              }
+              if (y > 280) { doc.addPage(); y = 10; }
             });
           }
           y += 4;
@@ -636,21 +540,18 @@
         var shoppingUl = document.getElementById("shopping-list");
         if (shoppingUl) {
           var lis = shoppingUl.querySelectorAll("li");
-          lis.forEach(function (li) {
+          lis.forEach(function(li) {
             var cb = li.querySelector("input[type='checkbox']");
             var checked = cb && cb.checked;
-            var text = "[" + (checked ? "x" : " ") + "] " + li.innerText.trim();
+            var text = '[' + (checked ? 'x' : ' ') + '] ' + li.innerText.trim();
             doc.text(text, 14, y);
             y += 7;
-            if (y > 280) {
-              doc.addPage();
-              y = 10;
-            }
+            if (y > 280) { doc.addPage(); y = 10; }
           });
         }
         // --- Save PDF ---
         var date = document.getElementById("date").value;
-        doc.save("Lynx_Checklist_" + date.replace(/[:\s]/g, "_") + ".pdf");
+        doc.save('Lynx_Checklist_' + date.replace(/[:\s]/g, "_") + '.pdf');
       }
 
       // --- Consumables List Logic ---
@@ -675,23 +576,28 @@
           "Освежувачи за воздух",
           "Средство за дезинфекција",
           "Средство за ВЦ шоља (освеживач)",
-          "Средство за прање алишта",
+          "Средство за прање алишта",          
           "Средство против каменац",
         ],
-        Дневна: ["Батерие за даљинско", "Сијалице за Лустер", "Сијалица за Столна лампа"],
+        Дневна: [
+          "Батерие за даљинско",
+          "Сијалице за Лустер",
+          "Сијалица за Столна лампа",
+        ],
         Минибар: [
           "5 Вина (700ml секое)",
           "5 Жестоки пијалоци (50ml секое)",
           "5 Грицки (чипс, јаткасти плодови итн.)",
           "2 Чоколада (50g секое)",
         ],
-        Ходник: ["Боја за ципеле (2)", "Ролер за чистење влакна (1)"],
+        Ходник: [
+          "Боја за ципеле (2)",
+          "Ролер за чистење влакна (1)",
+        ],
       };
       let consumablesCheckedSections = {};
       for (const section in consumablesSections) {
-        consumablesCheckedSections[section] = Array(consumablesSections[section].length).fill(
-          false
-        );
+        consumablesCheckedSections[section] = Array(consumablesSections[section].length).fill(false);
       }
       function createConsumablesSection(title, items) {
         const sectionId = `consumables_${title.replace(/\s+/g, "_")}`;
@@ -711,9 +617,7 @@
           label.style.display = "flex";
           label.style.alignItems = "center";
           label.style.justifyContent = "space-between";
-          label.innerHTML = `<span><input type="checkbox" ${
-            consumablesCheckedSections[title][idx] ? "checked" : ""
-          } onchange="toggleConsumableSection('${title}', ${idx})"> ${item}</span>`;
+          label.innerHTML = `<span><input type="checkbox" ${consumablesCheckedSections[title][idx] ? "checked" : ""} onchange="toggleConsumableSection('${title}', ${idx})"> ${item}</span>`;
           group.appendChild(label);
         });
       }
@@ -825,6 +729,7 @@
           "Торба за фен (Temu)",
           "Пластична корпа за веш (Temu)",
           "Гумени папуче (Temu)",
+
         ],
         "Ходник Инвентура": [
           "Подлога за ципеле 71x35 см(IKEA: 60329711)",
