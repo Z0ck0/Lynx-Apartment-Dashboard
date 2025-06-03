@@ -180,9 +180,6 @@
         margin: 0 8px;
       }
       #theme-toggle {
-        position: absolute;
-        top: 16px;
-        right: 16px;
         font-size: 1.5rem;
         background: none;
         border: none;
@@ -256,7 +253,7 @@
         border-color: #23272a;
       }
       #theme-toggle:hover {
-        background: transparent;
+        background: #ddd;
       }
       .date-wrapper {
         display: flex;
@@ -264,26 +261,12 @@
         align-items: center;
         gap: 4px;
       }
-      .date-wrapper select {
-        width: fit-content;
-        padding: 6px 10px;
-        font-size: 1rem;
-        margin-bottom: 16px;
-        border-color: #cbd2d7;
-      }
 
       .date-row select {
         width: fit-content;
         min-width: auto;
         padding: 6px 10px;
         font-size: 1rem;
-      }
-      body.dark-mode .date-wrapper select {
-        background: #23272a;
-        color: #f3f3f3;
-        border: 1px solid #444;
-        width: fit-content;
-        margin-bottom: 16px;
       }
     </style>
   </head>
@@ -294,6 +277,9 @@
       <div class="date-wrapper">
         <label for="date">Датум на инспекција:</label>
         <select id="date"></select>
+        <div class="date-row">
+          <label for="date">Избери датум:</label>
+          <select id="date"></select>
       </div>
 
       <img src="logo-lynx.png" alt="Lynx Logo" class="logo" id="lynx-logo" />

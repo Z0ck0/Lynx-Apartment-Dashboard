@@ -180,9 +180,6 @@
         margin: 0 8px;
       }
       #theme-toggle {
-        position: absolute;
-        top: 16px;
-        right: 16px;
         font-size: 1.5rem;
         background: none;
         border: none;
@@ -256,20 +253,18 @@
         border-color: #23272a;
       }
       #theme-toggle:hover {
-        background: transparent;
+        background: #ddd;
       }
       .date-wrapper {
+        width: 100%;
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 4px;
+        justify-content: center;
       }
-      .date-wrapper select {
-        width: fit-content;
-        padding: 6px 10px;
-        font-size: 1rem;
-        margin-bottom: 16px;
-        border-color: #cbd2d7;
+
+      .date-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
       }
 
       .date-row select {
@@ -278,24 +273,20 @@
         padding: 6px 10px;
         font-size: 1rem;
       }
-      body.dark-mode .date-wrapper select {
-        background: #23272a;
-        color: #f3f3f3;
-        border: 1px solid #444;
-        width: fit-content;
-        margin-bottom: 16px;
-      }
     </style>
   </head>
   <body>
     <div class="container">
       <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
 
-      <div class="date-wrapper">
-        <label for="date">Датум на инспекција:</label>
-        <select id="date"></select>
+      <div class="top-bar">
+        <div class="date-wrapper">
+          <div class="date-row">
+            <label for="date">Датум на инспекција:</label>
+            <select id="date"></select>
+          </div>
+        </div>
       </div>
-
       <img src="logo-lynx.png" alt="Lynx Logo" class="logo" id="lynx-logo" />
       <h1>Lynx Apartment Dashboard</h1>
       <nav class="tabs" role="tablist">

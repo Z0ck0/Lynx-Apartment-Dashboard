@@ -155,12 +155,11 @@
       .top-bar {
         display: flex;
         align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 12px;
+        justify-content: space-between;
+        gap: 16px;
         margin-bottom: 20px;
         padding: 0 16px;
-        position: relative;
+        flex-wrap: wrap;
       }
       .top-bar label {
         margin: 0;
@@ -170,7 +169,7 @@
         margin-right: 8px;
       }
       .top-bar select {
-        width: fit-content;
+        width: 130px;
         font-size: 1rem;
         padding: 6px 10px;
         border-radius: 6px;
@@ -180,9 +179,6 @@
         margin: 0 8px;
       }
       #theme-toggle {
-        position: absolute;
-        top: 16px;
-        right: 16px;
         font-size: 1.5rem;
         background: none;
         border: none;
@@ -228,10 +224,20 @@
         }
       }
       body.dark-mode .top-bar select {
-        width: fit-content;
+        width: 130px; /* add this to match light mode */
         background: #23272a;
         color: #f3f3f3;
         border: 1px solid #444;
+
+
+    
+        font-size: 1rem;
+        padding: 6px 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        background: #fff;
+        color: #23272a;
+        margin: 0 8px;
       }
       body.dark-mode .top-bar button#theme-toggle:active,
       body.dark-mode .top-bar button#theme-toggle:focus {
@@ -256,34 +262,7 @@
         border-color: #23272a;
       }
       #theme-toggle:hover {
-        background: transparent;
-      }
-      .date-wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 4px;
-      }
-      .date-wrapper select {
-        width: fit-content;
-        padding: 6px 10px;
-        font-size: 1rem;
-        margin-bottom: 16px;
-        border-color: #cbd2d7;
-      }
-
-      .date-row select {
-        width: fit-content;
-        min-width: auto;
-        padding: 6px 10px;
-        font-size: 1rem;
-      }
-      body.dark-mode .date-wrapper select {
-        background: #23272a;
-        color: #f3f3f3;
-        border: 1px solid #444;
-        width: fit-content;
-        margin-bottom: 16px;
+        background: #ddd;
       }
     </style>
   </head>
@@ -291,11 +270,12 @@
     <div class="container">
       <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
 
-      <div class="date-wrapper">
-        <label for="date">Датум на инспекција:</label>
-        <select id="date"></select>
+      <div class="top-bar">
+        <div class="date-wrapper">
+          <label for="date">Датум на инспекција:</label>
+          <select id="date"></select>
+        </div>
       </div>
-
       <img src="logo-lynx.png" alt="Lynx Logo" class="logo" id="lynx-logo" />
       <h1>Lynx Apartment Dashboard</h1>
       <nav class="tabs" role="tablist">
