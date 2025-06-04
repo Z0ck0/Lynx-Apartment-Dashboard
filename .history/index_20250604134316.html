@@ -1019,15 +1019,15 @@
       // --- Consumables List Logic ---
       const ConsumablesGroups = [
         {
-          group: "Потрошен материјал за во Кујна",
+          group: "Kitchen Supplies",
           sections: ["Кујна"],
         },
         {
-          group: "Потрошен материјал за во Купатило",
+          group: "Bathroom Supplies",
           sections: ["Купатило"],
         },
         {
-          group: "Останато",
+          group: "Other Areas",
           sections: ["Дневна", "Минибар", "Ходник"],
         },
       ];
@@ -1069,26 +1069,40 @@
       // --- Inventory List Logic ---
       const InventoryGroups = [
         {
-          group: "Соби",
-          sections: ["Дневна Инвентура", "Спална Инвентура"],
+          group: "Essential Items",
+          sections: ["Essential"],
         },
         {
-          group: "Кујна и Трпезарија",
+          group: "Living Room",
+          sections: ["Дневна Инвентура"],
+        },
+        {
+          group: "Kitchen & Dining",
           sections: ["Кујна Инвентура", "Трпезарија Инвентура"],
         },
-
         {
-          group: "Купатило",
+          group: "Bedroom",
+          sections: ["Спална Инвентура"],
+        },
+        {
+          group: "Bathroom",
           sections: ["Купатило Инвентура"],
         },
         {
-          group: "Останато",
+          group: "Other Areas",
           sections: ["Ходник Инвентура", "Тераса Инвентура"],
         },
       ];
 
       // Inventory items now have type: 'E' (Essential) or 'O' (Optional)
       const InventorySections = {
+        Essential: [
+          { text: "Клучеви (2)", type: "E" },
+          { text: "WiFi роутер", type: "E" },
+          { text: "Пожарен аларм", type: "E" },
+          { text: "Прва помош кутија", type: "E" },
+          { text: "Евакуациски план", type: "E" },
+        ],
         "Дневна Инвентура": [
           { text: "Столна лампа (1) (IKEA: 30405042)", type: "E" },
           { text: "Перници, бели/тврди, 50x50 см (2)(IKEA: 50550702)", type: "E" },
@@ -1184,7 +1198,7 @@
           { text: "Торба за фен (Temu)", type: "O" },
           { text: "Пластична корпа за веш (Temu)", type: "O" },
           { text: "Гумени папуче (Temu)", type: "O" },
-          { text: "Прва помош кутија", type: "E" },
+                    { text: "Прва помош кутија", type: "E" },
         ],
         "Ходник Инвентура": [
           { text: "Подлога за ципеле 71x35 см(IKEA: 60329711)", type: "O" },

@@ -849,14 +849,8 @@
         populateDateDropdown();
         renderCleaningAccordions();
         renderConsumablesAccordions();
-        renderInventoryFilterDropdown();
         renderInventoryAccordions();
         renderShoppingList();
-        // Load saved notes
-        const savedNotes = localStorage.getItem("notes");
-        if (savedNotes) {
-          document.getElementById("notes").value = savedNotes;
-        }
       };
       function populateDateDropdown() {
         const select = document.getElementById("date");
@@ -1019,15 +1013,15 @@
       // --- Consumables List Logic ---
       const ConsumablesGroups = [
         {
-          group: "Потрошен материјал за во Кујна",
+          group: "Kitchen Supplies",
           sections: ["Кујна"],
         },
         {
-          group: "Потрошен материјал за во Купатило",
+          group: "Bathroom Supplies",
           sections: ["Купатило"],
         },
         {
-          group: "Останато",
+          group: "Other Areas",
           sections: ["Дневна", "Минибар", "Ходник"],
         },
       ];
@@ -1069,26 +1063,40 @@
       // --- Inventory List Logic ---
       const InventoryGroups = [
         {
-          group: "Соби",
-          sections: ["Дневна Инвентура", "Спална Инвентура"],
+          group: "Essential Items",
+          sections: ["Essential"],
         },
         {
-          group: "Кујна и Трпезарија",
+          group: "Living Room",
+          sections: ["Дневна Инвентура"],
+        },
+        {
+          group: "Kitchen & Dining",
           sections: ["Кујна Инвентура", "Трпезарија Инвентура"],
         },
-
         {
-          group: "Купатило",
+          group: "Bedroom",
+          sections: ["Спална Инвентура"],
+        },
+        {
+          group: "Bathroom",
           sections: ["Купатило Инвентура"],
         },
         {
-          group: "Останато",
+          group: "Other Areas",
           sections: ["Ходник Инвентура", "Тераса Инвентура"],
         },
       ];
 
       // Inventory items now have type: 'E' (Essential) or 'O' (Optional)
       const InventorySections = {
+        Essential: [
+          { text: "Клучеви (2)", type: "E" },
+          { text: "WiFi роутер", type: "E" },
+          { text: "Пожарен аларм", type: "E" },
+          { text: "Прва помош кутија", type: "E" },
+          { text: "Евакуациски план", type: "E" },
+        ],
         "Дневна Инвентура": [
           { text: "Столна лампа (1) (IKEA: 30405042)", type: "E" },
           { text: "Перници, бели/тврди, 50x50 см (2)(IKEA: 50550702)", type: "E" },
@@ -1184,7 +1192,6 @@
           { text: "Торба за фен (Temu)", type: "O" },
           { text: "Пластична корпа за веш (Temu)", type: "O" },
           { text: "Гумени папуче (Temu)", type: "O" },
-          { text: "Прва помош кутија", type: "E" },
         ],
         "Ходник Инвентура": [
           { text: "Подлога за ципеле 71x35 см(IKEA: 60329711)", type: "O" },
@@ -1452,7 +1459,6 @@
         populateDateDropdown();
         renderCleaningAccordions();
         renderConsumablesAccordions();
-        renderInventoryFilterDropdown();
         renderInventoryAccordions();
         renderShoppingList();
 
@@ -1462,82 +1468,6 @@
           document.getElementById("notes").value = savedNotes;
         }
       };
-
-      function renderConsumablesAccordions() {
-        const container = document.getElementById("consumables-sections");
-        container.innerHTML = "";
-
-        // Add collapse/expand all button
-        const controlsDiv = document.createElement("div");
-        controlsDiv.className = "section-controls";
-        controlsDiv.innerHTML = `
-          <button class="view-all-btn" onclick="toggleAllSections(true)">Expand All</button>
-          <button class="view-all-btn" onclick="toggleAllSections(false)">Collapse All</button>
-        `;
-        container.appendChild(controlsDiv);
-
-        ConsumablesGroups.forEach(groupObj => {
-          const acc = document.createElement("div");
-          acc.className = "accordion";
-
-          const header = document.createElement("div");
-          header.className = "accordion-header";
-
-          // Calculate total items and completed items for this group
-          let totalItems = 0;
-          let completedItems = 0;
-          groupObj.sections.forEach(section => {
-            const items = ConsumablesSections[section];
-            totalItems += items.length;
-            let checkedArr = JSON.parse(localStorage.getItem("checked_" + section) || "[]");
-            if (!Array.isArray(checkedArr) || checkedArr.length !== items.length) {
-              checkedArr = Array(items.length).fill(false);
-            }
-            completedItems += checkedArr.filter(Boolean).length;
-          });
-
-          header.innerHTML = `
-            <span>${groupObj.group}</span>
-            <span class="section-stats">${completedItems}/${totalItems} завршено</span>
-          `;
-          acc.appendChild(header);
-
-          const content = document.createElement("div");
-          content.className = "accordion-content";
-
-          groupObj.sections.forEach(section => {
-            content.appendChild(
-              renderSectionWithProgress(section, ConsumablesSections[section], section, () => {
-                // Update group progress when any item changes
-                let newTotal = 0;
-                let newCompleted = 0;
-                groupObj.sections.forEach(s => {
-                  const items = ConsumablesSections[s];
-                  newTotal += items.length;
-                  let checkedArr = JSON.parse(localStorage.getItem("checked_" + s) || "[]");
-                  if (!Array.isArray(checkedArr) || checkedArr.length !== items.length) {
-                    checkedArr = Array(items.length).fill(false);
-                  }
-                  newCompleted += checkedArr.filter(Boolean).length;
-                });
-                header.querySelector(
-                  ".section-stats"
-                ).textContent = `${newCompleted}/${newTotal} завршено`;
-              })
-            );
-          });
-
-          acc.appendChild(content);
-          container.appendChild(acc);
-
-          // Accordion toggle
-          header.onclick = function (e) {
-            if (e.target.tagName === "INPUT") return;
-            acc.classList.toggle("active");
-            content.style.display = content.style.display === "none" ? "block" : "none";
-          };
-        });
-      }
     </script>
   </body>
 </html>

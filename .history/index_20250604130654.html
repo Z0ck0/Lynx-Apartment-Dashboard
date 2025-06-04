@@ -849,14 +849,8 @@
         populateDateDropdown();
         renderCleaningAccordions();
         renderConsumablesAccordions();
-        renderInventoryFilterDropdown();
         renderInventoryAccordions();
         renderShoppingList();
-        // Load saved notes
-        const savedNotes = localStorage.getItem("notes");
-        if (savedNotes) {
-          document.getElementById("notes").value = savedNotes;
-        }
       };
       function populateDateDropdown() {
         const select = document.getElementById("date");
@@ -1019,15 +1013,15 @@
       // --- Consumables List Logic ---
       const ConsumablesGroups = [
         {
-          group: "Потрошен материјал за во Кујна",
+          group: "Kitchen Supplies",
           sections: ["Кујна"],
         },
         {
-          group: "Потрошен материјал за во Купатило",
+          group: "Bathroom Supplies",
           sections: ["Купатило"],
         },
         {
-          group: "Останато",
+          group: "Other Areas",
           sections: ["Дневна", "Минибар", "Ходник"],
         },
       ];
@@ -1069,225 +1063,210 @@
       // --- Inventory List Logic ---
       const InventoryGroups = [
         {
-          group: "Соби",
-          sections: ["Дневна Инвентура", "Спална Инвентура"],
+          group: "Essential Items",
+          sections: ["Essential"],
         },
         {
-          group: "Кујна и Трпезарија",
+          group: "Living Room",
+          sections: ["Дневна Инвентура"],
+        },
+        {
+          group: "Kitchen & Dining",
           sections: ["Кујна Инвентура", "Трпезарија Инвентура"],
         },
-
         {
-          group: "Купатило",
+          group: "Bedroom",
+          sections: ["Спална Инвентура"],
+        },
+        {
+          group: "Bathroom",
           sections: ["Купатило Инвентура"],
         },
         {
-          group: "Останато",
+          group: "Other Areas",
           sections: ["Ходник Инвентура", "Тераса Инвентура"],
         },
       ];
 
-      // Inventory items now have type: 'E' (Essential) or 'O' (Optional)
       const InventorySections = {
+        Essential: [
+          "Клучеви (2)",
+          "WiFi роутер",
+          "Пожарен аларм",
+          "Прва помош кутија",
+          "Евакуациски план",
+        ],
         "Дневна Инвентура": [
-          { text: "Столна лампа (1) (IKEA: 30405042)", type: "E" },
-          { text: "Перници, бели/тврди, 50x50 см (2)(IKEA: 50550702)", type: "E" },
-          { text: "Покривка на гарнитура (2)", type: "O" },
-          { text: "Уметничка слика на ѕид (1)", type: "O" },
-          { text: "Подлога за маса, воден зумбул, 37 см (1) (IKEA: 40082536)", type: "O" },
-          { text: "Computer Mouse (1)", type: "O" },
-          { text: "HDMI кабел (1)", type: "O" },
-          { text: "US to EU адаптер (2)", type: "O" },
-          { text: "Продужан кабал (1)", type: "O" },
-          { text: "Книги за Македонија (3)", type: "O" },
-          { text: "Украси на сталажа десно", type: "O" },
-          { text: "Свеќи на батерија (2)", type: "O" },
-          { text: "Кошница за цвеќе, морска трева, 25см (1) (IKEA: 60322173)", type: "O" },
+          "Столна лампа (1) (IKEA: 30405042)",
+          "Перници, бели/тврди, 50x50 см (2)(IKEA: 50550702)",
+          "Покривка на гарнитура (2)",
+          "Уметничка слика на ѕид (1)",
+          "Подлога за маса, воден зумбул, 37 см (1) (IKEA: 40082536)",
+          "Computer Mouse (1)",
+          "HDMI кабел (1)",
+          "US to EU адаптер (2)",
+          "Продужан кабал (1)",
+          "Книги за Македонија (3)",
+          "Украси на сталажа десно",
+          "Свеќи на батерија (2)",
+          "Кошница за цвеќе, морска трева, 25см (1) (IKEA: 60322173)",
         ],
         "Кујна Инвентура": [
-          { text: "Нож, 3 ком (IKEA: 70257624)", type: "E" },
-          { text: "Нож, црн 22 цм (4)(IKEA: 00287295)", type: "E" },
-          { text: "Даска за сечење, бамбус, 45x28 см (IKEA: 80233430)", type: "E" },
-          { text: "Острилка за ножеви, црна (IKEA: 57145296)", type: "O" },
-          { text: "Лупалка за компири, зелена (IKEA: 90521963)", type: "O" },
-          { text: "Здела за салата, проѕирно стакло, 20 см (IKEA: 90057252)", type: "O" },
-          {
-            text: "Прибор за јадење, 30 парчиња, од не'рѓосувачки челик (IKEA: 30167507)",
-            type: "E",
-          },
-          { text: "Тенџере за готвење со капак (3), тигањ (1)(IKEA: 80580104)", type: "E" },
-          { text: "Подметач за тенџере, плута, 19 см (IKEA: 87077700)", type: "O" },
-          { text: "Држач за вруќо тенџере, сив, 21x21 см (IKEA: 00476366)", type: "O" },
-          { text: "Сад за сол/бибер, проѕирно стакло 8см ( IKEA: 40553211)", type: "O" },
-          { text: "Кујнски крпи, бел/зелен/со шари, 45x60 см (4)(IKEA: 60476354)", type: "E" },
-          { text: "Кујнски крпи, бел/темно сив/со шари, 45x60 см (8)(IKEA: 20476346)", type: "E" },
-          { text: "Полица цедење за садови (1)(IKEA: 80461276)", type: "O" },
-          { text: "Жица за матење, тркалезна (1)(IKEA: 10225952)", type: "O" },
-          {
-            text: "Организер за прибор за јадење, светла бамбусова, 52x50 см (IKEA: 70433104)",
-            type: "O",
-          },
-          { text: "Ренде", type: "O" },
-          { text: "Тостер, црн", type: "O" },
-          { text: "Бокал за воду на струја", type: "O" },
-          { text: "Кафемат KRUPS KP 243B10, 1000W, 15 bar", type: "O" },
-          { text: "Здела за капсуле за кафе (Temu)", type: "O" },
+          "Нож, 3 ком (IKEA: 70257624)",
+          "Нож, црн 22 цм (4)(IKEA: 00287295)",
+          "Даска за сечење, бамбус, 45x28 см (IKEA: 80233430)",
+          "Острилка за ножеви, црна (IKEA: 57145296)",
+          "Лупалка за компири, зелена (IKEA: 90521963)",
+          "Здела за салата, проѕирно стакло, 20 см (IKEA: 90057252)",
+          "Прибор за јадење, 30 парчиња, од не'рѓосувачки челик (IKEA: 30167507)",
+          "Тенџере за готвење со капак (3), тигањ (1)(IKEA: 80580104)",
+          "Подметач за тенџере, плута, 19 см (IKEA: 87077700)",
+          "Држач за вруќо тенџере, сив, 21x21 см (IKEA: 00476366)",
+          "Сад за сол/бибер, проѕирно стакло 8см ( IKEA: 40553211)",
+          "Кујнски крпи, бел/зелен/со шари, 45x60 см (4)(IKEA: 60476354)",
+          "Кујнски крпи, бел/темно сив/со шари, 45x60 см (8)(IKEA: 20476346)",
+          "Полица цедење за садови (1)(IKEA: 80461276)",
+          "Жица за матење, тркалезна (1)(IKEA: 10225952)",
+          "Организер за прибор за јадење, светла бамбусова, 52x50 см (IKEA: 70433104)",
+          "Ренде",
+          "Тостер, црн",
+          "Бокал за воду на струја",
+          "Кафемат KRUPS KP 243B10, 1000W, 15 bar",
+          "Здела за капсуле за кафе (Temu)",
         ],
         "Трпезарија Инвентура": [
-          { text: "Подлога за маса, темно сива, 38x30см (4) (IKEA: 20569251)", type: "O" },
-          { text: "Вазна, проѕирно стакло во боја", type: "O" },
-          { text: "Трпезариска маса со 4 столици", type: "E" },
+          "Подлога за маса, темно сива, 38x30см (4) (IKEA: 20569251)",
+          "Вазна, проѕирно стакло во боја",
+          "Трпезариска маса со 4 столици",
         ],
         "Спална Инвентура": [
-          { text: "Офингер (8) (IKEA: 30238543)", type: "E" },
-          { text: "Водоотпорен заштитник за душек, 160x200 см (2) (IKEA: 60522129)", type: "E" },
-          {
-            text: "Навлака за јорган и 2 навлаки за перници, сива/пругаста, 200x200/50x60см (2) (IKEA: 70423242)",
-            type: "E",
-          },
-          {
-            text: "Навлака за јорган и 2 навлаки за перници, бела, 200x200/50x60 см (1) (IKEA: 20377959)",
-            type: "E",
-          },
-          { text: "Чаршаф, бела, 160x200 см (3) (IKEA: 30357220)", type: "E" },
-          { text: "Јорган за сите сезони, 200x200 см (1+1) (IKEA: 70458585)", type: "E" },
-          { text: "Навлака за перница, светло сива, 50x60 см (1) (IKEA: 90482476)", type: "O" },
-          { text: "Навлака за перница, бела, 50x60 см (3) (IKEA: 10357301)", type: "O" },
-          { text: "Перница, висока, 50x60 см (2) (IKEA: 20460411)", type: "E" },
-          { text: "Перница, ниска, на стомак, 50x60 см (2) (IKEA: 50460546)", type: "O" },
-          { text: "Столна ламба, пепел/бела (2) (IKEA: 60573538)", type: "O" },
-          { text: "Малечка ламба за читање (1)", type: "O" },
-          { text: "Даска за пеглање", type: "O" },
-          { text: "Пегла", type: "O" },
-          { text: "Прекривач/кебе, темно сива, 230x250см (1) (IKEA: 60346447)", type: "O" },
-          { text: "Кебе тенко (1)", type: "O" },
-          { text: "Кебе дебело (1)", type: "O" },
-          { text: "Кревет за деца (Ѓоре)", type: "O" },
-          { text: "Навлака за сако (1)", type: "O" },
+          "Офингер (8) (IKEA: 30238543)",
+          "Водоотпорен заштитник за душек, 160x200 см (2) (IKEA: 60522129)",
+          "Навлака за јорган и 2 навлаки за перници, сива/пругаста, 200x200/50x60см (2) (IKEA: 70423242)",
+          "Навлака за јорган и 2 навлаки за перници, бела, 200x200/50x60 см (1) (IKEA: 20377959)",
+          "Чаршаф, бела, 160x200 см (3) (IKEA: 30357220)",
+          "Јорган за сите сезони, 200x200 см (1+1) (IKEA: 70458585)",
+          "Навлака за перница, светло сива, 50x60 см (1) (IKEA: 90482476)",
+          "Навлака за перница, бела, 50x60 см (3) (IKEA: 10357301)",
+          "Перница, висока, 50x60 см (2) (IKEA: 20460411)",
+          "Перница, ниска, на стомак, 50x60 см (2) (IKEA: 50460546)",
+          "Столна ламба, пепел/бела (2) (IKEA: 60573538)",
+          "Малечка ламба за читање (1)",
+          "Даска за пеглање",
+          "Пегла",
+          "Прекривач/кебе, темно сива, 230x250см (1) (IKEA: 60346447)",
+          "Кебе тенко (1)",
+          "Кебе дебело (1)",
+          "Кревет за деца (Ѓоре)",
+          "Навлака за сако (1)",
         ],
         "Купатило Инвентура": [
-          { text: "Саксија за цвеќе (IKEA: 40395617)", type: "O" },
-          { text: "Канта за отпад (IKEA: 20593736)", type: "E" },
-          { text: "Четка за тоалет (IKEA: 10593727)", type: "E" },
-          { text: "Држач за тоалетна хартија (IKEA: 40381291)", type: "E" },
-          { text: "Крпа за бањање, (6), 70x140 см (IKEA: 80350985)", type: "E" },
-          { text: "Крпа за руке, (6), 50x100 см (IKEA: 70350995)", type: "E" },
-          { text: "Туш ручка (IKEA: 60342543)", type: "O" },
-          { text: "Тепих за бању, тиркизна, 50x80 см (IKEA: 40603169)", type: "O" },
-          { text: "Дозатор за сапун (IKEA: 30593726)", type: "O" },
-          { text: "Држач за четкице за зуби (IKEA: 50593730)", type: "O" },
-          { text: "Самолеплива кука (2) (IKEA: 50567830)", type: "O" },
-          { text: "Надворешни полици за крпе, бамбус, 37x37x104см (1)(IKEA: 80549420)", type: "O" },
-          { text: "Кутија за прва помош Praxis – JUS 5015", type: "E" },
-          { text: "Корпа за фен (STOREAGE)", type: "O" },
-          { text: "Фен за косу (MAX HD22IR)", type: "O" },
-          { text: "Торба за фен (Temu)", type: "O" },
-          { text: "Пластична корпа за веш (Temu)", type: "O" },
-          { text: "Гумени папуче (Temu)", type: "O" },
-          { text: "Прва помош кутија", type: "E" },
+          "Саксија за цвеќе (IKEA: 40395617)",
+          "Канта за отпад (IKEA: 20593736)",
+          "Четка за тоалет (IKEA: 10593727)",
+          "Држач за тоалетна хартија (IKEA: 40381291)",
+          "Крпа за бањање, (6), 70x140 см (IKEA: 80350985)",
+          "Крпа за руке, (6), 50x100 см (IKEA: 70350995)",
+          "Туш ручка (IKEA: 60342543)",
+          "Тепих за бању, тиркизна, 50x80 см (IKEA: 40603169)",
+          "Дозатор за сапун (IKEA: 30593726)",
+          "Држач за четкице за зуби (IKEA: 50593730)",
+          "Самолеплива кука (2) (IKEA: 50567830)",
+          "Надворешни полици за крпе, бамбус, 37x37x104см (1)(IKEA: 80549420)",
+          "Кутија за прва помош Praxis – JUS 5015",
+          "Корпа за фен (STOREAGE)",
+          "Фен за косу (MAX HD22IR)",
+          "Торба за фен (Temu)",
+          "Пластична корпа за веш (Temu)",
+          "Гумени папуче (Temu)",
         ],
         "Ходник Инвентура": [
-          { text: "Подлога за ципеле 71x35 см(IKEA: 60329711)", type: "O" },
-          { text: "Усисувач (MAKS VC 2200SW)", type: "E" },
-          { text: "Кашика за ципеле", type: "O" },
+          "Подлога за ципеле 71x35 см(IKEA: 60329711)",
+          "Усисувач (MAKS VC 2200SW)",
+          "Кашика за ципеле",
         ],
         "Тераса Инвентура": [
-          { text: "Столица за седење (2)(IKEA: 90095428)", type: "O" },
-          { text: "Асталче за терасу (1)(IKEA: 70095429)", type: "O" },
+          "Столица за седење (2)(IKEA: 90095428)",
+          "Асталче за терасу (1)(IKEA: 70095429)",
         ],
       };
 
-      // --- Inventory Filter Dropdown ---
-      let inventoryFilter = "all"; // 'all', 'E', 'O'
+      // Render functions for Consumables and Inventory
+      function renderConsumablesAccordions() {
+        const container = document.getElementById("consumables-sections");
+        container.innerHTML = "";
 
-      function renderInventoryFilterDropdown() {
-        const container = document.getElementById("inventory-sections");
-        let filterDiv = document.getElementById("inventory-filter-div");
-        if (!filterDiv) {
-          filterDiv = document.createElement("div");
-          filterDiv.id = "inventory-filter-div";
-          filterDiv.style.marginBottom = "10px";
-          filterDiv.innerHTML = `
-            <select id="inventory-filter" class="view-all-btn" style="width:auto;">
-              <option value="all">Сите</option>
-              <option value="E">Само Essentials</option>
-              <option value="O">Само Optional</option>
-            </select>
-          `;
-          container.parentNode.insertBefore(filterDiv, container);
-          document.getElementById("inventory-filter").addEventListener("change", function (e) {
-            inventoryFilter = e.target.value;
-            renderInventoryAccordions();
-          });
-        }
-      }
+        // Add collapse/expand all button
+        const controlsDiv = document.createElement("div");
+        controlsDiv.className = "section-controls";
+        controlsDiv.innerHTML = `
+          <button class="view-all-btn" onclick="toggleAllSections(true)">Expand All</button>
+          <button class="view-all-btn" onclick="toggleAllSections(false)">Collapse All</button>
+        `;
+        container.appendChild(controlsDiv);
 
-      function renderSectionWithProgress(title, items, sectionKey, onProgressChange, isInventory) {
-        const sectionDiv = document.createElement("div");
-        sectionDiv.className = "section";
+        ConsumablesGroups.forEach(groupObj => {
+          const acc = document.createElement("div");
+          acc.className = "accordion";
 
-        // Section header
-        const header = document.createElement("div");
-        header.className = "section-header";
-        header.innerHTML = `<label>${title}</label>`;
-        sectionDiv.appendChild(header);
+          const header = document.createElement("div");
+          header.className = "accordion-header";
 
-        // Items list
-        const ul = document.createElement("div");
-        ul.className = "checkbox-group section-items";
-
-        // Load checked state from localStorage, always correct length
-        let checkedArr = JSON.parse(localStorage.getItem("checked_" + sectionKey) || "[]");
-        if (!Array.isArray(checkedArr) || checkedArr.length !== items.length) {
-          checkedArr = Array(items.length).fill(false);
-        }
-
-        // Filter items if inventory
-        let filteredItems = items;
-        if (isInventory && inventoryFilter !== "all") {
-          filteredItems = items
-            .map((item, idx) => ({ ...item, idx }))
-            .filter(item => item.type === inventoryFilter);
-        } else if (isInventory) {
-          filteredItems = items.map((item, idx) => ({ ...item, idx }));
-        } else {
-          filteredItems = items.map((text, idx) => ({ text, idx }));
-        }
-
-        filteredItems.forEach(itemObj => {
-          const label = document.createElement("label");
-          label.style.display = "flex";
-          label.style.alignItems = "center";
-          label.style.justifyContent = "space-between";
-          let tag = "";
-          if (isInventory)
-            tag = `<span style="font-size:13px;font-weight:bold;margin-left:8px;">(${itemObj.type})</span>`;
-          label.innerHTML = `<span><input type="checkbox" data-section="${sectionKey}" data-idx="${itemObj.idx}"> ${itemObj.text} ${tag}</span>`;
-          const checkbox = label.querySelector("input[type='checkbox']");
-          checkbox.checked = checkedArr[itemObj.idx];
-          checkbox.onchange = function () {
-            checkedArr[itemObj.idx] = checkbox.checked;
-            localStorage.setItem("checked_" + sectionKey, JSON.stringify(checkedArr));
-            if (onProgressChange) {
-              onProgressChange();
+          // Calculate total items and completed items for this group
+          let totalItems = 0;
+          let completedItems = 0;
+          groupObj.sections.forEach(section => {
+            const items = ConsumablesSections[section];
+            totalItems += items.length;
+            const checkedArr = JSON.parse(localStorage.getItem("checked_" + section) || "[]");
+            if (Array.isArray(checkedArr)) {
+              completedItems += checkedArr.filter(Boolean).length;
             }
+          });
+
+          header.innerHTML = `
+            <span>${groupObj.group}</span>
+            <span class="section-stats">${completedItems}/${totalItems} завршено</span>
+          `;
+          acc.appendChild(header);
+
+          const content = document.createElement("div");
+          content.className = "accordion-content";
+
+          groupObj.sections.forEach(section => {
+            content.appendChild(
+              renderSectionWithProgress(section, ConsumablesSections[section], section, () => {
+                // Update group progress when any item changes
+                let newTotal = 0;
+                let newCompleted = 0;
+                groupObj.sections.forEach(s => {
+                  const items = ConsumablesSections[s];
+                  newTotal += items.length;
+                  const checkedArr = JSON.parse(localStorage.getItem("checked_" + s) || "[]");
+                  if (Array.isArray(checkedArr)) {
+                    newCompleted += checkedArr.filter(Boolean).length;
+                  }
+                });
+                header.querySelector(
+                  ".section-stats"
+                ).textContent = `${newCompleted}/${newTotal} завршено`;
+              })
+            );
+          });
+
+          acc.appendChild(content);
+          container.appendChild(acc);
+
+          // Accordion toggle
+          header.onclick = function (e) {
+            if (e.target.tagName === "INPUT") return;
+            acc.classList.toggle("active");
+            content.style.display = content.style.display === "none" ? "block" : "none";
           };
-          ul.appendChild(label);
         });
-
-        sectionDiv.appendChild(ul);
-
-        // Make header clickable for collapse/expand
-        header.onclick = function (e) {
-          if (e.target.tagName === "INPUT") return;
-          ul.style.display = ul.style.display === "none" ? "block" : "none";
-        };
-
-        return sectionDiv;
       }
 
       function renderInventoryAccordions() {
-        renderInventoryFilterDropdown();
         const container = document.getElementById("inventory-sections");
         container.innerHTML = "";
 
@@ -1307,28 +1286,16 @@
           const header = document.createElement("div");
           header.className = "accordion-header";
 
-          // Calculate total items and completed items for this group (filtered)
+          // Calculate total items and completed items for this group
           let totalItems = 0;
           let completedItems = 0;
           groupObj.sections.forEach(section => {
-            let items = InventorySections[section];
-            if (inventoryFilter !== "all") {
-              items = items.filter(item => item.type === inventoryFilter);
-            }
+            const items = InventorySections[section];
             totalItems += items.length;
-            let checkedArr = JSON.parse(localStorage.getItem("checked_" + section) || "[]");
-            if (
-              !Array.isArray(checkedArr) ||
-              checkedArr.length !== InventorySections[section].length
-            ) {
-              checkedArr = Array(InventorySections[section].length).fill(false);
+            const checkedArr = JSON.parse(localStorage.getItem("checked_" + section) || "[]");
+            if (Array.isArray(checkedArr)) {
+              completedItems += checkedArr.filter(Boolean).length;
             }
-            items.forEach((item, idx) => {
-              const origIdx = InventorySections[section].findIndex(
-                i => i.text === item.text && i.type === item.type
-              );
-              if (checkedArr[origIdx]) completedItems++;
-            });
           });
 
           header.innerHTML = `
@@ -1342,40 +1309,22 @@
 
           groupObj.sections.forEach(section => {
             content.appendChild(
-              renderSectionWithProgress(
-                section,
-                InventorySections[section],
-                section,
-                () => {
-                  // Update group progress when any item changes
-                  let newTotal = 0;
-                  let newCompleted = 0;
-                  groupObj.sections.forEach(s => {
-                    let items = InventorySections[s];
-                    if (inventoryFilter !== "all") {
-                      items = items.filter(item => item.type === inventoryFilter);
-                    }
-                    newTotal += items.length;
-                    let checkedArr = JSON.parse(localStorage.getItem("checked_" + s) || "[]");
-                    if (
-                      !Array.isArray(checkedArr) ||
-                      checkedArr.length !== InventorySections[s].length
-                    ) {
-                      checkedArr = Array(InventorySections[s].length).fill(false);
-                    }
-                    items.forEach((item, idx) => {
-                      const origIdx = InventorySections[s].findIndex(
-                        i => i.text === item.text && i.type === item.type
-                      );
-                      if (checkedArr[origIdx]) newCompleted++;
-                    });
-                  });
-                  header.querySelector(
-                    ".section-stats"
-                  ).textContent = `${newCompleted}/${newTotal} завршено`;
-                },
-                true
-              )
+              renderSectionWithProgress(section, InventorySections[section], section, () => {
+                // Update group progress when any item changes
+                let newTotal = 0;
+                let newCompleted = 0;
+                groupObj.sections.forEach(s => {
+                  const items = InventorySections[s];
+                  newTotal += items.length;
+                  const checkedArr = JSON.parse(localStorage.getItem("checked_" + s) || "[]");
+                  if (Array.isArray(checkedArr)) {
+                    newCompleted += checkedArr.filter(Boolean).length;
+                  }
+                });
+                header.querySelector(
+                  ".section-stats"
+                ).textContent = `${newCompleted}/${newTotal} завршено`;
+              })
             );
           });
 
@@ -1452,7 +1401,6 @@
         populateDateDropdown();
         renderCleaningAccordions();
         renderConsumablesAccordions();
-        renderInventoryFilterDropdown();
         renderInventoryAccordions();
         renderShoppingList();
 
@@ -1462,82 +1410,6 @@
           document.getElementById("notes").value = savedNotes;
         }
       };
-
-      function renderConsumablesAccordions() {
-        const container = document.getElementById("consumables-sections");
-        container.innerHTML = "";
-
-        // Add collapse/expand all button
-        const controlsDiv = document.createElement("div");
-        controlsDiv.className = "section-controls";
-        controlsDiv.innerHTML = `
-          <button class="view-all-btn" onclick="toggleAllSections(true)">Expand All</button>
-          <button class="view-all-btn" onclick="toggleAllSections(false)">Collapse All</button>
-        `;
-        container.appendChild(controlsDiv);
-
-        ConsumablesGroups.forEach(groupObj => {
-          const acc = document.createElement("div");
-          acc.className = "accordion";
-
-          const header = document.createElement("div");
-          header.className = "accordion-header";
-
-          // Calculate total items and completed items for this group
-          let totalItems = 0;
-          let completedItems = 0;
-          groupObj.sections.forEach(section => {
-            const items = ConsumablesSections[section];
-            totalItems += items.length;
-            let checkedArr = JSON.parse(localStorage.getItem("checked_" + section) || "[]");
-            if (!Array.isArray(checkedArr) || checkedArr.length !== items.length) {
-              checkedArr = Array(items.length).fill(false);
-            }
-            completedItems += checkedArr.filter(Boolean).length;
-          });
-
-          header.innerHTML = `
-            <span>${groupObj.group}</span>
-            <span class="section-stats">${completedItems}/${totalItems} завршено</span>
-          `;
-          acc.appendChild(header);
-
-          const content = document.createElement("div");
-          content.className = "accordion-content";
-
-          groupObj.sections.forEach(section => {
-            content.appendChild(
-              renderSectionWithProgress(section, ConsumablesSections[section], section, () => {
-                // Update group progress when any item changes
-                let newTotal = 0;
-                let newCompleted = 0;
-                groupObj.sections.forEach(s => {
-                  const items = ConsumablesSections[s];
-                  newTotal += items.length;
-                  let checkedArr = JSON.parse(localStorage.getItem("checked_" + s) || "[]");
-                  if (!Array.isArray(checkedArr) || checkedArr.length !== items.length) {
-                    checkedArr = Array(items.length).fill(false);
-                  }
-                  newCompleted += checkedArr.filter(Boolean).length;
-                });
-                header.querySelector(
-                  ".section-stats"
-                ).textContent = `${newCompleted}/${newTotal} завршено`;
-              })
-            );
-          });
-
-          acc.appendChild(content);
-          container.appendChild(acc);
-
-          // Accordion toggle
-          header.onclick = function (e) {
-            if (e.target.tagName === "INPUT") return;
-            acc.classList.toggle("active");
-            content.style.display = content.style.display === "none" ? "block" : "none";
-          };
-        });
-      }
     </script>
   </body>
 </html>
