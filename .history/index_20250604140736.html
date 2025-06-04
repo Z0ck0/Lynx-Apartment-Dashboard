@@ -905,10 +905,7 @@
             const text = "[" + (checked ? "x" : " ") + "] " + item;
             doc.text(text, 14, y);
             y += 7;
-            if (y > 280) {
-              doc.addPage();
-              y = 10;
-            }
+            if (y > 280) { doc.addPage(); y = 10; }
           });
           y += 4;
         }
@@ -921,8 +918,7 @@
           doc.text(notes, 10, y);
         }
 
-        doc.addPage();
-        y = 10;
+        doc.addPage(); y = 10;
 
         // --- Consumables List ---
         doc.setFontSize(16);
@@ -938,16 +934,12 @@
             const text = "[" + (checked ? "x" : " ") + "] " + item;
             doc.text(text, 14, y);
             y += 7;
-            if (y > 280) {
-              doc.addPage();
-              y = 10;
-            }
+            if (y > 280) { doc.addPage(); y = 10; }
           });
           y += 4;
         }
 
-        doc.addPage();
-        y = 10;
+        doc.addPage(); y = 10;
 
         // --- Inventory List ---
         doc.setFontSize(16);
@@ -964,10 +956,7 @@
             const text = "[" + (checked ? "x" : " ") + "] " + item.text + " (" + item.type + ")";
             doc.text(text, 14, y);
             y += 7;
-            if (y > 280) {
-              doc.addPage();
-              y = 10;
-            }
+            if (y > 280) { doc.addPage(); y = 10; }
           });
           y += 4;
         }

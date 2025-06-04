@@ -896,12 +896,16 @@
         doc.text("Cleaning List", 10, y);
         y += 10;
         doc.setFontSize(12);
+
         for (const [section, items] of Object.entries(CleaningSections)) {
           doc.text(section, 10, y);
           y += 8;
-          const checkedArr = JSON.parse(localStorage.getItem("checked_" + section) || "[]");
+
+          const checkboxes = document.querySelectorAll(
+            `input[type="checkbox"][data-section="${section}"]`
+          );
           items.forEach((item, idx) => {
-            const checked = checkedArr[idx];
+            const checked = checkboxes[idx] && checkboxes[idx].checked;
             const text = "[" + (checked ? "x" : " ") + "] " + item;
             doc.text(text, 14, y);
             y += 7;
@@ -921,6 +925,7 @@
           doc.text(notes, 10, y);
         }
 
+        // --- Page break before next section ---
         doc.addPage();
         y = 10;
 
@@ -929,12 +934,16 @@
         doc.text("Consumables List", 10, y);
         y += 10;
         doc.setFontSize(12);
+
         for (const [section, items] of Object.entries(ConsumablesSections)) {
           doc.text(section, 10, y);
           y += 8;
-          const checkedArr = JSON.parse(localStorage.getItem("checked_" + section) || "[]");
+
+          const checkboxes = document.querySelectorAll(
+            `input[type="checkbox"][data-section="${section}"]`
+          );
           items.forEach((item, idx) => {
-            const checked = checkedArr[idx];
+            const checked = checkboxes[idx] && checkboxes[idx].checked;
             const text = "[" + (checked ? "x" : " ") + "] " + item;
             doc.text(text, 14, y);
             y += 7;
@@ -946,6 +955,7 @@
           y += 4;
         }
 
+        // --- Page break before next section ---
         doc.addPage();
         y = 10;
 
@@ -954,14 +964,17 @@
         doc.text("Inventory List", 10, y);
         y += 10;
         doc.setFontSize(12);
+
         for (const [section, items] of Object.entries(InventorySections)) {
           doc.text(section, 10, y);
           y += 8;
-          const checkedArr = JSON.parse(localStorage.getItem("checked_" + section) || "[]");
+
+          const checkboxes = document.querySelectorAll(
+            `input[type="checkbox"][data-section="${section}"]`
+          );
           items.forEach((item, idx) => {
-            // item is now an object: {text, type}
-            const checked = checkedArr[idx];
-            const text = "[" + (checked ? "x" : " ") + "] " + item.text + " (" + item.type + ")";
+            const checked = checkboxes[idx] && checkboxes[idx].checked;
+            const text = "[" + (checked ? "x" : " ") + "] " + item;
             doc.text(text, 14, y);
             y += 7;
             if (y > 280) {
@@ -971,6 +984,10 @@
           });
           y += 4;
         }
+
+        // --- Page break before next section ---
+        doc.addPage();
+        y = 10;
 
         // --- Shopping List ---
         doc.setFontSize(16);
