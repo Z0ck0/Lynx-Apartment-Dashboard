@@ -1523,37 +1523,37 @@
       }
 
       // Logo click: clear all localStorage except theme, reload, show popup after reload
-      document.getElementById("lynx-logo").addEventListener("click", function () {
-        if (confirm("Do you want to reset all progress and clear the checklist?")) {
-          const theme = localStorage.getItem("lynx-theme");
-          localStorage.clear();
-          if (theme) localStorage.setItem("lynx-theme", theme);
-          sessionStorage.setItem("checklist-reset", "1");
-          location.reload();
-        }
-      });
+document.getElementById("lynx-logo").addEventListener("click", function () {
+  if (confirm("Do you want to reset all progress and clear the checklist?")) {
+    const theme = localStorage.getItem("lynx-theme");
+    localStorage.clear();
+    if (theme) localStorage.setItem("lynx-theme", theme);
+    sessionStorage.setItem("checklist-reset", "1");
+    location.reload();
+  }
+});
 
-      // On load, show reset popup if needed
-      window.addEventListener("DOMContentLoaded", function () {
-        if (sessionStorage.getItem("checklist-reset")) {
-          sessionStorage.removeItem("checklist-reset");
-          // You can use a custom popup, but for simplicity:
-          const popup = document.createElement("div");
-          popup.textContent = "Checklist has been reset. You now have a blank list.";
-          popup.style.position = "fixed";
-          popup.style.top = "30px";
-          popup.style.left = "50%";
-          popup.style.transform = "translateX(-50%)";
-          popup.style.background = "#23272a";
-          popup.style.color = "#ffe066";
-          popup.style.padding = "16px 32px";
-          popup.style.borderRadius = "8px";
-          popup.style.boxShadow = "0 2px 8px rgba(0,0,0,0.2)";
-          popup.style.zIndex = "9999";
-          document.body.appendChild(popup);
-          setTimeout(() => popup.remove(), 3000);
-        }
-      });
+// On load, show reset popup if needed
+window.addEventListener("DOMContentLoaded", function () {
+  if (sessionStorage.getItem("checklist-reset")) {
+    sessionStorage.removeItem("checklist-reset");
+    // You can use a custom popup, but for simplicity:
+    const popup = document.createElement("div");
+    popup.textContent = "Checklist has been reset. You now have a blank list.";
+    popup.style.position = "fixed";
+    popup.style.top = "30px";
+    popup.style.left = "50%";
+    popup.style.transform = "translateX(-50%)";
+    popup.style.background = "#23272a";
+    popup.style.color = "#ffe066";
+    popup.style.padding = "16px 32px";
+    popup.style.borderRadius = "8px";
+    popup.style.boxShadow = "0 2px 8px rgba(0,0,0,0.2)";
+    popup.style.zIndex = "9999";
+    document.body.appendChild(popup);
+    setTimeout(() => popup.remove(), 3000);
+  }
+});
     </script>
   </body>
 </html>
