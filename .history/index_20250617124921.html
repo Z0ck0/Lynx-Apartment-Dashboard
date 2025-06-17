@@ -604,22 +604,8 @@
         });
       });
 
-      function updateAddToShoppingBtnVisibility() {
-        // Hide all "Add to Shopping" buttons initially
-        const addToShoppingBtns = document.querySelectorAll(".add-to-shopping-btn");
-        addToShoppingBtns.forEach(btn => {
-          btn.style.display = "none"; // Hide button by default
-        });
 
-        // Show the buttons only in the "tab-inventory" tab
-        if (activeTab === "tab-consumables") {
-          const inventoryBtns = document.querySelectorAll(".add-to-shopping-btn");
-          inventoryBtns.forEach(btn => {
-            btn.style.display = "inline-block"; // Show button in inventory tab
-          });
-        }
-      }
-
+      
       // --- Dark Mode Logic ---
       const themeToggle = document.getElementById("theme-toggle");
       const logoImg = document.getElementById("lynx-logo");

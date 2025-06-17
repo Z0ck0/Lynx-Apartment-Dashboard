@@ -605,17 +605,20 @@
       });
 
       function updateAddToShoppingBtnVisibility() {
-        // Hide all "Add to Shopping" buttons initially
+        // Hide all buttons initially
         const addToShoppingBtns = document.querySelectorAll(".add-to-shopping-btn");
-        addToShoppingBtns.forEach(btn => {
-          btn.style.display = "none"; // Hide button by default
-        });
+        addToShoppingBtns.forEach(btn => (btn.style.display = "none"));
 
-        // Show the buttons only in the "tab-inventory" tab
-        if (activeTab === "tab-consumables") {
-          const inventoryBtns = document.querySelectorAll(".add-to-shopping-btn");
-          inventoryBtns.forEach(btn => {
-            btn.style.display = "inline-block"; // Show button in inventory tab
+        // Show the buttons only in the Consumables tab
+        if (activeTab === "tab-inventory") {
+          const consumableBtns = document.querySelectorAll(".tab-btn");
+          consumableBtns.forEach(btn => {
+            if (btn.id === "tab-consumables") {
+              const btnsInConsumablesTab = btn
+                .closest(".tab-content")
+                .querySelectorAll(".add-to-shopping-btn");
+              btnsInConsumablesTab.forEach(btn => (btn.style.display = "inline-block"));
+            }
           });
         }
       }

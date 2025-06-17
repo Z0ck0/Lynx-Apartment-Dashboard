@@ -603,23 +603,6 @@
           });
         });
       });
-
-      function updateAddToShoppingBtnVisibility() {
-        // Hide all "Add to Shopping" buttons initially
-        const addToShoppingBtns = document.querySelectorAll(".add-to-shopping-btn");
-        addToShoppingBtns.forEach(btn => {
-          btn.style.display = "none"; // Hide button by default
-        });
-
-        // Show the buttons only in the "tab-inventory" tab
-        if (activeTab === "tab-consumables") {
-          const inventoryBtns = document.querySelectorAll(".add-to-shopping-btn");
-          inventoryBtns.forEach(btn => {
-            btn.style.display = "inline-block"; // Show button in inventory tab
-          });
-        }
-      }
-
       // --- Dark Mode Logic ---
       const themeToggle = document.getElementById("theme-toggle");
       const logoImg = document.getElementById("lynx-logo");
@@ -778,11 +761,9 @@
             displayText = item.text || item.name || JSON.stringify(item);
           }
 
-          // Conditionally add the "add-to-shopping-btn" button
-          const addToShoppingBtn =
-            activeTab === "tab-consumables"
-              ? `<button class="add-to-shopping-btn" data-item="${item}" onclick="addToShoppingList('${item}')">🛒</button>`
-              : "";
+ // Conditionally add the "add-to-shopping-btn" button
+ const addToShoppingBtn = activeTab === "tab-consumables" ? 
+      `<button class="add-to-shopping-btn" data-item="${item}" onclick="addToShoppingList('${item}')">🛒</button>` : "";
 
           label.innerHTML = `<span><input type="checkbox" data-section="${sectionKey}" data-idx="${idx}"> ${displayText}</span>`;
           const checkbox = label.querySelector("input[type='checkbox']");
