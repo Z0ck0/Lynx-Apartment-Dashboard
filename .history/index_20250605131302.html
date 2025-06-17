@@ -459,7 +459,7 @@
       </div>
 
       <!-- Sticky Tabs -->
-      <nav class="tabs sticky-tabs" role="tablist">
+      <nav class="tabs sticky-tabs" role="tabpanel">
         <button
           class="tab-btn active"
           id="tab-checklist"
@@ -1377,10 +1377,6 @@
       function renderShoppingList() {
         const ul = document.getElementById("shopping-list");
         ul.innerHTML = "";
-
-        // Load shopping list from localStorage
-        shoppingList = JSON.parse(localStorage.getItem("shoppingList") || "[]");
-
         shoppingList.forEach((item, idx) => {
           const li = document.createElement("li");
           li.setAttribute("draggable", "true");
@@ -1422,7 +1418,6 @@
         const item = prompt("Enter shopping item:");
         if (item && item.trim() !== "") {
           shoppingList.push(item.trim());
-          localStorage.setItem("shoppingList", JSON.stringify(shoppingList)); // Save to localStorage
           renderShoppingList();
         }
       }

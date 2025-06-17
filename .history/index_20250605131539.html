@@ -459,48 +459,46 @@
       </div>
 
       <!-- Sticky Tabs -->
-      <nav class="tabs sticky-tabs" role="tablist">
-        <button
-          class="tab-btn active"
-          id="tab-checklist"
-          role="tab"
-          aria-selected="true"
-          aria-controls="content-checklist"
-          tabindex="0"
-        >
-          Чистење
-        </button>
-        <button
-          class="tab-btn"
-          id="tab-consumables"
-          role="tab"
-          aria-selected="false"
-          aria-controls="content-consumables"
-          tabindex="-1"
-        >
-          Потрошан Материјал
-        </button>
-        <button
-          class="tab-btn"
-          id="tab-inventory"
-          role="tab"
-          aria-selected="false"
-          aria-controls="content-inventory"
-          tabindex="-1"
-        >
-          Инвентура
-        </button>
-        <button
-          class="tab-btn"
-          id="tab-shopping"
-          role="tab"
-          aria-selected="false"
-          aria-controls="content-shopping"
-          tabindex="-1"
-        >
-          Шопинг листа
-        </button>
-      </nav>
+<!-- Sticky Tabs -->
+<nav class="tabs sticky-tabs" role="tablist">
+  <button
+    class="tab-btn active"
+    id="tab-checklist"
+    aria-selected="true"
+    aria-controls="content-checklist"
+    tabindex="0"
+  >
+    Чистење
+  </button>
+  <button
+    class="tab-btn"
+    id="tab-consumables"
+    aria-selected="false"
+    aria-controls="content-consumables"
+    tabindex="-1"
+  >
+    Потрошан Материјал
+  </button>
+  <button
+    class="tab-btn"
+    id="tab-inventory"
+    aria-selected="false"
+    aria-controls="content-inventory"
+    tabindex="-1"
+  >
+    Инвентура
+  </button>
+  <button
+    class="tab-btn"
+    id="tab-shopping"
+    aria-selected="false"
+    aria-controls="content-shopping"
+    tabindex="-1"
+  >
+    Шопинг листа
+  </button>
+</nav>
+
 
       <!-- Cleaning List Section -->
       <div
@@ -1377,10 +1375,6 @@
       function renderShoppingList() {
         const ul = document.getElementById("shopping-list");
         ul.innerHTML = "";
-
-        // Load shopping list from localStorage
-        shoppingList = JSON.parse(localStorage.getItem("shoppingList") || "[]");
-
         shoppingList.forEach((item, idx) => {
           const li = document.createElement("li");
           li.setAttribute("draggable", "true");
@@ -1422,7 +1416,6 @@
         const item = prompt("Enter shopping item:");
         if (item && item.trim() !== "") {
           shoppingList.push(item.trim());
-          localStorage.setItem("shoppingList", JSON.stringify(shoppingList)); // Save to localStorage
           renderShoppingList();
         }
       }

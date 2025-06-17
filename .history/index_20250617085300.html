@@ -1377,10 +1377,7 @@
       function renderShoppingList() {
         const ul = document.getElementById("shopping-list");
         ul.innerHTML = "";
-
-        // Load shopping list from localStorage
-        shoppingList = JSON.parse(localStorage.getItem("shoppingList") || "[]");
-
+        
         shoppingList.forEach((item, idx) => {
           const li = document.createElement("li");
           li.setAttribute("draggable", "true");
