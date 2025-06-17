@@ -744,14 +744,7 @@
           label.style.display = "flex";
           label.style.alignItems = "center";
           label.style.justifyContent = "space-between";
-          // Fix: Always display correct item text
-          let displayText = "";
-          if (typeof item === "string") {
-            displayText = item;
-          } else if (item && typeof item === "object") {
-            displayText = item.text || item.name || JSON.stringify(item);
-          }
-          label.innerHTML = `<span><input type="checkbox" data-section="${sectionKey}" data-idx="${idx}"> ${displayText}</span>`;
+          label.innerHTML = `<span><input type="checkbox" data-section="${sectionKey}" data-idx="${idx}"> ${item}</span>`;
           const checkbox = label.querySelector("input[type='checkbox']");
           checkbox.checked = checkedArr[idx];
           checkbox.onchange = function () {
@@ -1230,13 +1223,10 @@
         }
       }
 
-      // --- Inventory Accordion Rendering ---
+      // --- Inventory Accordion Rendering (with live progress update) ---
       function renderInventoryAccordions() {
         const container = document.getElementById("inventory-sections");
-        // Remove all except filter dropdown
-        container
-          .querySelectorAll(".accordion, .section-controls, .section")
-          .forEach(e => e.remove());
+        container.innerHTML = "";
 
         InventoryGroups.forEach(groupObj => {
           const acc = document.createElement("div");
@@ -1245,22 +1235,15 @@
           const header = document.createElement("div");
           header.className = "accordion-header";
 
-          // Calculate total and completed items for this group (respecting filter)
+          // Calculate total items and completed items for this group
           let totalItems = 0;
           let completedItems = 0;
           groupObj.sections.forEach(section => {
             const items = InventorySections[section];
-            let filteredItems = items;
-            if (inventoryFilter === "E") filteredItems = items.filter(i => i.type === "E");
-            if (inventoryFilter === "O") filteredItems = items.filter(i => i.type === "O");
-            totalItems += filteredItems.length;
+            totalItems += items.length;
             const checkedArr = JSON.parse(localStorage.getItem("checked_" + section) || "[]");
             if (Array.isArray(checkedArr)) {
-              filteredItems.forEach((item, idx) => {
-                // Find the index of this item in the original items array
-                const origIdx = items.indexOf(item);
-                if (checkedArr[origIdx]) completedItems++;
-              });
+              completedItems += checkedArr.filter(Boolean).length;
             }
           });
 
@@ -1273,34 +1256,29 @@
           const content = document.createElement("div");
           content.className = "accordion-content";
 
+          // Helper to update the group progress counter
+          function updateGroupProgress() {
+            let newTotal = 0;
+            let newCompleted = 0;
+            groupObj.sections.forEach(s => {
+              const items = InventorySections[s];
+              newTotal += items.length;
+              const checkedArr = JSON.parse(localStorage.getItem("checked_" + s) || "[]");
+              if (Array.isArray(checkedArr)) {
+                newCompleted += checkedArr.filter(Boolean).length;
+              }
+            });
+            header.querySelector(".section-stats").textContent = `${newCompleted}/${newTotal} завршено`;
+          }
+
+          // Render each section in the group
           groupObj.sections.forEach(section => {
             content.appendChild(
               renderSectionWithProgress(
                 section,
                 InventorySections[section],
                 section,
-                () => {
-                  // Update group progress when any item changes
-                  let newTotal = 0;
-                  let newCompleted = 0;
-                  groupObj.sections.forEach(s => {
-                    const items = InventorySections[s];
-                    let filteredItems = items;
-                    if (inventoryFilter === "E") filteredItems = items.filter(i => i.type === "E");
-                    if (inventoryFilter === "O") filteredItems = items.filter(i => i.type === "O");
-                    newTotal += filteredItems.length;
-                    const checkedArr = JSON.parse(localStorage.getItem("checked_" + s) || "[]");
-                    if (Array.isArray(checkedArr)) {
-                      filteredItems.forEach((item, idx) => {
-                        const origIdx = items.indexOf(item);
-                        if (checkedArr[origIdx]) newCompleted++;
-                      });
-                    }
-                  });
-                  header.querySelector(
-                    ".section-stats"
-                  ).textContent = `${newCompleted}/${newTotal} завршено`;
-                },
+                updateGroupProgress,
                 true // isInventory
               )
             );
@@ -1344,11 +1322,7 @@
           label.style.display = "flex";
           label.style.alignItems = "center";
           label.style.justifyContent = "space-between";
-          let itemText = isInventory
-            ? `${item.text} <span class='inv-type'>(${
-                item.type === "E" ? "Essential" : "Optional"
-              })</span>`
-            : item;
+          let itemText = isInventory ? `${item.text} <span class='inv-type'>(${item.type === 'E' ? 'Essential' : 'Optional'})</span>` : item;
           label.innerHTML = `<span><input type="checkbox" data-section="${sectionKey}" data-idx="${idx}"> ${itemText}</span>`;
           const checkbox = label.querySelector("input[type='checkbox']");
           checkbox.checked = checkedArr[idx];
@@ -1553,14 +1527,7 @@
           label.style.display = "flex";
           label.style.alignItems = "center";
           label.style.justifyContent = "space-between";
-          // Fix: Always display correct item text
-          let displayText = "";
-          if (typeof item === "string") {
-            displayText = item;
-          } else if (item && typeof item === "object") {
-            displayText = item.text || item.name || JSON.stringify(item);
-          }
-          label.innerHTML = `<span><input type="checkbox" data-section="${sectionKey}" data-idx="${idx}"> ${displayText}</span>
+          label.innerHTML = `<span><input type="checkbox" data-section="${sectionKey}" data-idx="${idx}"> ${item}</span>
                           <button class="add-to-shopping-btn" data-item="${item}" onclick="addToShoppingList('${item}')">
                               🛒
                           </button>`;
@@ -1668,8 +1635,7 @@
           label.style.display = "flex";
           label.style.alignItems = "center";
           label.style.justifyContent = "space-between";
-          let displayText =
-            typeof item === "object" ? item.text || item.name || JSON.stringify(item) : item;
+          let displayText = typeof item === 'object' ? (item.text || item.name || JSON.stringify(item)) : item;
           label.innerHTML = `<span><input type="checkbox"> ${displayText}</span>`;
           groupEss.appendChild(label);
         });
@@ -1678,8 +1644,7 @@
           label.style.display = "flex";
           label.style.alignItems = "center";
           label.style.justifyContent = "space-between";
-          let displayText =
-            typeof item === "object" ? item.text || item.name || JSON.stringify(item) : item;
+          let displayText = typeof item === 'object' ? (item.text || item.name || JSON.stringify(item)) : item;
           label.innerHTML = `<span><input type="checkbox"> ${displayText}</span>`;
           groupOpt.appendChild(label);
         });

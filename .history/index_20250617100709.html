@@ -744,14 +744,7 @@
           label.style.display = "flex";
           label.style.alignItems = "center";
           label.style.justifyContent = "space-between";
-          // Fix: Always display correct item text
-          let displayText = "";
-          if (typeof item === "string") {
-            displayText = item;
-          } else if (item && typeof item === "object") {
-            displayText = item.text || item.name || JSON.stringify(item);
-          }
-          label.innerHTML = `<span><input type="checkbox" data-section="${sectionKey}" data-idx="${idx}"> ${displayText}</span>`;
+          label.innerHTML = `<span><input type="checkbox" data-section="${sectionKey}" data-idx="${idx}"> ${item}</span>`;
           const checkbox = label.querySelector("input[type='checkbox']");
           checkbox.checked = checkedArr[idx];
           checkbox.onchange = function () {
@@ -1234,9 +1227,7 @@
       function renderInventoryAccordions() {
         const container = document.getElementById("inventory-sections");
         // Remove all except filter dropdown
-        container
-          .querySelectorAll(".accordion, .section-controls, .section")
-          .forEach(e => e.remove());
+        container.querySelectorAll(".accordion, .section-controls, .section").forEach(e => e.remove());
 
         InventoryGroups.forEach(groupObj => {
           const acc = document.createElement("div");
@@ -1297,9 +1288,7 @@
                       });
                     }
                   });
-                  header.querySelector(
-                    ".section-stats"
-                  ).textContent = `${newCompleted}/${newTotal} завршено`;
+                  header.querySelector(".section-stats").textContent = `${newCompleted}/${newTotal} завршено`;
                 },
                 true // isInventory
               )
@@ -1344,11 +1333,7 @@
           label.style.display = "flex";
           label.style.alignItems = "center";
           label.style.justifyContent = "space-between";
-          let itemText = isInventory
-            ? `${item.text} <span class='inv-type'>(${
-                item.type === "E" ? "Essential" : "Optional"
-              })</span>`
-            : item;
+          let itemText = isInventory ? `${item.text} <span class='inv-type'>(${item.type === 'E' ? 'Essential' : 'Optional'})</span>` : item;
           label.innerHTML = `<span><input type="checkbox" data-section="${sectionKey}" data-idx="${idx}"> ${itemText}</span>`;
           const checkbox = label.querySelector("input[type='checkbox']");
           checkbox.checked = checkedArr[idx];
@@ -1553,14 +1538,7 @@
           label.style.display = "flex";
           label.style.alignItems = "center";
           label.style.justifyContent = "space-between";
-          // Fix: Always display correct item text
-          let displayText = "";
-          if (typeof item === "string") {
-            displayText = item;
-          } else if (item && typeof item === "object") {
-            displayText = item.text || item.name || JSON.stringify(item);
-          }
-          label.innerHTML = `<span><input type="checkbox" data-section="${sectionKey}" data-idx="${idx}"> ${displayText}</span>
+          label.innerHTML = `<span><input type="checkbox" data-section="${sectionKey}" data-idx="${idx}"> ${item}</span>
                           <button class="add-to-shopping-btn" data-item="${item}" onclick="addToShoppingList('${item}')">
                               🛒
                           </button>`;
@@ -1668,8 +1646,7 @@
           label.style.display = "flex";
           label.style.alignItems = "center";
           label.style.justifyContent = "space-between";
-          let displayText =
-            typeof item === "object" ? item.text || item.name || JSON.stringify(item) : item;
+          let displayText = typeof item === 'object' ? (item.text || item.name || JSON.stringify(item)) : item;
           label.innerHTML = `<span><input type="checkbox"> ${displayText}</span>`;
           groupEss.appendChild(label);
         });
@@ -1678,8 +1655,7 @@
           label.style.display = "flex";
           label.style.alignItems = "center";
           label.style.justifyContent = "space-between";
-          let displayText =
-            typeof item === "object" ? item.text || item.name || JSON.stringify(item) : item;
+          let displayText = typeof item === 'object' ? (item.text || item.name || JSON.stringify(item)) : item;
           label.innerHTML = `<span><input type="checkbox"> ${displayText}</span>`;
           groupOpt.appendChild(label);
         });

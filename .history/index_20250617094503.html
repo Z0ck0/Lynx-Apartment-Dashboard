@@ -744,14 +744,7 @@
           label.style.display = "flex";
           label.style.alignItems = "center";
           label.style.justifyContent = "space-between";
-          // Fix: Always display correct item text
-          let displayText = "";
-          if (typeof item === "string") {
-            displayText = item;
-          } else if (item && typeof item === "object") {
-            displayText = item.text || item.name || JSON.stringify(item);
-          }
-          label.innerHTML = `<span><input type="checkbox" data-section="${sectionKey}" data-idx="${idx}"> ${displayText}</span>`;
+          label.innerHTML = `<span><input type="checkbox" data-section="${sectionKey}" data-idx="${idx}"> ${item}</span>`;
           const checkbox = label.querySelector("input[type='checkbox']");
           checkbox.checked = checkedArr[idx];
           checkbox.onchange = function () {
@@ -1064,7 +1057,7 @@
           "Средство за прање алишта",
           "Средство против каменац",
         ],
-        Дневна: ["Батерие за даљинско", "Сијалици за Лустер", "Сијалица за Столна лампа"],
+        Дневна: ["Батерие за даљинско", "Сијалице за Лустер", "Сијалица за Столна лампа"],
         Минибар: [
           "5 Вина (700ml секое)",
           "5 Жестоки пијалоци (50ml секое)",
@@ -1230,13 +1223,83 @@
         }
       }
 
-      // --- Inventory Accordion Rendering ---
+      function renderSectionWithProgress(title, items, sectionKey, onProgressChange, isInventory) {
+        const sectionDiv = document.createElement("div");
+        sectionDiv.className = "section";
+
+        // Section header
+        const header = document.createElement("div");
+        header.className = "section-header";
+        header.innerHTML = `<label>${title}</label>`;
+        sectionDiv.appendChild(header);
+
+        // Items list
+        const ul = document.createElement("div");
+        ul.className = "checkbox-group section-items";
+
+        // Load checked state from localStorage, always correct length
+        let checkedArr = JSON.parse(localStorage.getItem("checked_" + sectionKey) || "[]");
+        if (!Array.isArray(checkedArr) || checkedArr.length !== items.length) {
+          checkedArr = Array(items.length).fill(false);
+        }
+
+        // Filter items if inventory
+        let filteredItems = items;
+        if (isInventory && inventoryFilter !== "all") {
+          filteredItems = items
+            .map((item, idx) => ({ ...item, idx }))
+            .filter(item => item.type === inventoryFilter);
+        } else if (isInventory) {
+          filteredItems = items.map((item, idx) => ({ ...item, idx }));
+        } else {
+          filteredItems = items.map((text, idx) => ({ text, idx }));
+        }
+
+        filteredItems.forEach(itemObj => {
+          const label = document.createElement("label");
+          label.style.display = "flex";
+          label.style.alignItems = "center";
+          label.style.justifyContent = "space-between";
+          let tag = "";
+          if (isInventory)
+            tag = `<span style="font-size:13px;font-weight:bold;margin-left:8px;">(${itemObj.type})</span>`;
+          label.innerHTML = `<span><input type="checkbox" data-section="${sectionKey}" data-idx="${itemObj.idx}"> ${itemObj.text} ${tag}</span>`;
+          const checkbox = label.querySelector("input[type='checkbox']");
+          checkbox.checked = checkedArr[itemObj.idx];
+          checkbox.onchange = function () {
+            checkedArr[itemObj.idx] = checkbox.checked;
+            localStorage.setItem("checked_" + sectionKey, JSON.stringify(checkedArr));
+            if (onProgressChange) {
+              onProgressChange();
+            }
+          };
+          ul.appendChild(label);
+        });
+
+        sectionDiv.appendChild(ul);
+
+        // Make header clickable for collapse/expand
+        header.onclick = function (e) {
+          if (e.target.tagName === "INPUT") return;
+          ul.style.display = ul.style.display === "none" ? "block" : "none";
+        };
+
+        return sectionDiv;
+      }
+
       function renderInventoryAccordions() {
+        renderInventoryFilterDropdown();
         const container = document.getElementById("inventory-sections");
-        // Remove all except filter dropdown
-        container
-          .querySelectorAll(".accordion, .section-controls, .section")
-          .forEach(e => e.remove());
+        container.innerHTML = "";
+
+        // Add collapse/expand all button
+        const controlsDiv = document.createElement("div");
+        controlsDiv.className = "section-controls";
+        controlsDiv.innerHTML = `
+          <button class="view-all-btn" onclick="toggleAllSections(true)">Expand All</button>
+          <button class="view-all-btn" onclick="toggleAllSections(false)">Collapse All</button>
+        `;
+        container.appendChild(controlsDiv);
 
         InventoryGroups.forEach(groupObj => {
           const acc = document.createElement("div");
@@ -1245,23 +1308,28 @@
           const header = document.createElement("div");
           header.className = "accordion-header";
 
-          // Calculate total and completed items for this group (respecting filter)
+          // Calculate total items and completed items for this group (filtered)
           let totalItems = 0;
           let completedItems = 0;
           groupObj.sections.forEach(section => {
-            const items = InventorySections[section];
-            let filteredItems = items;
-            if (inventoryFilter === "E") filteredItems = items.filter(i => i.type === "E");
-            if (inventoryFilter === "O") filteredItems = items.filter(i => i.type === "O");
-            totalItems += filteredItems.length;
-            const checkedArr = JSON.parse(localStorage.getItem("checked_" + section) || "[]");
-            if (Array.isArray(checkedArr)) {
-              filteredItems.forEach((item, idx) => {
-                // Find the index of this item in the original items array
-                const origIdx = items.indexOf(item);
-                if (checkedArr[origIdx]) completedItems++;
-              });
+            let items = InventorySections[section];
+            if (inventoryFilter !== "all") {
+              items = items.filter(item => item.type === inventoryFilter);
             }
+            totalItems += items.length;
+            let checkedArr = JSON.parse(localStorage.getItem("checked_" + section) || "[]");
+            if (
+              !Array.isArray(checkedArr) ||
+              checkedArr.length !== InventorySections[section].length
+            ) {
+              checkedArr = Array(InventorySections[section].length).fill(false);
+            }
+            items.forEach((item, idx) => {
+              const origIdx = InventorySections[section].findIndex(
+                i => i.text === item.text && i.type === item.type
+              );
+              if (checkedArr[origIdx]) completedItems++;
+            });
           });
 
           header.innerHTML = `
@@ -1284,24 +1352,30 @@
                   let newTotal = 0;
                   let newCompleted = 0;
                   groupObj.sections.forEach(s => {
-                    const items = InventorySections[s];
-                    let filteredItems = items;
-                    if (inventoryFilter === "E") filteredItems = items.filter(i => i.type === "E");
-                    if (inventoryFilter === "O") filteredItems = items.filter(i => i.type === "O");
-                    newTotal += filteredItems.length;
-                    const checkedArr = JSON.parse(localStorage.getItem("checked_" + s) || "[]");
-                    if (Array.isArray(checkedArr)) {
-                      filteredItems.forEach((item, idx) => {
-                        const origIdx = items.indexOf(item);
-                        if (checkedArr[origIdx]) newCompleted++;
-                      });
+                    let items = InventorySections[s];
+                    if (inventoryFilter !== "all") {
+                      items = items.filter(item => item.type === inventoryFilter);
                     }
+                    newTotal += items.length;
+                    let checkedArr = JSON.parse(localStorage.getItem("checked_" + s) || "[]");
+                    if (
+                      !Array.isArray(checkedArr) ||
+                      checkedArr.length !== InventorySections[s].length
+                    ) {
+                      checkedArr = Array(InventorySections[s].length).fill(false);
+                    }
+                    items.forEach((item, idx) => {
+                      const origIdx = InventorySections[s].findIndex(
+                        i => i.text === item.text && i.type === item.type
+                      );
+                      if (checkedArr[origIdx]) newCompleted++;
+                    });
                   });
                   header.querySelector(
                     ".section-stats"
                   ).textContent = `${newCompleted}/${newTotal} завршено`;
                 },
-                true // isInventory
+                true
               )
             );
           });
@@ -1316,61 +1390,6 @@
             content.style.display = content.style.display === "none" ? "block" : "none";
           };
         });
-      }
-
-      // --- Inventory Section Rendering (with checkboxes and live update) ---
-      function renderSectionWithProgress(title, items, sectionKey, onProgressChange, isInventory) {
-        const sectionDiv = document.createElement("div");
-        sectionDiv.className = "section";
-
-        // Section header
-        const header = document.createElement("div");
-        header.className = "section-header";
-        header.innerHTML = `<label>${title}</label>`;
-        sectionDiv.appendChild(header);
-
-        // Items list
-        const ul = document.createElement("div");
-        ul.className = "checkbox-group section-items";
-
-        // Load checked state from localStorage
-        let checkedArr = JSON.parse(localStorage.getItem("checked_" + sectionKey) || "[]");
-        if (!Array.isArray(checkedArr) || checkedArr.length !== items.length) {
-          checkedArr = Array(items.length).fill(false);
-        }
-
-        items.forEach((item, idx) => {
-          const label = document.createElement("label");
-          label.style.display = "flex";
-          label.style.alignItems = "center";
-          label.style.justifyContent = "space-between";
-          let itemText = isInventory
-            ? `${item.text} <span class='inv-type'>(${
-                item.type === "E" ? "Essential" : "Optional"
-              })</span>`
-            : item;
-          label.innerHTML = `<span><input type="checkbox" data-section="${sectionKey}" data-idx="${idx}"> ${itemText}</span>`;
-          const checkbox = label.querySelector("input[type='checkbox']");
-          checkbox.checked = checkedArr[idx];
-          checkbox.onchange = function () {
-            checkedArr[idx] = checkbox.checked;
-            localStorage.setItem("checked_" + sectionKey, JSON.stringify(checkedArr));
-            if (onProgressChange) {
-              onProgressChange();
-            }
-          };
-          ul.appendChild(label);
-        });
-
-        sectionDiv.appendChild(ul);
-
-        // Make header clickable for collapse/expand
-        header.onclick = function (e) {
-          if (e.target.tagName === "INPUT") return;
-          ul.style.display = ul.style.display === "none" ? "block" : "none";
-        };
-
-        return sectionDiv;
       }
 
       // --- Shopping List Logic ---
@@ -1553,14 +1572,7 @@
           label.style.display = "flex";
           label.style.alignItems = "center";
           label.style.justifyContent = "space-between";
-          // Fix: Always display correct item text
-          let displayText = "";
-          if (typeof item === "string") {
-            displayText = item;
-          } else if (item && typeof item === "object") {
-            displayText = item.text || item.name || JSON.stringify(item);
-          }
-          label.innerHTML = `<span><input type="checkbox" data-section="${sectionKey}" data-idx="${idx}"> ${displayText}</span>
+          label.innerHTML = `<span><input type="checkbox" data-section="${sectionKey}" data-idx="${idx}"> ${item}</span>
                           <button class="add-to-shopping-btn" data-item="${item}" onclick="addToShoppingList('${item}')">
                               🛒
                           </button>`;
