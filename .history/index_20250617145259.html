@@ -3,10 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Lynx Apartment Host Dashboard</title>
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -233,12 +230,8 @@
         color: #f3f3f3;
         border: 1px solid #444;
       }
-      body.dark-mode
-        .top-bar
-        button#theme-toggle:active,
-      body.dark-mode
-        .top-bar
-        button#theme-toggle:focus {
+      body.dark-mode .top-bar button#theme-toggle:active,
+      body.dark-mode .top-bar button#theme-toggle:focus {
         background: #333;
       }
       #theme-toggle {
@@ -459,8 +452,7 @@
         font-size: 14px;
         opacity: 0;
         visibility: hidden;
-        transition: opacity 0.5s,
-          visibility 0.5s ease-in-out;
+        transition: opacity 0.5s, visibility 0.5s ease-in-out;
         z-index: 9999;
       }
 
@@ -472,43 +464,23 @@
   </head>
   <body>
     <div class="container">
-      <button
-        id="theme-toggle"
-        aria-label="Toggle dark mode"
-      >
-        🌙
-      </button>
+      <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
 
       <div class="date-wrapper">
-        <label for="date"
-          >Датум на инспекција:</label
-        >
+        <label for="date">Датум на инспекција:</label>
         <select id="date"></select>
       </div>
 
-      <img
-        src="logo-lynx.png"
-        alt="Lynx Logo"
-        class="logo"
-        id="lynx-logo"
-      />
+      <img src="logo-lynx.png" alt="Lynx Logo" class="logo" id="lynx-logo" />
       <h1>Lynx Apartment Dashboard</h1>
 
       <!-- Search Container -->
       <div class="search-container">
-        <input
-          type="text"
-          class="search-input"
-          id="search-input"
-          placeholder="Search items..."
-        />
+        <input type="text" class="search-input" id="search-input" placeholder="Search items..." />
       </div>
 
       <!-- Sticky Tabs -->
-      <nav
-        class="tabs sticky-tabs"
-        role="tablist"
-      >
+      <nav class="tabs sticky-tabs" role="tablist">
         <button
           class="tab-btn active"
           id="tab-checklist"
@@ -563,11 +535,7 @@
         </div>
         <div class="section">
           <label>Additional Notes</label>
-          <input
-            type="text"
-            id="notes"
-            placeholder="Any extra details..."
-          />
+          <input type="text" id="notes" placeholder="Any extra details..." />
         </div>
       </div>
       <!-- Consumables List Section -->
@@ -577,9 +545,7 @@
         role="tabpanel"
         aria-labelledby="tab-consumables"
       >
-        <div id="consumables-sections">
-          <!-- Consumables items rendered here -->
-        </div>
+        <div id="consumables-sections"><!-- Consumables items rendered here --></div>
       </div>
       <!-- Inventory List Section -->
       <div
@@ -588,114 +554,66 @@
         role="tabpanel"
         aria-labelledby="tab-inventory"
       >
-        <div id="inventory-sections">
-          <!-- Inventory items rendered here -->
-        </div>
+        <div id="inventory-sections"><!-- Inventory items rendered here --></div>
       </div>
       <!-- Shopping List Section -->
-      <div
-        id="content-shopping"
-        class="tab-content"
-        role="tabpanel"
-        aria-labelledby="tab-shopping"
-      >
+      <div id="content-shopping" class="tab-content" role="tabpanel" aria-labelledby="tab-shopping">
         <div class="section">
           <ul
             id="shopping-list"
             class="checkbox-group"
-            style="
-              list-style: none;
-              padding-left: 0;
-            "
+            style="list-style: none; padding-left: 0"
           ></ul>
-          <button
-            class="add-btn"
-            onclick="addShoppingItem()"
-          >
-            + Додади ставка
-          </button>
+          <button class="add-btn" onclick="addShoppingItem()">+ Додади ставка</button>
         </div>
       </div>
       <!-- Global Save Checklist Button -->
-      <div
-        style="
-          text-align: center;
-          margin: 32px 0 0 0;
-        "
-      >
-        <button
-          id="save-checklist-global"
-          onclick="saveChecklist()"
-        >
-          Зачувај листа
-        </button>
+      <div style="text-align: center; margin: 32px 0 0 0">
+        <button id="save-checklist-global" onclick="saveChecklist()">Зачувај листа</button>
       </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="DejaVuSans-normal.js"></script>
     <script>
       // --- Tab Switching & Theme Logic ---
-      const tabBtns =
-        document.querySelectorAll(".tab-btn");
-      const tabContents =
-        document.querySelectorAll(".tab-content");
+      const tabBtns = document.querySelectorAll(".tab-btn");
+      const tabContents = document.querySelectorAll(".tab-content");
 
       // Track active tab
       let activeTab = "tab-checklist"; // Default to Cleaning tab
 
       tabBtns.forEach((btn, idx) => {
-        btn.addEventListener(
-          "click",
-          function () {
-            tabBtns.forEach(b =>
-              b.classList.remove("active")
-            );
-            tabContents.forEach(c =>
-              c.classList.remove("active")
-            );
-            btn.classList.add("active");
-            tabContents[idx].classList.add(
-              "active"
-            );
+        btn.addEventListener("click", function () {
+          tabBtns.forEach(b => b.classList.remove("active"));
+          tabContents.forEach(c => c.classList.remove("active"));
+          btn.classList.add("active");
+          tabContents[idx].classList.add("active");
 
-            // Update active tab
-            activeTab = btn.id; // Store the current active tab
-            updateAddToShoppingBtnVisibility(); // Call function to update button visibility
+          // Update active tab
+          activeTab = btn.id; // Store the current active tab
+          updateAddToShoppingBtnVisibility(); // Call function to update button visibility
 
-            btn.setAttribute(
-              "aria-selected",
-              "true"
-            );
-            btn.setAttribute("tabindex", "0");
-            tabBtns.forEach((b, i) => {
-              if (i !== idx) {
-                b.setAttribute(
-                  "aria-selected",
-                  "false"
-                );
-                b.setAttribute("tabindex", "-1");
-              }
-            });
-          }
-        );
+          btn.setAttribute("aria-selected", "true");
+          btn.setAttribute("tabindex", "0");
+          tabBtns.forEach((b, i) => {
+            if (i !== idx) {
+              b.setAttribute("aria-selected", "false");
+              b.setAttribute("tabindex", "-1");
+            }
+          });
+        });
       });
 
       function updateAddToShoppingBtnVisibility() {
         // Hide all "Add to Shopping" buttons initially
-        const addToShoppingBtns =
-          document.querySelectorAll(
-            ".add-to-shopping-btn"
-          );
+        const addToShoppingBtns = document.querySelectorAll(".add-to-shopping-btn");
         addToShoppingBtns.forEach(btn => {
           btn.style.display = "none"; // Hide button by default
         });
 
         // Show the buttons only in the "tab-inventory" tab
         if (activeTab === "tab-consumables") {
-          const inventoryBtns =
-            document.querySelectorAll(
-              ".add-to-shopping-btn"
-            );
+          const inventoryBtns = document.querySelectorAll(".add-to-shopping-btn");
           inventoryBtns.forEach(btn => {
             btn.style.display = "inline-block"; // Show button in inventory tab
           });
@@ -703,44 +621,26 @@
       }
 
       // --- Dark Mode Logic ---
-      const themeToggle = document.getElementById(
-        "theme-toggle"
-      );
-      const logoImg =
-        document.getElementById("lynx-logo");
+      const themeToggle = document.getElementById("theme-toggle");
+      const logoImg = document.getElementById("lynx-logo");
       function setTheme(dark) {
         if (dark) {
-          document.body.classList.add(
-            "dark-mode"
-          );
+          document.body.classList.add("dark-mode");
           themeToggle.textContent = "☀️";
           logoImg.src = "logo-lynx-dark.png";
-          localStorage.setItem(
-            "lynx-theme",
-            "dark"
-          );
+          localStorage.setItem("lynx-theme", "dark");
         } else {
-          document.body.classList.remove(
-            "dark-mode"
-          );
+          document.body.classList.remove("dark-mode");
           themeToggle.textContent = "🌙";
           logoImg.src = "logo-lynx.png";
-          localStorage.setItem(
-            "lynx-theme",
-            "light"
-          );
+          localStorage.setItem("lynx-theme", "light");
         }
       }
       themeToggle.onclick = function () {
-        setTheme(
-          !document.body.classList.contains(
-            "dark-mode"
-          )
-        );
+        setTheme(!document.body.classList.contains("dark-mode"));
       };
       (function () {
-        const saved =
-          localStorage.getItem("lynx-theme");
+        const saved = localStorage.getItem("lynx-theme");
         setTheme(saved === "dark");
       })();
 
@@ -802,13 +702,13 @@
           "Избриши шпорет и рерна",
           "Испразни и Избриши фрижидер и замрзнувач",
           "Испразни и Избриши машина за кафе",
-          "Испразни и Избриши електричен бокал",
-          "Испразни тостер од трошки",
+          "Исчисти  и Избриши електричен бокал",
           "Избриши микробранова",
           "Провери машина за садови",
-          "Провери садови за јадење и готвење",
-          "Провери прибор за јадење, чинии, чаши и шољи",
-          "Измиј даска за сецкање",
+
+          "Провери тенџериња и тави",
+          "Провери и Пребриши прибор за јадење и чаши",
+          "Избриши даска за сецкање",
           "Замени крпа за кујна, сунгерче за садови, виледа и крпче за прашина",
           "Дополни чај/кафе/бомбони/вода",
           "Дополни кесе за ѓубре",
@@ -816,102 +716,64 @@
         Купатило: [
           "Исчисти огледало и лавабо",
           "Исчисти туш кабина и туш ручка",
-          "Исчисти ВЦ школка и Четка за ВЦ школка",
+          "Исчисти ВЦ шоља и Четка за ВЦ шоља",
           "Изџогирај под и плочки",
           "Дополни тоалетна хартија",
-          "Дополни течен сапун и шампон",
+          "Дополни течен сапунн",
           "Дополни средство за перење алишта",
-          "Дополни средства за чистење и дезинфекција",
-          "Замени освеживач за ВЦ школка",
+          "Дополни средство за дезинфекција",
+          "Замени освеживач за ВЦ шоља",
           "Стави нови крпи (капење, лице, ноге) (2 по госта)",
           "Провери фен, машина за прање, бојлер, сушара",
         ],
         Трпезарија: [
           "Пребриши трпезариски астал",
           "Истреси столици од трошки",
-          "Намести подлоги за топли садови",
-          "Стави вазна на сред маса",
+          "Намести подлоги за вруќо",
+          "Стави вазну на сред стал",
         ],
-        Тераса: [
-          "Измиј тераса",
-          "Пребриши асталче и столици",
-        ],
-        Ходник: [
-          "Пребриши плакар",
-          "Пребриши Огледало",
-        ],
+        Тераса: ["Измиј тераса", "Пребриши асталче и столици"],
+        Ходник: ["Пребриши плакар", "Пребриши Огледало"],
       };
       // Save/load checked state to localStorage
       function getCheckedState(section) {
-        return JSON.parse(
-          localStorage.getItem(
-            "checked_" + section
-          ) || "[]"
-        );
+        return JSON.parse(localStorage.getItem("checked_" + section) || "[]");
       }
       function setCheckedState(section, arr) {
-        localStorage.setItem(
-          "checked_" + section,
-          JSON.stringify(arr)
-        );
+        localStorage.setItem("checked_" + section, JSON.stringify(arr));
       }
       // Section with progress bar
-      function renderSectionWithProgress(
-        title,
-        items,
-        sectionKey,
-        onProgressChange
-      ) {
-        const sectionDiv =
-          document.createElement("div");
+      function renderSectionWithProgress(title, items, sectionKey, onProgressChange) {
+        const sectionDiv = document.createElement("div");
         sectionDiv.className = "section";
 
         // Section header
-        const header =
-          document.createElement("div");
+        const header = document.createElement("div");
         header.className = "section-header";
         header.innerHTML = `<label>${title}</label>`;
         sectionDiv.appendChild(header);
 
         // Items list
         const ul = document.createElement("div");
-        ul.className =
-          "checkbox-group section-items";
+        ul.className = "checkbox-group section-items";
 
         // Load checked state from localStorage
-        let checkedArr = JSON.parse(
-          localStorage.getItem(
-            "checked_" + sectionKey
-          ) || "[]"
-        );
-        if (
-          !Array.isArray(checkedArr) ||
-          checkedArr.length !== items.length
-        ) {
-          checkedArr = Array(items.length).fill(
-            false
-          );
+        let checkedArr = JSON.parse(localStorage.getItem("checked_" + sectionKey) || "[]");
+        if (!Array.isArray(checkedArr) || checkedArr.length !== items.length) {
+          checkedArr = Array(items.length).fill(false);
         }
 
         items.forEach((item, idx) => {
-          const label =
-            document.createElement("label");
+          const label = document.createElement("label");
           label.style.display = "flex";
           label.style.alignItems = "center";
-          label.style.justifyContent =
-            "space-between";
+          label.style.justifyContent = "space-between";
           // Fix: Always display correct item text
           let displayText = "";
           if (typeof item === "string") {
             displayText = item;
-          } else if (
-            item &&
-            typeof item === "object"
-          ) {
-            displayText =
-              item.text ||
-              item.name ||
-              JSON.stringify(item);
+          } else if (item && typeof item === "object") {
+            displayText = item.text || item.name || JSON.stringify(item);
           }
 
           // Conditionally add the "add-to-shopping-btn" button
@@ -921,16 +783,11 @@
               : "";
 
           label.innerHTML = `<span><input type="checkbox" data-section="${sectionKey}" data-idx="${idx}"> ${displayText}</span>`;
-          const checkbox = label.querySelector(
-            "input[type='checkbox']"
-          );
+          const checkbox = label.querySelector("input[type='checkbox']");
           checkbox.checked = checkedArr[idx];
           checkbox.onchange = function () {
             checkedArr[idx] = checkbox.checked;
-            localStorage.setItem(
-              "checked_" + sectionKey,
-              JSON.stringify(checkedArr)
-            );
+            localStorage.setItem("checked_" + sectionKey, JSON.stringify(checkedArr));
             if (onProgressChange) {
               onProgressChange();
             }
@@ -942,12 +799,8 @@
 
         // Make header clickable for collapse/expand
         header.onclick = function (e) {
-          if (e.target.tagName === "INPUT")
-            return;
-          ul.style.display =
-            ul.style.display === "none"
-              ? "block"
-              : "none";
+          if (e.target.tagName === "INPUT") return;
+          ul.style.display = ul.style.display === "none" ? "block" : "none";
         };
 
         return sectionDiv;
@@ -955,16 +808,12 @@
 
       // Accordion rendering
       function renderCleaningAccordions() {
-        const container = document.getElementById(
-          "checklist-sections"
-        );
+        const container = document.getElementById("checklist-sections");
         container.innerHTML = "";
 
         // Add collapse/expand all button
-        const controlsDiv =
-          document.createElement("div");
-        controlsDiv.className =
-          "section-controls";
+        const controlsDiv = document.createElement("div");
+        controlsDiv.className = "section-controls";
         controlsDiv.innerHTML = `
           <button class="view-all-btn" onclick="toggleAllSections(true)">Expand All</button>
           <button class="view-all-btn" onclick="toggleAllSections(false)">Collapse All</button>
@@ -972,29 +821,21 @@
         container.appendChild(controlsDiv);
 
         CleaningGroups.forEach(groupObj => {
-          const acc =
-            document.createElement("div");
+          const acc = document.createElement("div");
           acc.className = "accordion";
 
-          const header =
-            document.createElement("div");
+          const header = document.createElement("div");
           header.className = "accordion-header";
 
           // Calculate total items and completed items for this group
           let totalItems = 0;
           let completedItems = 0;
           groupObj.sections.forEach(section => {
-            const items =
-              CleaningSections[section];
+            const items = CleaningSections[section];
             totalItems += items.length;
-            const checkedArr = JSON.parse(
-              localStorage.getItem(
-                "checked_" + section
-              ) || "[]"
-            );
+            const checkedArr = JSON.parse(localStorage.getItem("checked_" + section) || "[]");
             if (Array.isArray(checkedArr)) {
-              completedItems +=
-                checkedArr.filter(Boolean).length;
+              completedItems += checkedArr.filter(Boolean).length;
             }
           });
 
@@ -1004,43 +845,27 @@
           `;
           acc.appendChild(header);
 
-          const content =
-            document.createElement("div");
+          const content = document.createElement("div");
           content.className = "accordion-content";
 
           groupObj.sections.forEach(section => {
             content.appendChild(
-              renderSectionWithProgress(
-                section,
-                CleaningSections[section],
-                section,
-                () => {
-                  // Update group progress when any item changes
-                  let newTotal = 0;
-                  let newCompleted = 0;
-                  groupObj.sections.forEach(s => {
-                    const items =
-                      CleaningSections[s];
-                    newTotal += items.length;
-                    const checkedArr = JSON.parse(
-                      localStorage.getItem(
-                        "checked_" + s
-                      ) || "[]"
-                    );
-                    if (
-                      Array.isArray(checkedArr)
-                    ) {
-                      newCompleted +=
-                        checkedArr.filter(
-                          Boolean
-                        ).length;
-                    }
-                  });
-                  header.querySelector(
-                    ".section-stats"
-                  ).textContent = `${newCompleted}/${newTotal} завршено`;
-                }
-              )
+              renderSectionWithProgress(section, CleaningSections[section], section, () => {
+                // Update group progress when any item changes
+                let newTotal = 0;
+                let newCompleted = 0;
+                groupObj.sections.forEach(s => {
+                  const items = CleaningSections[s];
+                  newTotal += items.length;
+                  const checkedArr = JSON.parse(localStorage.getItem("checked_" + s) || "[]");
+                  if (Array.isArray(checkedArr)) {
+                    newCompleted += checkedArr.filter(Boolean).length;
+                  }
+                });
+                header.querySelector(
+                  ".section-stats"
+                ).textContent = `${newCompleted}/${newTotal} завршено`;
+              })
             );
           });
 
@@ -1049,56 +874,31 @@
 
           // Accordion toggle
           header.onclick = function (e) {
-            if (e.target.tagName === "INPUT")
-              return;
+            if (e.target.tagName === "INPUT") return;
             acc.classList.toggle("active");
-            content.style.display =
-              content.style.display === "none"
-                ? "block"
-                : "none";
+            content.style.display = content.style.display === "none" ? "block" : "none";
           };
         });
       }
 
       // Toggle all sections
       function toggleAllSections(expand) {
-        document
-          .querySelectorAll(".accordion-content")
-          .forEach(content => {
-            content.style.display = expand
-              ? "block"
-              : "none";
-          });
-        document
-          .querySelectorAll(".accordion")
-          .forEach(acc => {
-            acc.classList.toggle(
-              "active",
-              expand
-            );
-          });
+        document.querySelectorAll(".accordion-content").forEach(content => {
+          content.style.display = expand ? "block" : "none";
+        });
+        document.querySelectorAll(".accordion").forEach(acc => {
+          acc.classList.toggle("active", expand);
+        });
       }
 
       // --- Search/Filter Logic ---
-      document
-        .getElementById("search-input")
-        .addEventListener("input", function (e) {
-          const val =
-            e.target.value.toLowerCase();
-          document
-            .querySelectorAll(
-              ".section-items label"
-            )
-            .forEach(label => {
-              const text =
-                label.textContent.toLowerCase();
-              label.style.display = text.includes(
-                val
-              )
-                ? "flex"
-                : "none";
-            });
+      document.getElementById("search-input").addEventListener("input", function (e) {
+        const val = e.target.value.toLowerCase();
+        document.querySelectorAll(".section-items label").forEach(label => {
+          const text = label.textContent.toLowerCase();
+          label.style.display = text.includes(val) ? "flex" : "none";
         });
+      });
 
       // --- Initial Render on Load ---
       window.onload = function () {
@@ -1109,31 +909,22 @@
         renderInventoryAccordions();
         renderShoppingList();
         // Load saved notes
-        const savedNotes =
-          localStorage.getItem("notes");
+        const savedNotes = localStorage.getItem("notes");
         if (savedNotes) {
-          document.getElementById("notes").value =
-            savedNotes;
+          document.getElementById("notes").value = savedNotes;
         }
       };
       function populateDateDropdown() {
-        const select =
-          document.getElementById("date");
+        const select = document.getElementById("date");
         const today = new Date();
         for (let i = 0; i < 7; i++) {
           const d = new Date(today);
           d.setDate(today.getDate() + i);
-          const dd = String(d.getDate()).padStart(
-            2,
-            "0"
-          );
-          const mm = String(
-            d.getMonth() + 1
-          ).padStart(2, "0");
+          const dd = String(d.getDate()).padStart(2, "0");
+          const mm = String(d.getMonth() + 1).padStart(2, "0");
           const yyyy = d.getFullYear();
           const dateStr = `${dd}-${mm}-${yyyy}`;
-          const option =
-            document.createElement("option");
+          const option = document.createElement("option");
           option.value = dateStr;
           option.text = dateStr;
           if (i === 0) option.selected = true;
@@ -1146,15 +937,8 @@
 
         // Register and set DejaVu font for Cyrillic support
         try {
-          doc.addFileToVFS(
-            "DejaVuSans.ttf",
-            dejavu_sans_normal
-          );
-          doc.addFont(
-            "DejaVuSans.ttf",
-            "DejaVu",
-            "normal"
-          );
+          doc.addFileToVFS("DejaVuSans.ttf", dejavu_sans_normal);
+          doc.addFont("DejaVuSans.ttf", "DejaVu", "normal");
           doc.setFont("DejaVu");
         } catch (e) {
           console.error("Font loading error:", e);
@@ -1168,24 +952,13 @@
         doc.text("Cleaning List", 10, y);
         y += 10;
         doc.setFontSize(12);
-        for (const [
-          section,
-          items,
-        ] of Object.entries(CleaningSections)) {
+        for (const [section, items] of Object.entries(CleaningSections)) {
           doc.text(section, 10, y);
           y += 8;
-          const checkedArr = JSON.parse(
-            localStorage.getItem(
-              "checked_" + section
-            ) || "[]"
-          );
+          const checkedArr = JSON.parse(localStorage.getItem("checked_" + section) || "[]");
           items.forEach((item, idx) => {
             const checked = checkedArr[idx];
-            const text =
-              "[" +
-              (checked ? "x" : " ") +
-              "] " +
-              item;
+            const text = "[" + (checked ? "x" : " ") + "] " + item;
             doc.text(text, 14, y);
             y += 7;
             if (y > 280) {
@@ -1197,8 +970,7 @@
         }
 
         // Notes
-        const notes =
-          document.getElementById("notes").value;
+        const notes = document.getElementById("notes").value;
         if (notes) {
           doc.text("Notes:", 10, y);
           y += 7;
@@ -1213,26 +985,13 @@
         doc.text("Consumables List", 10, y);
         y += 10;
         doc.setFontSize(12);
-        for (const [
-          section,
-          items,
-        ] of Object.entries(
-          ConsumablesSections
-        )) {
+        for (const [section, items] of Object.entries(ConsumablesSections)) {
           doc.text(section, 10, y);
           y += 8;
-          const checkedArr = JSON.parse(
-            localStorage.getItem(
-              "checked_" + section
-            ) || "[]"
-          );
+          const checkedArr = JSON.parse(localStorage.getItem("checked_" + section) || "[]");
           items.forEach((item, idx) => {
             const checked = checkedArr[idx];
-            const text =
-              "[" +
-              (checked ? "x" : " ") +
-              "] " +
-              item;
+            const text = "[" + (checked ? "x" : " ") + "] " + item;
             doc.text(text, 14, y);
             y += 7;
             if (y > 280) {
@@ -1251,28 +1010,14 @@
         doc.text("Inventory List", 10, y);
         y += 10;
         doc.setFontSize(12);
-        for (const [
-          section,
-          items,
-        ] of Object.entries(InventorySections)) {
+        for (const [section, items] of Object.entries(InventorySections)) {
           doc.text(section, 10, y);
           y += 8;
-          const checkedArr = JSON.parse(
-            localStorage.getItem(
-              "checked_" + section
-            ) || "[]"
-          );
+          const checkedArr = JSON.parse(localStorage.getItem("checked_" + section) || "[]");
           items.forEach((item, idx) => {
             // item is now an object: {text, type}
             const checked = checkedArr[idx];
-            const text =
-              "[" +
-              (checked ? "x" : " ") +
-              "] " +
-              item.text +
-              " (" +
-              item.type +
-              ")";
+            const text = "[" + (checked ? "x" : " ") + "] " + item.text + " (" + item.type + ")";
             doc.text(text, 14, y);
             y += 7;
             if (y > 280) {
@@ -1289,23 +1034,13 @@
         y += 10;
         doc.setFontSize(12);
 
-        const shoppingUl =
-          document.getElementById(
-            "shopping-list"
-          );
+        const shoppingUl = document.getElementById("shopping-list");
         if (shoppingUl) {
-          const lis =
-            shoppingUl.querySelectorAll("li");
+          const lis = shoppingUl.querySelectorAll("li");
           lis.forEach(li => {
-            const cb = li.querySelector(
-              "input[type='checkbox']"
-            );
+            const cb = li.querySelector("input[type='checkbox']");
             const checked = cb && cb.checked;
-            const text =
-              "[" +
-              (checked ? "x" : " ") +
-              "] " +
-              li.innerText.trim();
+            const text = "[" + (checked ? "x" : " ") + "] " + li.innerText.trim();
             doc.text(text, 14, y);
             y += 7;
             if (y > 280) {
@@ -1316,11 +1051,8 @@
         }
 
         // --- Save PDF ---
-        const date =
-          document.getElementById("date").value;
-        doc.save(
-          "Lynx_Checklist_" + date + ".pdf"
-        );
+        const date = document.getElementById("date").value;
+        doc.save("Lynx_Checklist_" + date + ".pdf");
       }
 
       // --- Consumables List Logic ---
@@ -1330,17 +1062,12 @@
           sections: ["Кујна"],
         },
         {
-          group:
-            "Потрошен материјал за во Купатило",
+          group: "Потрошен материјал за во Купатило",
           sections: ["Купатило"],
         },
         {
           group: "Останато",
-          sections: [
-            "Дневна",
-            "Минибар",
-            "Ходник",
-          ],
+          sections: ["Дневна", "Минибар", "Ходник"],
         },
       ];
 
@@ -1371,38 +1098,25 @@
           "Средство за чистење на плочки или работни површини",
           "Ракавици за чистење",
         ],
-        Дневна: [
-          "Батерие за даљинско",
-          "Сијалици за Лустер",
-          "Сијалица за Столна лампа",
-        ],
+        Дневна: ["Батерие за даљинско", "Сијалици за Лустер", "Сијалица за Столна лампа"],
         Минибар: [
           "5 Вина (700ml секое)",
           "4 Жестоки пијалоци (50ml секое)",
           "2 Мали вина (190ml секое)",
           "3 Грицки (чипс, јаткасти плодови итн.)",
         ],
-        Ходник: [
-          "Боја за ципеле (2)",
-          "Ролер за чистење влакна (1)",
-        ],
+        Ходник: ["Боја за ципеле (2)", "Ролер за чистење влакна (1)"],
       };
 
       // --- Inventory List Logic ---
       const InventoryGroups = [
         {
           group: "Соби",
-          sections: [
-            "Дневна Инвентура",
-            "Спална Инвентура",
-          ],
+          sections: ["Дневна Инвентура", "Спална Инвентура"],
         },
         {
           group: "Кујна и Трпезарија",
-          sections: [
-            "Кујна Инвентура",
-            "Трпезарија Инвентура",
-          ],
+          sections: ["Кујна Инвентура", "Трпезарија Инвентура"],
         },
 
         {
@@ -1411,169 +1125,64 @@
         },
         {
           group: "Останато",
-          sections: [
-            "Ходник Инвентура",
-            "Тераса Инвентура",
-          ],
+          sections: ["Ходник Инвентура", "Тераса Инвентура"],
         },
       ];
 
       // Inventory items now have type: 'E' (Essential) or 'O' (Optional)
       const InventorySections = {
         "Дневна Инвентура": [
-          {
-            text: "Столна лампа (1) (IKEA: 30405042)",
-            type: "E",
-          },
-          {
-            text: "Перници, бели/тврди, 50x50 см (2)(IKEA: 50550702)",
-            type: "E",
-          },
-          {
-            text: "Покривка на гарнитура (2)",
-            type: "O",
-          },
-          {
-            text: "Уметничка слика на ѕид (1)",
-            type: "O",
-          },
-          {
-            text: "Подлога за маса, воден зумбул, 37 см (1) (IKEA: 40082536)",
-            type: "O",
-          },
-          {
-            text: "Computer Mouse (1)",
-            type: "O",
-          },
+          { text: "Столна лампа (1) (IKEA: 30405042)", type: "E" },
+          { text: "Перници, бели/тврди, 50x50 см (2)(IKEA: 50550702)", type: "E" },
+          { text: "Покривка на гарнитура (2)", type: "O" },
+          { text: "Уметничка слика на ѕид (1)", type: "O" },
+          { text: "Подлога за маса, воден зумбул, 37 см (1) (IKEA: 40082536)", type: "O" },
+          { text: "Computer Mouse (1)", type: "O" },
           { text: "HDMI кабел (1)", type: "O" },
-          {
-            text: "US to EU адаптер (2)",
-            type: "O",
-          },
-          {
-            text: "Продужан кабал (1)",
-            type: "O",
-          },
-          {
-            text: "Книги за Македонија (3)",
-            type: "O",
-          },
-          {
-            text: "Украси на сталажа десно",
-            type: "O",
-          },
-          {
-            text: "Свеќи на батерија (2)",
-            type: "O",
-          },
-          {
-            text: "Кошница за цвеќе, морска трева, 25см (1) (IKEA: 60322173)",
-            type: "O",
-          },
+          { text: "US to EU адаптер (2)", type: "O" },
+          { text: "Продужан кабал (1)", type: "O" },
+          { text: "Книги за Македонија (3)", type: "O" },
+          { text: "Украси на сталажа десно", type: "O" },
+          { text: "Свеќи на батерија (2)", type: "O" },
+          { text: "Кошница за цвеќе, морска трева, 25см (1) (IKEA: 60322173)", type: "O" },
         ],
         "Кујна Инвентура": [
-          {
-            text: "Нож, 3 ком (IKEA: 70257624)",
-            type: "E",
-          },
-          {
-            text: "Нож, црн 22 цм (4)(IKEA: 00287295)",
-            type: "E",
-          },
-          {
-            text: "Даска за сечење, бамбус, 45x28 см (IKEA: 80233430)",
-            type: "E",
-          },
-          {
-            text: "Острилка за ножеви, црна (IKEA: 57145296)",
-            type: "O",
-          },
-          {
-            text: "Лупалка за компири, зелена (IKEA: 90521963)",
-            type: "O",
-          },
-          {
-            text: "Здела за салата, проѕирно стакло, 20 см (IKEA: 90057252)",
-            type: "O",
-          },
+          { text: "Нож, 3 ком (IKEA: 70257624)", type: "E" },
+          { text: "Нож, црн 22 цм (4)(IKEA: 00287295)", type: "E" },
+          { text: "Даска за сечење, бамбус, 45x28 см (IKEA: 80233430)", type: "E" },
+          { text: "Острилка за ножеви, црна (IKEA: 57145296)", type: "O" },
+          { text: "Лупалка за компири, зелена (IKEA: 90521963)", type: "O" },
+          { text: "Здела за салата, проѕирно стакло, 20 см (IKEA: 90057252)", type: "O" },
           {
             text: "Прибор за јадење, 30 парчиња, од не'рѓосувачки челик (IKEA: 30167507)",
             type: "E",
           },
-          {
-            text: "Тенџере за готвење со капак (3), тигањ (1)(IKEA: 80580104)",
-            type: "E",
-          },
-          {
-            text: "Подметач за тенџере, плута, 19 см (IKEA: 87077700)",
-            type: "O",
-          },
-          {
-            text: "Држач за вруќо тенџере, сив, 21x21 см (IKEA: 00476366)",
-            type: "O",
-          },
-          {
-            text: "Сад за сол/бибер, проѕирно стакло 8см ( IKEA: 40553211)",
-            type: "O",
-          },
-          {
-            text: "Кујнски крпи, бел/зелен/со шари, 45x60 см (4)(IKEA: 60476354)",
-            type: "E",
-          },
-          {
-            text: "Кујнски крпи, бел/темно сив/со шари, 45x60 см (8)(IKEA: 20476346)",
-            type: "E",
-          },
-          {
-            text: "Полица цедење за садови (1)(IKEA: 80461276)",
-            type: "O",
-          },
-          {
-            text: "Жица за матење, тркалезна (1)(IKEA: 10225952)",
-            type: "O",
-          },
+          { text: "Тенџере за готвење со капак (3), тигањ (1)(IKEA: 80580104)", type: "E" },
+          { text: "Подметач за тенџере, плута, 19 см (IKEA: 87077700)", type: "O" },
+          { text: "Држач за вруќо тенџере, сив, 21x21 см (IKEA: 00476366)", type: "O" },
+          { text: "Сад за сол/бибер, проѕирно стакло 8см ( IKEA: 40553211)", type: "O" },
+          { text: "Кујнски крпи, бел/зелен/со шари, 45x60 см (4)(IKEA: 60476354)", type: "E" },
+          { text: "Кујнски крпи, бел/темно сив/со шари, 45x60 см (8)(IKEA: 20476346)", type: "E" },
+          { text: "Полица цедење за садови (1)(IKEA: 80461276)", type: "O" },
+          { text: "Жица за матење, тркалезна (1)(IKEA: 10225952)", type: "O" },
           {
             text: "Организер за прибор за јадење, светла бамбусова, 52x50 см (IKEA: 70433104)",
             type: "O",
           },
           { text: "Ренде", type: "O" },
           { text: "Тостер, црн", type: "O" },
-          {
-            text: "Бокал за воду на струја",
-            type: "O",
-          },
-          {
-            text: "Кафемат KRUPS KP 243B10, 1000W, 15 bar",
-            type: "O",
-          },
-          {
-            text: "Здела за капсуле за кафе (Temu)",
-            type: "O",
-          },
+          { text: "Бокал за воду на струја", type: "O" },
+          { text: "Кафемат KRUPS KP 243B10, 1000W, 15 bar", type: "O" },
+          { text: "Здела за капсуле за кафе (Temu)", type: "O" },
         ],
         "Трпезарија Инвентура": [
-          {
-            text: "Подлога за маса, темно сива, 38x30см (4) (IKEA: 20569251)",
-            type: "O",
-          },
-          {
-            text: "Вазна, проѕирно стакло во боја",
-            type: "O",
-          },
-          {
-            text: "Трпезариска маса со 4 столици",
-            type: "E",
-          },
+          { text: "Подлога за маса, темно сива, 38x30см (4) (IKEA: 20569251)", type: "O" },
+          { text: "Вазна, проѕирно стакло во боја", type: "O" },
+          { text: "Трпезариска маса со 4 столици", type: "E" },
         ],
         "Спална Инвентура": [
-          {
-            text: "Офингер (8) (IKEA: 30238543)",
-            type: "E",
-          },
-          {
-            text: "Водоотпорен заштитник за душек, 160x200 см (2) (IKEA: 60522129)",
-            type: "E",
-          },
+          { text: "Офингер (8) (IKEA: 30238543)", type: "E" },
+          { text: "Водоотпорен заштитник за душек, 160x200 см (2) (IKEA: 60522129)", type: "E" },
           {
             text: "Навлака за јорган и 2 навлаки за перници, сива/пругаста, 200x200/50x60см (2) (IKEA: 70423242)",
             type: "E",
@@ -1582,153 +1191,51 @@
             text: "Навлака за јорган и 2 навлаки за перници, бела, 200x200/50x60 см (1) (IKEA: 20377959)",
             type: "E",
           },
-          {
-            text: "Чаршаф, бела, 160x200 см (3) (IKEA: 30357220)",
-            type: "E",
-          },
-          {
-            text: "Јорган за сите сезони, 200x200 см (1+1) (IKEA: 70458585)",
-            type: "E",
-          },
-          {
-            text: "Навлака за перница, светло сива, 50x60 см (1) (IKEA: 90482476)",
-            type: "O",
-          },
-          {
-            text: "Навлака за перница, бела, 50x60 см (3) (IKEA: 10357301)",
-            type: "O",
-          },
-          {
-            text: "Перница, висока, 50x60 см (2) (IKEA: 20460411)",
-            type: "E",
-          },
-          {
-            text: "Перница, ниска, на стомак, 50x60 см (2) (IKEA: 50460546)",
-            type: "O",
-          },
-          {
-            text: "Столна ламба, пепел/бела (2) (IKEA: 60573538)",
-            type: "O",
-          },
-          {
-            text: "Малечка ламба за читање (1)",
-            type: "O",
-          },
+          { text: "Чаршаф, бела, 160x200 см (3) (IKEA: 30357220)", type: "E" },
+          { text: "Јорган за сите сезони, 200x200 см (1+1) (IKEA: 70458585)", type: "E" },
+          { text: "Навлака за перница, светло сива, 50x60 см (1) (IKEA: 90482476)", type: "O" },
+          { text: "Навлака за перница, бела, 50x60 см (3) (IKEA: 10357301)", type: "O" },
+          { text: "Перница, висока, 50x60 см (2) (IKEA: 20460411)", type: "E" },
+          { text: "Перница, ниска, на стомак, 50x60 см (2) (IKEA: 50460546)", type: "O" },
+          { text: "Столна ламба, пепел/бела (2) (IKEA: 60573538)", type: "O" },
+          { text: "Малечка ламба за читање (1)", type: "O" },
           { text: "Даска за пеглање", type: "O" },
           { text: "Пегла", type: "O" },
-          {
-            text: "Прекривач/кебе, темно сива, 230x250см (1) (IKEA: 60346447)",
-            type: "O",
-          },
+          { text: "Прекривач/кебе, темно сива, 230x250см (1) (IKEA: 60346447)", type: "O" },
           { text: "Кебе тенко (1)", type: "O" },
           { text: "Кебе дебело (1)", type: "O" },
-          {
-            text: "Кревет за деца (Ѓоре)",
-            type: "O",
-          },
-          {
-            text: "Навлака за сако (1)",
-            type: "O",
-          },
+          { text: "Кревет за деца (Ѓоре)", type: "O" },
+          { text: "Навлака за сако (1)", type: "O" },
         ],
         "Купатило Инвентура": [
-          {
-            text: "Саксија за цвеќе (IKEA: 40395617)",
-            type: "O",
-          },
-          {
-            text: "Канта за отпад (IKEA: 20593736)",
-            type: "E",
-          },
-          {
-            text: "Четка за тоалет (IKEA: 10593727)",
-            type: "E",
-          },
-          {
-            text: "Држач за тоалетна хартија (IKEA: 40381291)",
-            type: "E",
-          },
-          {
-            text: "Крпа за бањање, (6), 70x140 см (IKEA: 80350985)",
-            type: "E",
-          },
-          {
-            text: "Крпа за руке, (6), 50x100 см (IKEA: 70350995)",
-            type: "E",
-          },
-          {
-            text: "Туш ручка (IKEA: 60342543)",
-            type: "O",
-          },
-          {
-            text: "Тепих за бању, тиркизна, 50x80 см (IKEA: 40603169)",
-            type: "O",
-          },
-          {
-            text: "Дозатор за сапун (IKEA: 30593726)",
-            type: "O",
-          },
-          {
-            text: "Држач за четкице за зуби (IKEA: 50593730)",
-            type: "O",
-          },
-          {
-            text: "Самолеплива кука (2) (IKEA: 50567830)",
-            type: "O",
-          },
-          {
-            text: "Надворешни полици за крпе, бамбус, 37x37x104см (1)(IKEA: 80549420)",
-            type: "O",
-          },
-          {
-            text: "Кутија за прва помош Praxis – JUS 5015",
-            type: "E",
-          },
-          {
-            text: "Корпа за фен (STOREAGE)",
-            type: "O",
-          },
-          {
-            text: "Фен за косу (MAX HD22IR)",
-            type: "O",
-          },
-          {
-            text: "Торба за фен (Temu)",
-            type: "O",
-          },
-          {
-            text: "Пластична корпа за веш (Temu)",
-            type: "O",
-          },
-          {
-            text: "Гумени папуче (Temu)",
-            type: "O",
-          },
-          {
-            text: "Прва помош кутија",
-            type: "E",
-          },
+          { text: "Саксија за цвеќе (IKEA: 40395617)", type: "O" },
+          { text: "Канта за отпад (IKEA: 20593736)", type: "E" },
+          { text: "Четка за тоалет (IKEA: 10593727)", type: "E" },
+          { text: "Држач за тоалетна хартија (IKEA: 40381291)", type: "E" },
+          { text: "Крпа за бањање, (6), 70x140 см (IKEA: 80350985)", type: "E" },
+          { text: "Крпа за руке, (6), 50x100 см (IKEA: 70350995)", type: "E" },
+          { text: "Туш ручка (IKEA: 60342543)", type: "O" },
+          { text: "Тепих за бању, тиркизна, 50x80 см (IKEA: 40603169)", type: "O" },
+          { text: "Дозатор за сапун (IKEA: 30593726)", type: "O" },
+          { text: "Држач за четкице за зуби (IKEA: 50593730)", type: "O" },
+          { text: "Самолеплива кука (2) (IKEA: 50567830)", type: "O" },
+          { text: "Надворешни полици за крпе, бамбус, 37x37x104см (1)(IKEA: 80549420)", type: "O" },
+          { text: "Кутија за прва помош Praxis – JUS 5015", type: "E" },
+          { text: "Корпа за фен (STOREAGE)", type: "O" },
+          { text: "Фен за косу (MAX HD22IR)", type: "O" },
+          { text: "Торба за фен (Temu)", type: "O" },
+          { text: "Пластична корпа за веш (Temu)", type: "O" },
+          { text: "Гумени папуче (Temu)", type: "O" },
+          { text: "Прва помош кутија", type: "E" },
         ],
         "Ходник Инвентура": [
-          {
-            text: "Подлога за ципеле 71x35 см(IKEA: 60329711)",
-            type: "O",
-          },
-          {
-            text: "Усисувач (MAKS VC 2200SW)",
-            type: "E",
-          },
+          { text: "Подлога за ципеле 71x35 см(IKEA: 60329711)", type: "O" },
+          { text: "Усисувач (MAKS VC 2200SW)", type: "E" },
           { text: "Кашика за ципеле", type: "O" },
         ],
         "Тераса Инвентура": [
-          {
-            text: "Столица за седење (2)(IKEA: 90095428)",
-            type: "O",
-          },
-          {
-            text: "Асталче за терасу (1)(IKEA: 70095429)",
-            type: "O",
-          },
+          { text: "Столица за седење (2)(IKEA: 90095428)", type: "O" },
+          { text: "Асталче за терасу (1)(IKEA: 70095429)", type: "O" },
         ],
       };
 
@@ -1736,15 +1243,10 @@
       let inventoryFilter = "all"; // 'all', 'E', 'O'
 
       function renderInventoryFilterDropdown() {
-        const container = document.getElementById(
-          "inventory-sections"
-        );
-        let filterDiv = document.getElementById(
-          "inventory-filter-div"
-        );
+        const container = document.getElementById("inventory-sections");
+        let filterDiv = document.getElementById("inventory-filter-div");
         if (!filterDiv) {
-          filterDiv =
-            document.createElement("div");
+          filterDiv = document.createElement("div");
           filterDiv.id = "inventory-filter-div";
           filterDiv.style.marginBottom = "10px";
           filterDiv.innerHTML = `
@@ -1754,74 +1256,45 @@
               <option value="O">Само Optional</option>
             </select>
           `;
-          container.parentNode.insertBefore(
-            filterDiv,
-            container
-          );
-          document
-            .getElementById("inventory-filter")
-            .addEventListener(
-              "change",
-              function (e) {
-                inventoryFilter = e.target.value;
-                renderInventoryAccordions();
-              }
-            );
+          container.parentNode.insertBefore(filterDiv, container);
+          document.getElementById("inventory-filter").addEventListener("change", function (e) {
+            inventoryFilter = e.target.value;
+            renderInventoryAccordions();
+          });
         }
       }
 
       // --- Inventory Accordion Rendering ---
       function renderInventoryAccordions() {
-        const container = document.getElementById(
-          "inventory-sections"
-        );
+        const container = document.getElementById("inventory-sections");
         // Remove all except filter dropdown
         container
-          .querySelectorAll(
-            ".accordion, .section-controls, .section"
-          )
+          .querySelectorAll(".accordion, .section-controls, .section")
           .forEach(e => e.remove());
 
         InventoryGroups.forEach(groupObj => {
-          const acc =
-            document.createElement("div");
+          const acc = document.createElement("div");
           acc.className = "accordion";
 
-          const header =
-            document.createElement("div");
+          const header = document.createElement("div");
           header.className = "accordion-header";
 
           // Calculate total and completed items for this group (respecting filter)
           let totalItems = 0;
           let completedItems = 0;
           groupObj.sections.forEach(section => {
-            const items =
-              InventorySections[section];
+            const items = InventorySections[section];
             let filteredItems = items;
-            if (inventoryFilter === "E")
-              filteredItems = items.filter(
-                i => i.type === "E"
-              );
-            if (inventoryFilter === "O")
-              filteredItems = items.filter(
-                i => i.type === "O"
-              );
+            if (inventoryFilter === "E") filteredItems = items.filter(i => i.type === "E");
+            if (inventoryFilter === "O") filteredItems = items.filter(i => i.type === "O");
             totalItems += filteredItems.length;
-            const checkedArr = JSON.parse(
-              localStorage.getItem(
-                "checked_" + section
-              ) || "[]"
-            );
+            const checkedArr = JSON.parse(localStorage.getItem("checked_" + section) || "[]");
             if (Array.isArray(checkedArr)) {
-              filteredItems.forEach(
-                (item, idx) => {
-                  // Find the index of this item in the original items array
-                  const origIdx =
-                    items.indexOf(item);
-                  if (checkedArr[origIdx])
-                    completedItems++;
-                }
-              );
+              filteredItems.forEach((item, idx) => {
+                // Find the index of this item in the original items array
+                const origIdx = items.indexOf(item);
+                if (checkedArr[origIdx]) completedItems++;
+              });
             }
           });
 
@@ -1831,8 +1304,7 @@
           `;
           acc.appendChild(header);
 
-          const content =
-            document.createElement("div");
+          const content = document.createElement("div");
           content.className = "accordion-content";
 
           groupObj.sections.forEach(section => {
@@ -1846,37 +1318,17 @@
                   let newTotal = 0;
                   let newCompleted = 0;
                   groupObj.sections.forEach(s => {
-                    const items =
-                      InventorySections[s];
+                    const items = InventorySections[s];
                     let filteredItems = items;
-                    if (inventoryFilter === "E")
-                      filteredItems =
-                        items.filter(
-                          i => i.type === "E"
-                        );
-                    if (inventoryFilter === "O")
-                      filteredItems =
-                        items.filter(
-                          i => i.type === "O"
-                        );
-                    newTotal +=
-                      filteredItems.length;
-                    const checkedArr = JSON.parse(
-                      localStorage.getItem(
-                        "checked_" + s
-                      ) || "[]"
-                    );
-                    if (
-                      Array.isArray(checkedArr)
-                    ) {
-                      filteredItems.forEach(
-                        (item, idx) => {
-                          const origIdx =
-                            items.indexOf(item);
-                          if (checkedArr[origIdx])
-                            newCompleted++;
-                        }
-                      );
+                    if (inventoryFilter === "E") filteredItems = items.filter(i => i.type === "E");
+                    if (inventoryFilter === "O") filteredItems = items.filter(i => i.type === "O");
+                    newTotal += filteredItems.length;
+                    const checkedArr = JSON.parse(localStorage.getItem("checked_" + s) || "[]");
+                    if (Array.isArray(checkedArr)) {
+                      filteredItems.forEach((item, idx) => {
+                        const origIdx = items.indexOf(item);
+                        if (checkedArr[origIdx]) newCompleted++;
+                      });
                     }
                   });
                   header.querySelector(
@@ -1893,83 +1345,50 @@
 
           // Accordion toggle
           header.onclick = function (e) {
-            if (e.target.tagName === "INPUT")
-              return;
+            if (e.target.tagName === "INPUT") return;
             acc.classList.toggle("active");
-            content.style.display =
-              content.style.display === "none"
-                ? "block"
-                : "none";
+            content.style.display = content.style.display === "none" ? "block" : "none";
           };
         });
       }
 
       // --- Inventory Section Rendering (with checkboxes and live update) ---
-      function renderSectionWithProgress(
-        title,
-        items,
-        sectionKey,
-        onProgressChange,
-        isInventory
-      ) {
-        const sectionDiv =
-          document.createElement("div");
+      function renderSectionWithProgress(title, items, sectionKey, onProgressChange, isInventory) {
+        const sectionDiv = document.createElement("div");
         sectionDiv.className = "section";
 
         // Section header
-        const header =
-          document.createElement("div");
+        const header = document.createElement("div");
         header.className = "section-header";
         header.innerHTML = `<label>${title}</label>`;
         sectionDiv.appendChild(header);
 
         // Items list
         const ul = document.createElement("div");
-        ul.className =
-          "checkbox-group section-items";
+        ul.className = "checkbox-group section-items";
 
         // Load checked state from localStorage
-        let checkedArr = JSON.parse(
-          localStorage.getItem(
-            "checked_" + sectionKey
-          ) || "[]"
-        );
-        if (
-          !Array.isArray(checkedArr) ||
-          checkedArr.length !== items.length
-        ) {
-          checkedArr = Array(items.length).fill(
-            false
-          );
+        let checkedArr = JSON.parse(localStorage.getItem("checked_" + sectionKey) || "[]");
+        if (!Array.isArray(checkedArr) || checkedArr.length !== items.length) {
+          checkedArr = Array(items.length).fill(false);
         }
 
         items.forEach((item, idx) => {
-          const label =
-            document.createElement("label");
+          const label = document.createElement("label");
           label.style.display = "flex";
           label.style.alignItems = "center";
-          label.style.justifyContent =
-            "space-between";
+          label.style.justifyContent = "space-between";
           let itemText = isInventory
-            ? `${
-                item.text
-              } <span class='inv-type'>(${
-                item.type === "E"
-                  ? "Essential"
-                  : "Optional"
+            ? `${item.text} <span class='inv-type'>(${
+                item.type === "E" ? "Essential" : "Optional"
               })</span>`
             : item;
           label.innerHTML = `<span><input type="checkbox" data-section="${sectionKey}" data-idx="${idx}"> ${itemText}</span>`;
-          const checkbox = label.querySelector(
-            "input[type='checkbox']"
-          );
+          const checkbox = label.querySelector("input[type='checkbox']");
           checkbox.checked = checkedArr[idx];
           checkbox.onchange = function () {
             checkedArr[idx] = checkbox.checked;
-            localStorage.setItem(
-              "checked_" + sectionKey,
-              JSON.stringify(checkedArr)
-            );
+            localStorage.setItem("checked_" + sectionKey, JSON.stringify(checkedArr));
             if (onProgressChange) {
               onProgressChange();
             }
@@ -1981,12 +1400,8 @@
 
         // Make header clickable for collapse/expand
         header.onclick = function (e) {
-          if (e.target.tagName === "INPUT")
-            return;
-          ul.style.display =
-            ul.style.display === "none"
-              ? "block"
-              : "none";
+          if (e.target.tagName === "INPUT") return;
+          ul.style.display = ul.style.display === "none" ? "block" : "none";
         };
 
         return sectionDiv;
@@ -1996,16 +1411,11 @@
       let shoppingList = [];
       let dragSrcIndex = null;
       function renderShoppingList() {
-        const ul = document.getElementById(
-          "shopping-list"
-        );
+        const ul = document.getElementById("shopping-list");
         ul.innerHTML = "";
 
         // Load shopping list from localStorage
-        shoppingList = JSON.parse(
-          localStorage.getItem("shoppingList") ||
-            "[]"
-        );
+        shoppingList = JSON.parse(localStorage.getItem("shoppingList") || "[]");
 
         shoppingList.forEach((item, idx) => {
           const li = document.createElement("li");
@@ -2013,8 +1423,7 @@
           li.setAttribute("data-index", idx);
           li.style.display = "flex";
           li.style.alignItems = "center";
-          li.style.justifyContent =
-            "space-between";
+          li.style.justifyContent = "space-between";
           li.style.padding = "4px 0";
           li.ondragstart = e => {
             dragSrcIndex = idx;
@@ -2034,14 +1443,8 @@
           li.ondrop = e => {
             e.preventDefault();
             li.style.background = "";
-            if (
-              dragSrcIndex !== null &&
-              dragSrcIndex !== idx
-            ) {
-              const moved = shoppingList.splice(
-                dragSrcIndex,
-                1
-              )[0];
+            if (dragSrcIndex !== null && dragSrcIndex !== idx) {
+              const moved = shoppingList.splice(dragSrcIndex, 1)[0];
               shoppingList.splice(idx, 0, moved);
               renderShoppingList();
             }
@@ -2052,28 +1455,18 @@
         });
       }
       function addShoppingItem() {
-        const item = prompt(
-          "Enter shopping item:"
-        );
+        const item = prompt("Enter shopping item:");
         if (item && item.trim() !== "") {
           shoppingList.push(item.trim());
-          localStorage.setItem(
-            "shoppingList",
-            JSON.stringify(shoppingList)
-          ); // Save to localStorage
+          localStorage.setItem("shoppingList", JSON.stringify(shoppingList)); // Save to localStorage
           renderShoppingList();
         }
       }
 
       // Add event listener for notes
-      document
-        .getElementById("notes")
-        .addEventListener("input", function (e) {
-          localStorage.setItem(
-            "notes",
-            e.target.value
-          );
-        });
+      document.getElementById("notes").addEventListener("input", function (e) {
+        localStorage.setItem("notes", e.target.value);
+      });
 
       // Load notes on page load
       window.onload = function () {
@@ -2085,26 +1478,20 @@
         renderShoppingList();
 
         // Load saved notes
-        const savedNotes =
-          localStorage.getItem("notes");
+        const savedNotes = localStorage.getItem("notes");
         if (savedNotes) {
-          document.getElementById("notes").value =
-            savedNotes;
+          document.getElementById("notes").value = savedNotes;
         }
       };
 
       // Modify the renderConsumablesAccordions function
       function renderConsumablesAccordions() {
-        const container = document.getElementById(
-          "consumables-sections"
-        );
+        const container = document.getElementById("consumables-sections");
         container.innerHTML = "";
 
         // Add collapse/expand all button
-        const controlsDiv =
-          document.createElement("div");
-        controlsDiv.className =
-          "section-controls";
+        const controlsDiv = document.createElement("div");
+        controlsDiv.className = "section-controls";
         controlsDiv.innerHTML = `
       <button class="view-all-btn" onclick="toggleAllSections(true)">Expand All</button>
       <button class="view-all-btn" onclick="toggleAllSections(false)">Collapse All</button>
@@ -2112,36 +1499,23 @@
         container.appendChild(controlsDiv);
 
         ConsumablesGroups.forEach(groupObj => {
-          const acc =
-            document.createElement("div");
+          const acc = document.createElement("div");
           acc.className = "accordion";
 
-          const header =
-            document.createElement("div");
+          const header = document.createElement("div");
           header.className = "accordion-header";
 
           // Calculate total items and completed items for this group
           let totalItems = 0;
           let completedItems = 0;
           groupObj.sections.forEach(section => {
-            const items =
-              ConsumablesSections[section];
+            const items = ConsumablesSections[section];
             totalItems += items.length;
-            let checkedArr = JSON.parse(
-              localStorage.getItem(
-                "checked_" + section
-              ) || "[]"
-            );
-            if (
-              !Array.isArray(checkedArr) ||
-              checkedArr.length !== items.length
-            ) {
-              checkedArr = Array(
-                items.length
-              ).fill(false);
+            let checkedArr = JSON.parse(localStorage.getItem("checked_" + section) || "[]");
+            if (!Array.isArray(checkedArr) || checkedArr.length !== items.length) {
+              checkedArr = Array(items.length).fill(false);
             }
-            completedItems +=
-              checkedArr.filter(Boolean).length;
+            completedItems += checkedArr.filter(Boolean).length;
           });
 
           header.innerHTML = `
@@ -2150,50 +1524,28 @@
         `;
           acc.appendChild(header);
 
-          const content =
-            document.createElement("div");
+          const content = document.createElement("div");
           content.className = "accordion-content";
 
           groupObj.sections.forEach(section => {
             content.appendChild(
-              renderSectionWithProgress(
-                section,
-                ConsumablesSections[section],
-                section,
-                () => {
-                  // Update group progress when any item changes
-                  let newTotal = 0;
-                  let newCompleted = 0;
-                  groupObj.sections.forEach(s => {
-                    const items =
-                      ConsumablesSections[s];
-                    newTotal += items.length;
-                    let checkedArr = JSON.parse(
-                      localStorage.getItem(
-                        "checked_" + s
-                      ) || "[]"
-                    );
-                    if (
-                      !Array.isArray(
-                        checkedArr
-                      ) ||
-                      checkedArr.length !==
-                        items.length
-                    ) {
-                      checkedArr = Array(
-                        items.length
-                      ).fill(false);
-                    }
-                    newCompleted +=
-                      checkedArr.filter(
-                        Boolean
-                      ).length;
-                  });
-                  header.querySelector(
-                    ".section-stats"
-                  ).textContent = `${newCompleted}/${newTotal} завршено`;
-                }
-              )
+              renderSectionWithProgress(section, ConsumablesSections[section], section, () => {
+                // Update group progress when any item changes
+                let newTotal = 0;
+                let newCompleted = 0;
+                groupObj.sections.forEach(s => {
+                  const items = ConsumablesSections[s];
+                  newTotal += items.length;
+                  let checkedArr = JSON.parse(localStorage.getItem("checked_" + s) || "[]");
+                  if (!Array.isArray(checkedArr) || checkedArr.length !== items.length) {
+                    checkedArr = Array(items.length).fill(false);
+                  }
+                  newCompleted += checkedArr.filter(Boolean).length;
+                });
+                header.querySelector(
+                  ".section-stats"
+                ).textContent = `${newCompleted}/${newTotal} завршено`;
+              })
             );
           });
 
@@ -2202,89 +1554,55 @@
 
           // Accordion toggle
           header.onclick = function (e) {
-            if (e.target.tagName === "INPUT")
-              return;
+            if (e.target.tagName === "INPUT") return;
             acc.classList.toggle("active");
-            content.style.display =
-              content.style.display === "none"
-                ? "block"
-                : "none";
+            content.style.display = content.style.display === "none" ? "block" : "none";
           };
         });
       }
 
       // Modify renderSectionWithProgress to add shopping cart icon
-      function renderSectionWithProgress(
-        title,
-        items,
-        sectionKey,
-        onProgressChange
-      ) {
-        const sectionDiv =
-          document.createElement("div");
+      function renderSectionWithProgress(title, items, sectionKey, onProgressChange) {
+        const sectionDiv = document.createElement("div");
         sectionDiv.className = "section";
 
         // Section header
-        const header =
-          document.createElement("div");
+        const header = document.createElement("div");
         header.className = "section-header";
         header.innerHTML = `<label>${title}</label>`;
         sectionDiv.appendChild(header);
 
         // Items list
         const ul = document.createElement("div");
-        ul.className =
-          "checkbox-group section-items";
+        ul.className = "checkbox-group section-items";
 
         // Load checked state from localStorage
-        let checkedArr = JSON.parse(
-          localStorage.getItem(
-            "checked_" + sectionKey
-          ) || "[]"
-        );
-        if (
-          !Array.isArray(checkedArr) ||
-          checkedArr.length !== items.length
-        ) {
-          checkedArr = Array(items.length).fill(
-            false
-          );
+        let checkedArr = JSON.parse(localStorage.getItem("checked_" + sectionKey) || "[]");
+        if (!Array.isArray(checkedArr) || checkedArr.length !== items.length) {
+          checkedArr = Array(items.length).fill(false);
         }
 
         items.forEach((item, idx) => {
-          const label =
-            document.createElement("label");
+          const label = document.createElement("label");
           label.style.display = "flex";
           label.style.alignItems = "center";
-          label.style.justifyContent =
-            "space-between";
+          label.style.justifyContent = "space-between";
           // Fix: Always display correct item text
           let displayText = "";
           if (typeof item === "string") {
             displayText = item;
-          } else if (
-            item &&
-            typeof item === "object"
-          ) {
-            displayText =
-              item.text ||
-              item.name ||
-              JSON.stringify(item);
+          } else if (item && typeof item === "object") {
+            displayText = item.text || item.name || JSON.stringify(item);
           }
           label.innerHTML = `<span><input type="checkbox" data-section="${sectionKey}" data-idx="${idx}"> ${displayText}</span>
                           <button class="add-to-shopping-btn" data-item="${item}" onclick="addToShoppingList('${item}')">
                               🛒
                           </button>`;
-          const checkbox = label.querySelector(
-            "input[type='checkbox']"
-          );
+          const checkbox = label.querySelector("input[type='checkbox']");
           checkbox.checked = checkedArr[idx];
           checkbox.onchange = function () {
             checkedArr[idx] = checkbox.checked;
-            localStorage.setItem(
-              "checked_" + sectionKey,
-              JSON.stringify(checkedArr)
-            );
+            localStorage.setItem("checked_" + sectionKey, JSON.stringify(checkedArr));
             if (onProgressChange) {
               onProgressChange();
             }
@@ -2296,12 +1614,8 @@
 
         // Make header clickable for collapse/expand
         header.onclick = function (e) {
-          if (e.target.tagName === "INPUT")
-            return;
-          ul.style.display =
-            ul.style.display === "none"
-              ? "block"
-              : "none";
+          if (e.target.tagName === "INPUT") return;
+          ul.style.display = ul.style.display === "none" ? "block" : "none";
         };
 
         return sectionDiv;
@@ -2312,87 +1626,51 @@
         shoppingList.push(item);
 
         // Save the updated shopping list in localStorage
-        localStorage.setItem(
-          "shoppingList",
-          JSON.stringify(shoppingList)
-        );
+        localStorage.setItem("shoppingList", JSON.stringify(shoppingList));
 
         // Re-render the shopping list to show the new item
         renderShoppingList();
 
         // Show a success toast message
-        showToast(
-          "Успешно додадено во Шопинг листа"
-        );
+        showToast("Успешно додадено во Шопинг листа");
       }
 
       // Logo click: clear all localStorage except theme, reload, show popup after reload
-      document
-        .getElementById("lynx-logo")
-        .addEventListener("click", function () {
-          if (
-            confirm(
-              "Do you want to reset all progress and clear the checklist?"
-            )
-          ) {
-            const theme =
-              localStorage.getItem("lynx-theme");
-            localStorage.clear();
-            if (theme)
-              localStorage.setItem(
-                "lynx-theme",
-                theme
-              );
-            sessionStorage.setItem(
-              "checklist-reset",
-              "1"
-            );
-            location.reload();
-          }
-        });
+      document.getElementById("lynx-logo").addEventListener("click", function () {
+        if (confirm("Do you want to reset all progress and clear the checklist?")) {
+          const theme = localStorage.getItem("lynx-theme");
+          localStorage.clear();
+          if (theme) localStorage.setItem("lynx-theme", theme);
+          sessionStorage.setItem("checklist-reset", "1");
+          location.reload();
+        }
+      });
 
       // On load, show reset popup if needed
-      window.addEventListener(
-        "DOMContentLoaded",
-        function () {
-          if (
-            sessionStorage.getItem(
-              "checklist-reset"
-            )
-          ) {
-            sessionStorage.removeItem(
-              "checklist-reset"
-            );
-            // You can use a custom popup, but for simplicity:
-            const popup =
-              document.createElement("div");
-            popup.textContent =
-              "Checklist has been reset. You now have a blank list.";
-            popup.style.position = "fixed";
-            popup.style.top = "30px";
-            popup.style.left = "50%";
-            popup.style.transform =
-              "translateX(-50%)";
-            popup.style.background = "#23272a";
-            popup.style.color = "#ffe066";
-            popup.style.padding = "16px 32px";
-            popup.style.borderRadius = "8px";
-            popup.style.boxShadow =
-              "0 2px 8px rgba(0,0,0,0.2)";
-            popup.style.zIndex = "9999";
-            document.body.appendChild(popup);
-            setTimeout(
-              () => popup.remove(),
-              3000
-            );
-          }
+      window.addEventListener("DOMContentLoaded", function () {
+        if (sessionStorage.getItem("checklist-reset")) {
+          sessionStorage.removeItem("checklist-reset");
+          // You can use a custom popup, but for simplicity:
+          const popup = document.createElement("div");
+          popup.textContent = "Checklist has been reset. You now have a blank list.";
+          popup.style.position = "fixed";
+          popup.style.top = "30px";
+          popup.style.left = "50%";
+          popup.style.transform = "translateX(-50%)";
+          popup.style.background = "#23272a";
+          popup.style.color = "#ffe066";
+          popup.style.padding = "16px 32px";
+          popup.style.borderRadius = "8px";
+          popup.style.boxShadow = "0 2px 8px rgba(0,0,0,0.2)";
+          popup.style.zIndex = "9999";
+          document.body.appendChild(popup);
+          setTimeout(() => popup.remove(), 3000);
         }
-      );
+      });
 
       function showToast(message) {
         // Create a new toast element
-        const toast =
-          document.createElement("div");
+        const toast = document.createElement("div");
         toast.className = "toast";
         toast.textContent = message;
 
@@ -2414,51 +1692,28 @@
         }, 1000); // Пораката ќе исчезне по 3 секунди
       }
 
-      function renderInventorySectionItems(
-        sectionId,
-        title
-      ) {
-        const groupEss = document.getElementById(
-          sectionId + "_inventory_essential"
-        );
-        const groupOpt = document.getElementById(
-          sectionId + "_inventory_optional"
-        );
+      function renderInventorySectionItems(sectionId, title) {
+        const groupEss = document.getElementById(sectionId + "_inventory_essential");
+        const groupOpt = document.getElementById(sectionId + "_inventory_optional");
         groupEss.innerHTML = "";
         groupOpt.innerHTML = "";
-        (
-          inventorySections[title].essential || []
-        ).forEach((item, idx) => {
-          const label =
-            document.createElement("label");
+        (inventorySections[title].essential || []).forEach((item, idx) => {
+          const label = document.createElement("label");
           label.style.display = "flex";
           label.style.alignItems = "center";
-          label.style.justifyContent =
-            "space-between";
+          label.style.justifyContent = "space-between";
           let displayText =
-            typeof item === "object"
-              ? item.text ||
-                item.name ||
-                JSON.stringify(item)
-              : item;
+            typeof item === "object" ? item.text || item.name || JSON.stringify(item) : item;
           label.innerHTML = `<span><input type="checkbox"> ${displayText}</span>`;
           groupEss.appendChild(label);
         });
-        (
-          inventorySections[title].optional || []
-        ).forEach((item, idx) => {
-          const label =
-            document.createElement("label");
+        (inventorySections[title].optional || []).forEach((item, idx) => {
+          const label = document.createElement("label");
           label.style.display = "flex";
           label.style.alignItems = "center";
-          label.style.justifyContent =
-            "space-between";
+          label.style.justifyContent = "space-between";
           let displayText =
-            typeof item === "object"
-              ? item.text ||
-                item.name ||
-                JSON.stringify(item)
-              : item;
+            typeof item === "object" ? item.text || item.name || JSON.stringify(item) : item;
           label.innerHTML = `<span><input type="checkbox"> ${displayText}</span>`;
           groupOpt.appendChild(label);
         });
