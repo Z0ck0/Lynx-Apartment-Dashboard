@@ -2047,9 +2047,20 @@
             }
             dragSrcIndex = null;
           };
-          li.innerHTML = `<span><input type="checkbox"> ${item}</span>`;
+          li.innerHTML = `
+            <span><input type="checkbox"> ${item}</span>
+            <button class="delete-item-btn" onclick="deleteShoppingItem(${idx})" style="background: none; border: none; cursor: pointer; font-size: 16px;">🗑️</button>
+            `;
           ul.appendChild(li);
         });
+      }
+      function deleteShoppingItem(index) {
+        shoppingList.splice(index, 1);
+        localStorage.setItem(
+          "shoppingList",
+          JSON.stringify(shoppingList)
+        );
+        renderShoppingList();
       }
       function addShoppingItem() {
         const item = prompt(
