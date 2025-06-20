@@ -1,0 +1,59 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Playwright Testing Standards and Best Practices
+
+## Testing Architecture
+
+- Follow the Page Object Model pattern strictly
+- Separate locators and actions in page object files
+- Maintain directory structure that mirrors business logic
+- Page objects should be independent from one another when possible
+- Reuse existing page objects and utilities before creating new ones
+
+## Structure of the POM
+   - **Imports**: Import necessary Playwright modules.
+   - **Class Definition**: Named after the page it represents.
+   - **Locators**: Define all interactive elements.
+   - **Constructor**: Initialize locators using Playwright’s built-in methods.
+   - **Page Actions**: Define methods for interacting with the page.
+   - **Higher-Level Methods**: Group related actions into a single method to improve readability and maintainability.
+   - **Logical Workflow**: Ensure the sequence of actions follows a natural flow and includes necessary validations.
+   - **Strict Adherence to Provided Content**: No assumptions; only explicitly defined elements and actions are included.
+
+## Code Style & Patterns
+
+- NO conditionals in test files
+- Instead of adding comments to separate test sections, use test.step, but don't overdo it
+- Follow DRY (Don't Repeat Yourself) principle
+- Follow eslint/tslint rules
+- Do not add unnecessary comments
+
+## Development Workflow
+
+- Before writing new tests or page objects:
+  - Analyze existing similar examples in the codebase
+  - Follow established patterns and practices
+  - Review the readme.md file for comprehensive best practices
+
+## File Structure
+
+- Page objects should follow a consistent naming convention
+- Utility functions should be centralized and well-documented (utils directory)
+- Some global variables can be found in the globalVariables directory
+
+## Error Handling
+
+- Implement proper timeout handling for asynchronous operations
+- Ensure tests are resilient to environmental differences
+
+## Best Practices
+   - Use Playwright’s built-in locators (getByRole, getByPlaceholder, etc.) whenever possible.
+   - Keep locator definitions private and read-only to avoid accidental modifications.
+   - Follow Playwright’s best practices for waiting strategies (e.g., waitForLoadState, waitForSelector).
+   - Meaningful naming for locators and methods.
+   - Encapsulation and separation of concerns.
+   - Group related actions into a higher-level method for better readability.
+   - Consistent formatting and error handling.
