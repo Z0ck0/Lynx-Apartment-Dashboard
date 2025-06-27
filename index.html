@@ -1290,31 +1290,48 @@
         y += 10;
         doc.setFontSize(12);
 
-        const shoppingUl =
-          document.getElementById(
-            "shopping-list"
-          );
-        if (shoppingUl) {
-          const lis =
-            shoppingUl.querySelectorAll("li");
-          lis.forEach(li => {
-            const cb = li.querySelector(
-              "input[type='checkbox']"
-            );
-            const checked = cb && cb.checked;
-            const text =
-              "[" +
-              (checked ? "x" : " ") +
-              "] " +
-              li.innerText.trim();
-            doc.text(text, 14, y);
-            y += 7;
-            if (y > 280) {
-              doc.addPage();
-              y = 10;
+        // Get shopping list from localStorage and convert to new format if needed
+        const savedShoppingList = JSON.parse(
+          localStorage.getItem("shoppingList") ||
+            "[]"
+        );
+
+        // Convert old format (strings) to new format (objects with purchased property)
+        const shoppingListForPDF =
+          savedShoppingList.map(item => {
+            if (typeof item === "string") {
+              return {
+                text: item,
+                purchased: false,
+              };
             }
+            return item;
           });
-        }
+
+        // Sort items: unpurchased first, then purchased
+        const sortedShoppingList = [
+          ...shoppingListForPDF,
+        ].sort((a, b) => {
+          if (a.purchased === b.purchased)
+            return 0;
+          return a.purchased ? 1 : -1;
+        });
+
+        sortedShoppingList.forEach(item => {
+          const text =
+            "[" +
+            (item.purchased ? "x" : " ") +
+            "] " +
+            (item.purchased
+              ? item.text + " (купено)"
+              : item.text);
+          doc.text(text, 14, y);
+          y += 7;
+          if (y > 280) {
+            doc.addPage();
+            y = 10;
+          }
+        });
 
         // --- Save PDF ---
         const date =
@@ -1997,6 +2014,7 @@
       // --- Shopping List Logic ---
       let shoppingList = [];
       let dragSrcIndex = null;
+
       function renderShoppingList() {
         const ul = document.getElementById(
           "shopping-list"
@@ -2004,27 +2022,61 @@
         ul.innerHTML = "";
 
         // Load shopping list from localStorage
-        shoppingList = JSON.parse(
+        const savedList = JSON.parse(
           localStorage.getItem("shoppingList") ||
             "[]"
         );
 
-        shoppingList.forEach((item, idx) => {
+        // Convert old format (strings) to new format (objects with purchased property)
+        shoppingList = savedList.map(item => {
+          if (typeof item === "string") {
+            return {
+              text: item,
+              purchased: false,
+            };
+          }
+          return item;
+        });
+
+        // Sort items: unpurchased first, then purchased
+        const sortedList = [...shoppingList].sort(
+          (a, b) => {
+            if (a.purchased === b.purchased)
+              return 0;
+            return a.purchased ? 1 : -1;
+          }
+        );
+
+        sortedList.forEach((item, idx) => {
           const li = document.createElement("li");
           li.setAttribute("draggable", "true");
-          li.setAttribute("data-index", idx);
+          li.setAttribute(
+            "data-index",
+            shoppingList.indexOf(item)
+          );
           li.style.display = "flex";
           li.style.alignItems = "center";
           li.style.justifyContent =
             "space-between";
           li.style.padding = "4px 0";
+
+          // Add visual styling for purchased items
+          if (item.purchased) {
+            li.style.opacity = "0.6";
+            li.style.textDecoration =
+              "line-through";
+          }
+
           li.ondragstart = e => {
-            dragSrcIndex = idx;
+            dragSrcIndex =
+              shoppingList.indexOf(item);
             e.dataTransfer.effectAllowed = "move";
             li.style.opacity = "0.5";
           };
           li.ondragend = () => {
-            li.style.opacity = "";
+            li.style.opacity = item.purchased
+              ? "0.6"
+              : "";
           };
           li.ondragover = e => {
             e.preventDefault();
@@ -2038,24 +2090,55 @@
             li.style.background = "";
             if (
               dragSrcIndex !== null &&
-              dragSrcIndex !== idx
+              dragSrcIndex !==
+                shoppingList.indexOf(item)
             ) {
               const moved = shoppingList.splice(
                 dragSrcIndex,
                 1
               )[0];
-              shoppingList.splice(idx, 0, moved);
+              shoppingList.splice(
+                shoppingList.indexOf(item),
+                0,
+                moved
+              );
+              localStorage.setItem(
+                "shoppingList",
+                JSON.stringify(shoppingList)
+              );
               renderShoppingList();
             }
             dragSrcIndex = null;
           };
+
+          const displayText = item.purchased
+            ? `${item.text} (купено)`
+            : item.text;
+
           li.innerHTML = `
-            <span><input type="checkbox"> ${item}</span>
-            <button class="delete-item-btn" onclick="deleteShoppingItem(${idx})" style="background: none; border: none; cursor: pointer; font-size: 16px;">🗑️</button>
+            <span><input type="checkbox" ${
+              item.purchased ? "checked" : ""
+            } onchange="toggleShoppingItemPurchase(${shoppingList.indexOf(
+            item
+          )})"> ${displayText}</span>
+            <button class="delete-item-btn" onclick="deleteShoppingItem(${shoppingList.indexOf(
+              item
+            )})" style="background: none; border: none; cursor: pointer; font-size: 16px;">🗑️</button>
             `;
           ul.appendChild(li);
         });
       }
+
+      function toggleShoppingItemPurchase(index) {
+        shoppingList[index].purchased =
+          !shoppingList[index].purchased;
+        localStorage.setItem(
+          "shoppingList",
+          JSON.stringify(shoppingList)
+        );
+        renderShoppingList();
+      }
+
       function deleteShoppingItem(index) {
         shoppingList.splice(index, 1);
         localStorage.setItem(
@@ -2064,12 +2147,16 @@
         );
         renderShoppingList();
       }
+
       function addShoppingItem() {
         const item = prompt(
           "Enter shopping item:"
         );
         if (item && item.trim() !== "") {
-          shoppingList.push(item.trim());
+          shoppingList.push({
+            text: item.trim(),
+            purchased: false,
+          });
           localStorage.setItem(
             "shoppingList",
             JSON.stringify(shoppingList)
@@ -2321,8 +2408,11 @@
       }
 
       function addToShoppingList(item) {
-        // Add item to the shopping list array
-        shoppingList.push(item);
+        // Add item to the shopping list array with purchased: false
+        shoppingList.push({
+          text: item,
+          purchased: false,
+        });
 
         // Save the updated shopping list in localStorage
         localStorage.setItem(
