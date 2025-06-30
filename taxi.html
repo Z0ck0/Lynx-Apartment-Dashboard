@@ -245,6 +245,26 @@
         margin-top: 6px;
         line-height: 1.5;
       }
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 14px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.5s,
+          visibility 0.5s ease-in-out;
+        z-index: 9999;
+      }
+      .toast.show {
+        opacity: 1;
+        visibility: visible;
+      }
     </style>
   </head>
   <body>
@@ -285,17 +305,42 @@
           <span class="icon">📍</span>Pickup
           Address
         </div>
-        <div class="address-text">
+        <div
+          class="address-text"
+          id="pickup-address"
+        >
           Boulevard Serbia 31<br />
-          Cevahir Complex, Tower C<br />
-          Floor 11, Apartment 109
+          Cevahir Sky City<br />
+          Tower C, Floor 11, Apartment 109
+        </div>
+        <button
+          class="copy-btn"
+          style="margin-top: 10px"
+          onclick="copyAddress()"
+        >
+          Copy Address
+        </button>
+        <div
+          class="desc"
+          style="
+            margin-top: 8px;
+            font-size: 0.98em;
+            color: #888;
+          "
+        >
+          <span style="color: inherit"
+            >Tip: You can copy the full address
+            above and paste it directly into Wolt,
+            Glovo, or any other delivery app for
+            accurate delivery.</span
+          >
         </div>
       </div>
       <div class="card" id="taxi-card">
         <div class="card-title">
           <span class="icon">🚖</span>
           <span id="taxi-title"
-            >Taxi Services</span
+            >Available Taxi Providers</span
           >
         </div>
         <ul class="list" id="taxi-list">
@@ -419,6 +464,9 @@
         ></span
       >
     </div>
+    <div class="toast" id="toast">
+      <!-- Toast content will be dynamically added here -->
+    </div>
     <script>
       // Dark mode logic
       const themeToggle = document.getElementById(
@@ -479,6 +527,27 @@
             }, 1200);
           }
         });
+      }
+      function copyAddress() {
+        const address = `Boulevard Serbia 31, Cevahir Sky City, Tower C, Floor 11, Apartment 109`;
+        navigator.clipboard.writeText(address);
+        showToast("Address copied!");
+      }
+      function showToast(message) {
+        const toast =
+          document.createElement("div");
+        toast.className = "toast";
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+          toast.classList.add("show");
+        }, 100);
+        setTimeout(() => {
+          toast.classList.remove("show");
+          setTimeout(() => {
+            toast.remove();
+          }, 500);
+        }, 1000);
       }
     </script>
   </body>
