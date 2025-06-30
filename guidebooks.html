@@ -47,6 +47,13 @@
         width: 90px;
         margin-bottom: 8px;
       }
+      .guidebooks-title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--lynx-yellow);
+        margin-top: 12px;
+        margin-bottom: 8px;
+      }
       .welcome {
         font-family: "Poppins", Arial, sans-serif;
         font-size: 1.25rem;
@@ -55,12 +62,13 @@
         color: var(--lynx-blue);
       }
       .main-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px 80px;
         margin: 32px auto 0 auto;
-        max-width: 900px;
+        max-width: 1200px;
         padding: 0 12px;
+        align-items: flex-start;
       }
       .card {
         background: var(--lynx-card);
@@ -74,7 +82,7 @@
         flex-direction: column;
         align-items: flex-start;
         position: relative;
-        margin-bottom: 24px;
+        margin-bottom: 0;
       }
       .card-title {
         font-family: "Poppins", Arial, sans-serif;
@@ -97,6 +105,7 @@
         color: var(--lynx-yellow);
       }
       .address-card {
+        grid-column: 1 / -1;
         margin-bottom: 24px;
         background: var(--lynx-card);
         border-radius: 16px;
@@ -150,17 +159,15 @@
       #theme-toggle:hover {
         background: transparent;
       }
-      @media (max-width: 700px) {
+      @media (max-width: 900px) {
         .main-content {
-          padding: 0 2vw;
-        }
-        .card {
-          min-width: 0;
-          width: 100%;
-          max-width: 100vw;
+          grid-template-columns: 1fr 1fr;
         }
       }
       @media (max-width: 600px) {
+        .main-content {
+          grid-template-columns: 1fr;
+        }
         #theme-toggle {
           top: 12px;
           right: 12px;
@@ -207,23 +214,25 @@
         class="lynx-logo"
         id="lynx-logo"
       />
-      <div class="welcome" id="welcome-msg">
-        Welcome to Lynx Apartments – Your comfort
+      <div
+        class="guidebooks-title text-4xl font-bold text-yellow-400 text-center"
+        style="
+          margin-top: 12px;
+          margin-bottom: 8px;
+        "
+      >
+        Lynx Apartment Guidebooks
+      </div>
+      <div
+        class="welcome text-lg text-yellow-300 text-center"
+        id="welcome-msg"
+        style="margin-bottom: 6px"
+      >
+        Welcome to Lynx Apartment – Your comfort
         is our priority!
       </div>
     </div>
     <div class="main-content">
-      <div class="card address-card">
-        <div class="card-title">
-          <span class="icon">📍</span>Apartment
-          Address
-        </div>
-        <div class="address-text">
-          Boulevard Serbia 31<br />
-          Cevahir Complex, Tower C<br />
-          Floor 11, Apartment 109
-        </div>
-      </div>
       <div class="card">
         <div class="card-title">
           <span class="icon">🍽️🍷</span
