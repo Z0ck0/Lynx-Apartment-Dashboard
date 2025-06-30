@@ -265,6 +265,113 @@
         opacity: 1;
         visibility: visible;
       }
+      /* --- Taxi Services Flex List --- */
+      .taxi-services-list {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        margin: 0 auto;
+        max-width: 480px;
+        padding: 18px 0;
+      }
+      .taxi-service-item {
+        display: flex;
+        align-items: center;
+        background: #23272a;
+        border-radius: 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        padding: 14px 16px;
+        gap: 12px;
+        transition: box-shadow 0.18s;
+      }
+      .taxi-service-item:hover,
+      .taxi-service-item:focus-within {
+        box-shadow: 0 4px 16px #ffe06644;
+      }
+      .taxi-logo {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.7rem;
+        background: #181a1b;
+        border-radius: 10px;
+        margin-right: 10px;
+        flex-shrink: 0;
+      }
+      .taxi-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 8px;
+        background: #fff;
+      }
+      .taxi-label {
+        color: #ffe066;
+        font-weight: 600;
+        font-size: 1.08rem;
+        flex: 1 1 auto;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .taxi-desc {
+        color: #f3f3f3;
+        font-weight: 400;
+        font-size: 0.98rem;
+        margin-left: 4px;
+      }
+      .taxi-icon {
+        font-size: 1.35rem;
+        margin-left: 10px;
+        color: #ffe066;
+        text-decoration: none;
+        border-radius: 50%;
+        padding: 4px;
+        transition: background 0.18s, color 0.18s,
+          box-shadow 0.18s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .taxi-icon:active,
+      .taxi-icon:hover,
+      .taxi-service-item:focus-within .taxi-icon {
+        background: #ffe06622;
+        color: #fff;
+        box-shadow: 0 0 0 2px #ffe06655;
+        outline: none;
+      }
+      @media (max-width: 600px) {
+        .taxi-services-list {
+          max-width: 100vw;
+          padding: 8px 0;
+          gap: 12px;
+        }
+        .taxi-service-item {
+          padding: 10px 8px;
+          gap: 8px;
+        }
+        .taxi-logo {
+          width: 28px;
+          height: 28px;
+          font-size: 1.2rem;
+          margin-right: 6px;
+        }
+        .taxi-label {
+          font-size: 0.98rem;
+        }
+        .taxi-desc {
+          font-size: 0.92rem;
+        }
+        .taxi-icon {
+          font-size: 1.1rem;
+          margin-left: 6px;
+          padding: 3px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -330,8 +437,8 @@
         >
           <span style="color: inherit"
             >Tip: You can copy the full address
-            above and paste it directly into Wolt,
-            Glovo, or any other delivery app for
+            above and paste it directly into Wolt
+            or any other delivery app for
             accurate delivery.</span
           >
         </div>
@@ -343,111 +450,107 @@
             >Available Taxi Providers</span
           >
         </div>
-        <ul class="list" id="taxi-list">
-          <li>
-            <span class="desc" id="taxi-app">
-              Wizi ex Cammeo – Taxi App
-              <a
-                href="https://apps.apple.com/mt/app/wizi/id1078895979"
-                target="_blank"
-                style="
-                  display: inline-block;
-                  vertical-align: middle;
-                  margin-left: 6px;
-                "
+        <div class="taxi-services-list">
+          <!-- Wizi ex Cammeo -->
+          <div class="taxi-service-item">
+            <div class="taxi-logo">
+              <img
+                src="https://play-lh.googleusercontent.com/0Qw5n1YvQn6Qw8Qw5n1YvQn6Qw5n1YvQn6Qw5n1YvQn6Qw5n1YvQn6Qw=w240-h480-rw"
+                alt="Wizi ex Cammeo"
+              />
+            </div>
+            <div class="taxi-label">
+              Wizi ex Cammeo
+              <span class="taxi-desc"
+                >– Taxi App</span
               >
-                <img
-                  src="https://cdn.iphone-news.org/wp-content/uploads/2014/08/app_store_badge.png"
-                  alt="Apple App Store"
-                  style="
-                    height: 22px;
-                    width: auto;
-                    display: inline;
-                    vertical-align: middle;
-                  "
-                />
-              </a>
-              <a
-                href="https://play.google.com/store/apps/details?id=com.binom.cammeo&hl=en"
-                target="_blank"
-                style="
-                  display: inline-block;
-                  vertical-align: middle;
-                  margin-left: 6px;
-                "
-              >
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
-                  alt="Google Play Store"
-                  style="
-                    height: 22px;
-                    width: auto;
-                    display: inline;
-                    vertical-align: middle;
-                  "
-                />
-              </a>
-            </span>
-          </li>
-          <li>
+            </div>
             <a
               href="tel:+38971215196"
-              class="phone-link"
-              >+38971215196</a
+              class="taxi-icon"
+              aria-label="Call Wizi ex Cammeo"
+              >📞</a
             >
-            <button
-              class="copy-btn"
-              onclick="copyPhone('+38971215196')"
+            <a
+              href="https://apps.apple.com/mt/app/wizi/id1078895979"
+              target="_blank"
+              class="taxi-icon"
+              aria-label="Wizi on App Store"
+              ></a
             >
-              Copy
-            </button>
-            <span class="desc">– Express</span>
-          </li>
-          <li>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.binom.cammeo&hl=en"
+              target="_blank"
+              class="taxi-icon"
+              aria-label="Wizi on Google Play"
+              >🤖</a
+            >
+          </div>
+          <!-- Express -->
+          <div class="taxi-service-item">
+            <div class="taxi-logo">🚕</div>
+            <div class="taxi-label">
+              Express
+              <span class="taxi-desc"
+                >– Taxi</span
+              >
+            </div>
+            <a
+              href="tel:+38971215196"
+              class="taxi-icon"
+              aria-label="Call Express"
+              >📞</a
+            >
+          </div>
+          <!-- Riva -->
+          <div class="taxi-service-item">
+            <div class="taxi-logo">🚖</div>
+            <div class="taxi-label">
+              Riva
+              <span class="taxi-desc"
+                >– Taxi</span
+              >
+            </div>
             <a
               href="tel:+38975215161"
-              class="phone-link"
-              >+38975215161</a
+              class="taxi-icon"
+              aria-label="Call Riva"
+              >📞</a
             >
-            <button
-              class="copy-btn"
-              onclick="copyPhone('+38975215161')"
-            >
-              Copy
-            </button>
-            <span class="desc">– Riva</span>
-          </li>
-          <li>
+          </div>
+          <!-- City -->
+          <div class="taxi-service-item">
+            <div class="taxi-logo">🚗</div>
+            <div class="taxi-label">
+              City
+              <span class="taxi-desc"
+                >– Taxi</span
+              >
+            </div>
             <a
               href="tel:+38972315181"
-              class="phone-link"
-              >+38972315181</a
+              class="taxi-icon"
+              aria-label="Call City"
+              >📞</a
             >
-            <button
-              class="copy-btn"
-              onclick="copyPhone('+38972315181')"
-            >
-              Copy
-            </button>
-            <span class="desc">– City</span>
-          </li>
-          <li>
+          </div>
+          <!-- Blue Lagoon -->
+          <div class="taxi-service-item">
+            <div class="taxi-logo">🚙</div>
+            <div class="taxi-label">
+              Blue Lagoon
+              <span class="taxi-desc"
+                >– Taxi</span
+              >
+            </div>
             <a
               href="tel:+38921592"
-              class="phone-link"
-              >+38921592</a
+              class="taxi-icon"
+              aria-label="Call Blue Lagoon"
+              >📞</a
             >
-            <button
-              class="copy-btn"
-              onclick="copyPhone('+38921592')"
-            >
-              Copy
-            </button>
-            <span class="desc"
-              >– Blue Lagoon</span
-            >
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
     </div>
     <div class="footer" id="footer-contact">
