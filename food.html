@@ -149,7 +149,7 @@
         background: var(--lynx-dark);
         color: var(--lynx-yellow);
         text-align: center;
-        padding: 14px 10px 10px 10px;
+        padding: 40px 10px 40px 10px;
         font-size: 1.08rem;
         font-family: "Poppins", Arial, sans-serif;
         z-index: 100;
@@ -344,6 +344,20 @@
           font-size: 0.98rem;
         }
       }
+      .lynx-name-emphasized {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--lynx-yellow);
+        margin-top: 4px;
+        letter-spacing: 0.5px;
+        text-align: center;
+      }
+
+      @media (max-width: 600px) {
+        .lynx-name-emphasized {
+          font-size: 1.05rem;
+        }
+      }
     </style>
   </head>
   <body>
@@ -367,8 +381,10 @@
           </h1>
           <p class="hero-subtitle">
             Discover and order from trusted
-            delivery apps during your stay at Lynx
-            Apartment.
+            delivery apps during your stay at
+          </p>
+          <p class="lynx-name-emphasized">
+            Lynx Apartment
           </p>
         </div>
       </div>
