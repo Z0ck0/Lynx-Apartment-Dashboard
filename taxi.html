@@ -228,6 +228,23 @@
           right: 12px;
         }
       }
+      .address-card {
+        margin-bottom: 24px;
+        background: var(--lynx-card);
+        border-radius: 16px;
+        box-shadow: var(--lynx-shadow);
+        padding: 20px 20px 16px 20px;
+        font-size: 1.08rem;
+        color: var(--lynx-dark);
+      }
+      body.dark-mode .address-card {
+        background: #23272a;
+        color: #ffe066;
+      }
+      .address-text {
+        margin-top: 6px;
+        line-height: 1.5;
+      }
     </style>
   </head>
   <body>
@@ -250,6 +267,17 @@
       </div>
     </div>
     <div class="main-content">
+      <div class="card address-card">
+        <div class="card-title">
+          <span class="icon">📍</span>Pickup
+          Address
+        </div>
+        <div class="address-text">
+          Boulevard Serbia 31<br />
+          Cevahir Complex, Tower C<br />
+          Floor 11, Apartment 109
+        </div>
+      </div>
       <div class="card" id="taxi-card">
         <div class="card-title">
           <span class="icon">🚖</span>
@@ -332,14 +360,15 @@
     </div>
     <div class="footer" id="footer-contact">
       <span id="footer-msg"
-        >Need help? Contact your Lynx host:
+        >Need help? Contact your Lynx host (Call,
+        SMS, Viber, WhatsApp):
         <a
-          href="tel:+389 78 364 545"
+          href="tel:+38978364545"
           style="
             color: #ffe066;
             text-decoration: underline;
           "
-          >+389 78 364 545</a
+          >+38978364545</a
         ></span
       >
     </div>
