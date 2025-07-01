@@ -24,6 +24,13 @@
         --lynx-card: #fff;
         --lynx-shadow: 0 2px 8px
           rgba(0, 0, 0, 0.08);
+        --nav-bg: rgba(30, 32, 34, 0.92);
+        --nav-text: #fff;
+        --nav-accent: #ffe066;
+        --nav-shadow: 0 2px 8px
+          rgba(0, 0, 0, 0.12);
+        --nav-height: 62px;
+        --nav-radius: 16px;
       }
       body {
         font-family: "Roboto", Arial, sans-serif;
@@ -33,6 +40,7 @@
         padding: 0;
         min-height: 100vh;
         box-sizing: border-box;
+        padding-top: var(--nav-height);
       }
       .header {
         background: var(--lynx-card);
@@ -309,15 +317,136 @@
         box-shadow: 0 4px 24px 1px #ffe066cc !important;
         transition: box-shadow 0.18s;
       }
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--nav-height);
+        background: var(--nav-bg);
+        color: var(--nav-text);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        z-index: 1000;
+        box-shadow: var(--nav-shadow);
+        padding: 0 24px;
+        backdrop-filter: blur(8px);
+      }
+      .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+      .nav-logo {
+        height: 38px;
+        width: auto;
+        margin-right: 8px;
+      }
+      .nav-home {
+        background: none;
+        border: none;
+        color: var(--nav-accent);
+        font-size: 1.1rem;
+        font-weight: 700;
+        font-family: "Poppins", Arial, sans-serif;
+        cursor: pointer;
+        padding: 6px 16px;
+        border-radius: 8px;
+        transition: background 0.18s, color 0.18s;
+      }
+      .nav-home:hover,
+      .nav-home:focus {
+        background: var(--nav-accent);
+        color: #23272a;
+        outline: none;
+      }
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .theme-toggle {
+        background: #23272a;
+        color: #ffe066;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.5rem;
+        padding: 6px 10px;
+        cursor: pointer;
+        transition: background 0.18s, color 0.18s;
+      }
+      .theme-toggle:hover,
+      .theme-toggle:focus {
+        background: #ffe066;
+        color: #23272a;
+        outline: none;
+      }
+      @media (max-width: 600px) {
+        .navbar {
+          padding: 0 8px;
+          height: 54px;
+        }
+        .nav-logo {
+          height: 28px;
+        }
+        .nav-home {
+          font-size: 1rem;
+          padding: 4px 10px;
+        }
+        .theme-toggle {
+          font-size: 1.2rem;
+          padding: 4px 8px;
+        }
+      }
+      body.dark-mode {
+        background: #23272a;
+        color: #ffe066;
+      }
+      body.dark-mode .navbar {
+        background: rgba(35, 39, 42, 0.98);
+        color: #ffe066;
+      }
+      body.dark-mode .nav-home {
+        color: #ffe066;
+      }
+      body.dark-mode .nav-home:hover,
+      body.dark-mode .nav-home:focus {
+        background: #ffe066;
+        color: #23272a;
+      }
+      body.dark-mode .theme-toggle {
+        background: #ffe066;
+        color: #23272a;
+      }
+      body.dark-mode .theme-toggle:hover,
+      body.dark-mode .theme-toggle:focus {
+        background: #23272a;
+        color: #ffe066;
+      }
     </style>
   </head>
   <body>
-    <button
-      id="theme-toggle"
-      aria-label="Toggle dark mode"
-    >
-      🌙
-    </button>
+    <nav class="navbar">
+      <div class="nav-left">
+        <!-- <img src="public/logo-lynx.png" alt="Lynx Logo" class="nav-logo" /> -->
+        <button
+          class="nav-home"
+          onclick="location.href='home.html'"
+        >
+          Home
+        </button>
+      </div>
+      <div class="nav-right">
+        <button
+          class="theme-toggle"
+          id="theme-toggle"
+          aria-label="Toggle dark mode"
+        >
+          🌙
+        </button>
+      </div>
+    </nav>
     <section class="hero-section">
       <div class="hero-bg-full">
         <a
@@ -466,19 +595,16 @@
       >
     </div>
     <script>
-      // Dark mode logic
+      // Theme toggle logic
       const themeToggle = document.getElementById(
         "theme-toggle"
       );
-      const logoImg =
-        document.getElementById("lynx-logo");
       function setTheme(dark) {
         if (dark) {
           document.body.classList.add(
             "dark-mode"
           );
           themeToggle.textContent = "☀️";
-          logoImg.src = "logo-lynx-dark.png";
           localStorage.setItem(
             "lynx-theme",
             "dark"
@@ -488,17 +614,11 @@
             "dark-mode"
           );
           themeToggle.textContent = "🌙";
-          logoImg.src = "logo-lynx.png";
           localStorage.setItem(
             "lynx-theme",
             "light"
           );
         }
-        // Always use dark logo in hero
-        const heroLogo =
-          document.getElementById("hero-logo");
-        if (heroLogo)
-          heroLogo.src = "logo-lynx-dark.png";
       }
       themeToggle.onclick = function () {
         setTheme(
@@ -507,7 +627,6 @@
           )
         );
       };
-      // Default to dark mode
       (function () {
         const saved =
           localStorage.getItem("lynx-theme");
