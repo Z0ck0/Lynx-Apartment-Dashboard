@@ -287,6 +287,23 @@
           font-size: 1.05rem;
         }
       }
+      .airbnb-logo-hero {
+        position: absolute;
+        top: 24px;
+        left: 32px;
+        height: 54px;
+        width: auto;
+        z-index: 10;
+        background: none;
+        /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
+      }
+      @media (max-width: 600px) {
+        .airbnb-logo-hero {
+          top: 10px;
+          left: 10px;
+          height: 36px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -298,6 +315,11 @@
     </button>
     <section class="hero-section">
       <div class="hero-bg-full">
+        <img
+          src="public/Airbnb_Logo.png"
+          alt="Airbnb Logo"
+          class="airbnb-logo-hero"
+        />
         <div class="hero-overlay-full">
           <img
             src="logo-lynx-dark.png"
