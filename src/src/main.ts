@@ -10,6 +10,7 @@ import { DateUtils } from "./utils/date-utils";
 import { PdfGenerator } from "./utils/pdf-generator";
 import { showToast } from "./utils/toast";
 import { resetApplicationState } from "./utils/app-reset";
+import CleaningHeuristicsChecklist from "./checklist/cleaning-heuristics-checklist";
 
 // Initialize all modules
 document.addEventListener(
@@ -32,6 +33,17 @@ document.addEventListener(
     new ConsumablesManager();
     new InventoryManager();
     new SearchManager();
+
+    // Initialize cleaning heuristics
+    const heuristicsContainer =
+      document.getElementById(
+        "heuristics-container"
+      );
+    if (heuristicsContainer) {
+      new CleaningHeuristicsChecklist(
+        heuristicsContainer
+      );
+    }
 
     // Connect 'Add to Shopping' buttons
     document.body.addEventListener("click", e => {

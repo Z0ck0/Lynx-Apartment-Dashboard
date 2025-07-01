@@ -59,6 +59,16 @@
         </button>
         <button
           class="tab-btn"
+          id="tab-heuristics"
+          role="tab"
+          aria-selected="false"
+          aria-controls="content-heuristics"
+          tabindex="-1"
+        >
+          Heuristics
+        </button>
+        <button
+          class="tab-btn"
           id="tab-consumables"
           role="tab"
           aria-selected="false"
@@ -106,6 +116,18 @@
             id="notes"
             placeholder="Any extra details..."
           />
+        </div>
+      </div>
+
+      <!-- Heuristics Section -->
+      <div
+        id="content-heuristics"
+        class="tab-content"
+        role="tabpanel"
+        aria-labelledby="tab-heuristics"
+      >
+        <div id="heuristics-container">
+          <!-- Cleaning heuristics will be rendered here -->
         </div>
       </div>
 
