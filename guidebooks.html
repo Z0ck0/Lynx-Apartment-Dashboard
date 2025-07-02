@@ -447,6 +447,128 @@
           box-sizing: border-box;
         }
       }
+      /* Guidebook Card Redesign */
+      .guidebook-section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+        margin-bottom: 32px;
+        justify-content: center;
+      }
+      .guidebook-card {
+        background: var(--lynx-card);
+        border-radius: 16px;
+        box-shadow: var(--lynx-shadow);
+        padding: 24px 20px 20px 20px;
+        min-width: 260px;
+        max-width: 420px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        border-left: 5px solid var(--lynx-blue);
+        position: relative;
+        transition: box-shadow 0.18s;
+      }
+      .guidebook-card.restaurants {
+        border-left-color: #0078d7;
+      }
+      .guidebook-card.outdoor {
+        border-left-color: #28a745;
+      }
+      .guidebook-card.shopping {
+        border-left-color: #ff9800;
+      }
+      .guidebook-card.attractions {
+        border-left-color: #e91e63;
+      }
+      .guidebook-card.museums {
+        border-left-color: #9c27b0;
+      }
+      .guidebook-card.entertainment {
+        border-left-color: #ff5722;
+      }
+      .guidebook-card:hover,
+      .guidebook-card:focus-within {
+        box-shadow: 0 4px 24px 1px #ffe066cc !important;
+      }
+      .guidebook-header {
+        display: flex;
+        align-items: center;
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+        gap: 10px;
+      }
+      .guidebook-emoji {
+        font-size: 1.6em;
+        margin-right: 8px;
+      }
+      .guidebook-subtitle {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 16px;
+        font-weight: 500;
+      }
+      .guidebook-btn {
+        margin-top: 12px;
+        background: var(--lynx-blue);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.08rem;
+        font-family: "Poppins", Arial, sans-serif;
+        font-weight: 600;
+        padding: 12px 28px;
+        cursor: pointer;
+        text-decoration: none;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        transition: background 0.18s, color 0.18s;
+        display: inline-block;
+      }
+      .guidebook-btn:hover,
+      .guidebook-btn:focus {
+        background: #ffd43b;
+        color: #23272a;
+        outline: none;
+      }
+      @media (max-width: 900px) {
+        .guidebook-section {
+          gap: 18px;
+        }
+      }
+      @media (max-width: 700px) {
+        .guidebook-section {
+          flex-direction: column;
+          gap: 14px;
+          align-items: stretch;
+          box-sizing: border-box;
+          width: 100%;
+          max-width: 100%;
+          overflow-x: hidden;
+        }
+        .guidebook-card {
+          min-width: 0;
+          max-width: 100%;
+          width: 100%;
+          margin: 0;
+          box-sizing: border-box;
+        }
+      }
+      body.dark-mode .guidebook-card {
+        background: #23272a;
+        color: #ffe066;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      }
+      body.dark-mode .guidebook-btn {
+        background: #ffe066;
+        color: #23272a;
+      }
+      body.dark-mode .guidebook-btn:hover,
+      body.dark-mode .guidebook-btn:focus {
+        background: #0078d7;
+        color: #fff;
+      }
     </style>
   </head>
   <body>
@@ -530,77 +652,98 @@
       </div>
     </div> -->
     <div class="main-content">
-      <div class="card">
-        <div class="card-title">
-          <span class="icon">🍽️🍷</span
-          >Restaurants & Bars
+      <div class="guidebook-section">
+        <div class="guidebook-card restaurants">
+          <div class="guidebook-header">
+            <span class="guidebook-emoji"
+              >🍽️🍷</span
+            >Restaurants & Bars
+          </div>
+          <div class="guidebook-subtitle">
+            Local recommendations
+          </div>
+          <a
+            class="guidebook-btn"
+            href="https://www.airbnb.com/s/guidebooks?refinement_paths%5B%5D=%2Fguidebooks%2F6445854&s=67&unique_share_id=17f2527a-9d7d-4f70-a124-94ff42cbb9c2"
+            target="_blank"
+            >View Guidebook</a
+          >
         </div>
-        <a
-          class="guidebook-link"
-          href="https://www.airbnb.com/s/guidebooks?refinement_paths%5B%5D=%2Fguidebooks%2F6445854&s=67&unique_share_id=17f2527a-9d7d-4f70-a124-94ff42cbb9c2"
-          target="_blank"
-          >View Guidebook</a
-        >
-      </div>
-      <div class="card">
-        <div class="card-title">
-          <span class="icon">🌳</span>Outdoor
-          Activities & Nature
+        <div class="guidebook-card outdoor">
+          <div class="guidebook-header">
+            <span class="guidebook-emoji">🌳</span
+            >Outdoor Activities & Nature
+          </div>
+          <div class="guidebook-subtitle">
+            Parks, hiking, and more
+          </div>
+          <a
+            class="guidebook-btn"
+            href="https://www.airbnb.com/s/guidebooks?refinement_paths%5B%5D=%2Fguidebooks%2F6445888&s=67&unique_share_id=bfb07e6f-ed1f-4b67-86dc-74be5a45ed4d"
+            target="_blank"
+            >View Guidebook</a
+          >
         </div>
-        <a
-          class="guidebook-link"
-          href="https://www.airbnb.com/s/guidebooks?refinement_paths%5B%5D=%2Fguidebooks%2F6445888&s=67&unique_share_id=bfb07e6f-ed1f-4b67-86dc-74be5a45ed4d"
-          target="_blank"
-          >View Guidebook</a
-        >
-      </div>
-      <div class="card">
-        <div class="card-title">
-          <span class="icon">🛍️</span>Shopping &
-          Local Markets
+        <div class="guidebook-card shopping">
+          <div class="guidebook-header">
+            <span class="guidebook-emoji">🛍️</span
+            >Shopping & Local Markets
+          </div>
+          <div class="guidebook-subtitle">
+            Shops, malls, and markets
+          </div>
+          <a
+            class="guidebook-btn"
+            href="https://www.airbnb.com/s/guidebooks?refinement_paths%5B%5D=%2Fguidebooks%2F6445904&s=67&unique_share_id=f99bf10b-19ce-4f3c-a555-f81f0760bb7f"
+            target="_blank"
+            >View Guidebook</a
+          >
         </div>
-        <a
-          class="guidebook-link"
-          href="https://www.airbnb.com/s/guidebooks?refinement_paths%5B%5D=%2Fguidebooks%2F6445904&s=67&unique_share_id=f99bf10b-19ce-4f3c-a555-f81f0760bb7f"
-          target="_blank"
-          >View Guidebook</a
-        >
-      </div>
-      <div class="card">
-        <div class="card-title">
-          <span class="icon">��️</span>Attractions
-          & Sightseeing
+        <div class="guidebook-card attractions">
+          <div class="guidebook-header">
+            <span class="guidebook-emoji">🏛️</span
+            >Attractions & Sightseeing
+          </div>
+          <div class="guidebook-subtitle">
+            Must-see places
+          </div>
+          <a
+            class="guidebook-btn"
+            href="https://www.airbnb.com/s/guidebooks?refinement_paths%5B%5D=%2Fguidebooks%2F6445913&s=67&unique_share_id=a69aee32-a072-4f91-ae0d-86b038428fca"
+            target="_blank"
+            >View Guidebook</a
+          >
         </div>
-        <a
-          class="guidebook-link"
-          href="https://www.airbnb.com/s/guidebooks?refinement_paths%5B%5D=%2Fguidebooks%2F6445913&s=67&unique_share_id=a69aee32-a072-4f91-ae0d-86b038428fca"
-          target="_blank"
-          >View Guidebook</a
-        >
-      </div>
-      <div class="card">
-        <div class="card-title">
-          <span class="icon">🖼️</span>Museums &
-          Galleries
+        <div class="guidebook-card museums">
+          <div class="guidebook-header">
+            <span class="guidebook-emoji">🖼️</span
+            >Museums & Galleries
+          </div>
+          <div class="guidebook-subtitle">
+            Art & history
+          </div>
+          <a
+            class="guidebook-btn"
+            href="https://www.airbnb.com/s/guidebooks?refinement_paths%5B%5D=%2Fguidebooks%2F6445919&s=67&unique_share_id=5c0d8f7f-7c7f-495b-ab18-3348941659f6"
+            target="_blank"
+            >View Guidebook</a
+          >
         </div>
-        <a
-          class="guidebook-link"
-          href="https://www.airbnb.com/s/guidebooks?refinement_paths%5B%5D=%2Fguidebooks%2F6445919&s=67&unique_share_id=5c0d8f7f-7c7f-495b-ab18-3348941659f6"
-          target="_blank"
-          >View Guidebook</a
-        >
-      </div>
-      <div class="card">
-        <div class="card-title">
-          <span class="icon">🎭</span
-          >Entertainment & Nightlife Skopje
+        <div class="guidebook-card entertainment">
+          <div class="guidebook-header">
+            <span class="guidebook-emoji">🎭</span
+            >Entertainment & Nightlife Skopje
+          </div>
+          <div class="guidebook-subtitle">
+            Bars, clubs, and events
+          </div>
+          <a
+            class="guidebook-btn"
+            href="https://www.airbnb.com/s/guidebooks?refinement_paths%5B%5D=%2Fguidebooks%2F6445924&s=67&unique_share_id=0c0fd1e8-504a-42f5-8388-f218fd7fce7e"
+            target="_blank"
+            >View Guidebook</a
+          >
         </div>
-        <a
-          class="guidebook-link"
-          href="https://www.airbnb.com/s/guidebooks?refinement_paths%5B%5D=%2Fguidebooks%2F6445924&s=67&unique_share_id=0c0fd1e8-504a-42f5-8388-f218fd7fce7e"
-          target="_blank"
-          >View Guidebook</a
-        >
       </div>
     </div>
     <div class="footer" id="footer-contact">
