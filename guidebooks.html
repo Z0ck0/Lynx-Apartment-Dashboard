@@ -109,15 +109,14 @@
       .guidebook-link:hover {
         color: var(--lynx-yellow);
       }
-      .address-card {
-        grid-column: 1 / -1;
-        margin-bottom: 24px;
-        background: var(--lynx-card);
-        border-radius: 16px;
-        box-shadow: var(--lynx-shadow);
-        padding: 20px 20px 16px 20px;
-        font-size: 1.08rem;
-        color: var(--lynx-dark);
+      .address-card,
+      #guidebooks-card,
+      .disclaimer-section {
+        max-width: 900px;
+        margin: 24px auto;
+        padding-left: 12px;
+        padding-right: 12px;
+        box-sizing: border-box;
       }
       body.dark-mode .address-card {
         background: #23272a;
