@@ -41,6 +41,12 @@
         min-height: 100vh;
         box-sizing: border-box;
         padding-top: 52px;
+        overflow-x: hidden;
+      }
+      html,
+      body {
+        overflow-x: hidden;
+        box-sizing: border-box;
       }
       .header {
         background: var(--lynx-card);
@@ -79,9 +85,8 @@
         border-radius: 16px;
         box-shadow: var(--lynx-shadow);
         padding: 28px 24px 20px 24px;
-        min-width: 400px;
-        max-width: 480px;
         width: 100%;
+        max-width: 480px;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -170,31 +175,23 @@
       }
       @media (max-width: 700px) {
         .main-content {
-          padding-left: 16px;
-          padding-right: 16px;
+          max-width: 100vw;
+          width: 100%;
+          box-sizing: border-box;
         }
         .card {
-          margin-left: 0;
-          margin-right: 0;
-          width: 100%;
           max-width: 100vw;
-        }
-        .food-section {
           width: 100%;
         }
         .address-card,
-        #food-card {
-          padding-left: 18px;
-          padding-right: 18px;
-          padding-top: 20px;
-          padding-bottom: 16px;
-          margin-bottom: 18px;
-          border-radius: 16px;
+        #food-card,
+        .disclaimer-section {
           max-width: 100vw;
+          width: 100%;
           margin-left: 0;
           margin-right: 0;
+          box-sizing: border-box;
         }
-
         .food-services-list {
           max-width: 100vw;
           padding: 8px 0;
@@ -324,13 +321,13 @@
         visibility: visible;
       }
       .hero-section {
-        width: 100vw;
+        width: 100%;
         margin: 0;
         padding: 0;
         box-sizing: border-box;
       }
       .hero-bg-full {
-        width: 100vw;
+        width: 100%;
         height: 390px;
         margin: 0;
         background: url("https://hungerbay.com/assets/images/b6.jpg")
@@ -341,7 +338,7 @@
         justify-content: center;
       }
       .hero-overlay-full {
-        width: 100vw;
+        width: 100%;
         height: 390px;
         background: rgba(24, 26, 27, 0.45);
         display: flex;
