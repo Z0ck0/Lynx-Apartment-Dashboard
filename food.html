@@ -182,10 +182,19 @@
         .food-section {
           width: 100%;
         }
-        .address-card {
+        .address-card,
+        #food-card {
           padding-left: 18px;
           padding-right: 18px;
+          padding-top: 20px;
+          padding-bottom: 16px;
+          margin-bottom: 18px;
+          border-radius: 16px;
+          max-width: 100vw;
+          margin-left: 0;
+          margin-right: 0;
         }
+
         .food-services-list {
           max-width: 100vw;
           padding: 8px 0;
@@ -275,14 +284,14 @@
           right: 34px;
         }
       }
-      .address-card {
-        margin-bottom: 24px;
-        background: var(--lynx-card);
-        border-radius: 16px;
-        box-shadow: var(--lynx-shadow);
-        padding: 1px 8px 16px 4px;
-        font-size: 1.08rem;
-        color: var(--lynx-dark);
+      .address-card,
+      #food-card,
+      .disclaimer-section {
+        max-width: 900px;
+        margin: 24px auto;
+        padding-left: 12px;
+        padding-right: 12px;
+        box-sizing: border-box;
       }
       body.dark-mode .address-card {
         background: #23272a;
@@ -747,10 +756,10 @@
       }
 
       /* Responsive Design */
-      @media (max-width: 700px) {
+      @media (max-width: 400px) {
         .main-content {
-          padding-left: 16px;
-          padding-right: 16px;
+          padding-left: 20px;
+          padding-right: 20px;
         }
         .card {
           margin-left: 0;
