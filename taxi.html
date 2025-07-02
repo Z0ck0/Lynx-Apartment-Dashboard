@@ -82,9 +82,8 @@
         border-radius: 16px;
         box-shadow: var(--lynx-shadow);
         padding: 28px 24px 20px 24px;
-        min-width: 400px;
-        max-width: 480px;
         width: 100%;
+        max-width: 480px;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -910,6 +909,45 @@
         
         .disclaimer-content p {
           font-size: 0.9rem;
+        }
+      }
+      html, body {
+        overflow-x: hidden;
+        box-sizing: border-box;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 480px;
+        /* min-width removed for responsiveness */
+      }
+
+      .hero-section,
+      .hero-bg-full,
+      .hero-overlay-full {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+      }
+
+      @media (max-width: 700px) {
+        .main-content {
+          max-width: 100vw;
+          width: 100%;
+          box-sizing: border-box;
+        }
+        .card {
+          max-width: 100vw;
+          width: 100%;
+        }
+        .address-card,
+        #taxi-card,
+        .disclaimer-section {
+          max-width: 100vw;
+          width: 100%;
+          margin-left: 0;
+          margin-right: 0;
+          box-sizing: border-box;
         }
       }
     </style>

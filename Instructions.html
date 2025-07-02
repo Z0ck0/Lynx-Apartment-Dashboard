@@ -36,6 +36,7 @@
       body {
         margin: 0;
         padding: 0;
+        overflow-x: hidden;
         box-sizing: border-box;
       }
       body {
@@ -76,9 +77,8 @@
         border-radius: 16px;
         box-shadow: var(--lynx-shadow);
         padding: 28px 24px 20px 24px;
-        min-width: 400px;
-        max-width: 480px;
         width: 100%;
+        max-width: 480px;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -124,15 +124,22 @@
       }
       @media (max-width: 700px) {
         .main-content {
-          padding-left: 16px;
-          padding-right: 16px;
+          max-width: 100vw;
+          width: 100%;
+          box-sizing: border-box;
         }
         .card {
+          max-width: 100vw;
+          width: 100%;
+        }
+        .address-card,
+        #main-content,
+        .disclaimer-section {
+          max-width: 100vw;
+          width: 100%;
           margin-left: 0;
           margin-right: 0;
-          width: 100%;
-          max-width: 100vw;
-          min-width: 0;
+          box-sizing: border-box;
         }
       }
       body.dark-mode {
@@ -226,13 +233,13 @@
         }
       }
       .hero-section {
-        width: 100vw;
+        width: 100%;
         margin: 0;
         padding: 0;
         box-sizing: border-box;
       }
       .hero-bg-full {
-        width: 100vw;
+        width: 100%;
         height: 390px;
         margin: 0;
         background: url("https://hungerbay.com/assets/images/b6.jpg")
@@ -243,7 +250,7 @@
         justify-content: center;
       }
       .hero-overlay-full {
-        width: 100vw;
+        width: 100%;
         height: 390px;
         background: rgba(24, 26, 27, 0.45);
         display: flex;
