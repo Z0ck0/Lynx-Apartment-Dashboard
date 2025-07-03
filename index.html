@@ -2121,9 +2121,14 @@
             } onchange="toggleShoppingItemPurchase(${shoppingList.indexOf(
             item
           )})"> ${displayText}</span>
-            <button class="delete-item-btn" onclick="deleteShoppingItem(${shoppingList.indexOf(
-              item
-            )})" style="background: none; border: none; cursor: pointer; font-size: 16px;">🗑️</button>
+            <div style="display: flex; gap: 4px;">
+              <button class="edit-item-btn" onclick="editShoppingItem(${shoppingList.indexOf(
+                item
+              )})" style="background: none; border: none; cursor: pointer; font-size: 16px;">✏️</button>
+              <button class="delete-item-btn" onclick="deleteShoppingItem(${shoppingList.indexOf(
+                item
+              )})" style="background: none; border: none; cursor: pointer; font-size: 16px;">🗑️</button>
+            </div>
             `;
           ul.appendChild(li);
         });
@@ -2146,6 +2151,23 @@
           JSON.stringify(shoppingList)
         );
         renderShoppingList();
+      }
+
+      function editShoppingItem(index) {
+        const currentItem = shoppingList[index];
+        const newText = prompt(
+          "Edit shopping item:",
+          currentItem.text
+        );
+        if (newText && newText.trim() !== "") {
+          shoppingList[index].text =
+            newText.trim();
+          localStorage.setItem(
+            "shoppingList",
+            JSON.stringify(shoppingList)
+          );
+          renderShoppingList();
+        }
       }
 
       function addShoppingItem() {
