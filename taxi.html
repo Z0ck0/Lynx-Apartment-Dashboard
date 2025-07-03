@@ -1363,6 +1363,207 @@
     <div class="toast" id="toast">
       <!-- Toast content will be dynamically added here -->
     </div>
+    <!-- Modal HTML (place at the end of <body> in taxi.html) -->
+<div id="important-modal" class="modal-backdrop" tabindex="-1" aria-modal="true" role="dialog">
+  <div class="modal-dialog">
+    <h2 class="modal-title">Important Notice</h2>
+    <div class="modal-body">
+      <p>
+        All taxi services listed on this page are independent third-party providers. Lynx Apartment and your host are not affiliated with, endorsed by, or responsible for any of these companies, their services, pricing, or the quality of their transportation services.
+      </p>
+      <p>
+        All bookings, payments, and arrangements are made directly between you and the chosen provider. Please verify details and terms directly with your selected taxi service before booking.
+      </p>
+      <label class="modal-checkbox-label">
+        <input type="checkbox" id="modal-checkbox" />
+        I have read and understand the Important Notice.
+      </label>
+      <button id="modal-confirm-btn" disabled>Confirm &amp; Continue</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.modal-backdrop {
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  background: rgba(30, 32, 34, 0.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: modal-fade-in 0.4s cubic-bezier(0.4,0,0.2,1);
+  font-family: system-ui, 'Poppins', Arial, sans-serif;
+}
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.modal-dialog {
+  background: #23272a;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  padding: 32px 18px 24px 18px;
+  max-width: 98vw;
+  width: 400px;
+  color: #f3f3f3;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 20px;
+  position: relative;
+  font-family: system-ui, 'Poppins', Arial, sans-serif;
+  font-size: 1.08rem;
+}
+.modal-title {
+  color: #ffe066;
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 6px;
+}
+.modal-body p {
+  margin: 0 0 10px 0;
+  font-size: 1.05rem;
+  color: #f3f3f3;
+  text-align: justify;
+  line-height: 1.6;
+}
+.modal-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.05rem;
+  margin: 18px 0 0 0;
+  color: #ffe066;
+  font-weight: 500;
+  padding: 10px 0;
+  cursor: pointer;
+  user-select: none;
+}
+#modal-checkbox {
+  accent-color: #ffe066;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+#modal-confirm-btn {
+  margin-top: 22px;
+  padding: 15px 0;
+  background: #ffe066;
+  color: #23272a;
+  font-weight: 700;
+  font-size: 1.13rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, opacity 0.18s;
+  opacity: 0.7;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  width: 100%;
+  text-align: center;
+  outline: none;
+  min-height: 48px;
+  display: block;
+}
+#modal-confirm-btn:enabled {
+  opacity: 1;
+  background: #ffe066;
+  color: #23272a;
+}
+#modal-confirm-btn:disabled {
+  cursor: not-allowed;
+}
+@media (max-width: 600px) {
+  .modal-dialog {
+    width: 100vw;
+    min-width: 0;
+    padding: 18px 16px 18px 16px;
+    border-radius: 0;
+    box-sizing: border-box;
+  }
+  .modal-title {
+    font-size: 1.1rem;
+  }
+  .modal-body p {
+    font-size: 0.98rem;
+  }
+  #modal-confirm-btn {
+    font-size: 1rem;
+    min-height: 44px;
+    padding: 13px 0;
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 10px;
+    left: 0;
+    right: 0;
+    display: block;
+    box-sizing: border-box;
+  }
+  .modal-checkbox-label {
+    font-size: 0.98rem;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  #modal-checkbox {
+    width: 20px;
+    height: 20px;
+  }
+}
+</style>
+<script>
+(function() {
+  if (sessionStorage.getItem('taxiNoticeConfirmed')) {
+    document.getElementById('important-modal').style.display = 'none';
+    return;
+  }
+  document.body.style.overflow = 'hidden';
+  const modal = document.getElementById('important-modal');
+  const checkbox = document.getElementById('modal-checkbox');
+  const btn = document.getElementById('modal-confirm-btn');
+  checkbox.addEventListener('change', function() {
+    btn.disabled = !this.checked;
+  });
+  btn.addEventListener('click', function() {
+    modal.style.display = 'none';
+    sessionStorage.setItem('taxiNoticeConfirmed', '1');
+    document.body.style.overflow = '';
+  });
+  modal.addEventListener('keydown', function(e) {
+    if (e.key === 'Tab') {
+      const focusables = modal.querySelectorAll('input,button');
+      const first = focusables[0], last = focusables[focusables.length-1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          last.focus();
+          e.preventDefault();
+        }
+      } else {
+        if (document.activeElement === last) {
+          first.focus();
+          e.preventDefault();
+        }
+      }
+    }
+    if (e.key === 'Escape') {
+      e.preventDefault();
+    }
+  });
+  setTimeout(() => checkbox.focus(), 200);
+})();
+</script>
     <script>
       // Theme toggle logic
       const themeToggle = document.getElementById(
