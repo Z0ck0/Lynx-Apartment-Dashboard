@@ -56,16 +56,20 @@
       #theme-toggle {
         position: absolute;
         top: 8px;
-        right: 18px;
-        font-size: 1.5rem;
+        right: 15px;
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        border: 2px solid rgba(0, 0, 0, 0.1);
         background: var(--lynx-card);
-        color: #222;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        padding: 6px 10px;
+        color: var(--lynx-dark);
         cursor: pointer;
-        z-index: 1000;
-        transition: background 0.2s, color 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        transition: var(--lynx-transition);
+        box-shadow: var(--lynx-shadow);
       }
       body.dark-mode #theme-toggle {
         background: #23272a;
