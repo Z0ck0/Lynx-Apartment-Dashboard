@@ -1319,5 +1319,236 @@
         }, 1000);
       }
     </script>
+    <!-- Modal HTML (place at the end of <body> in food.html) -->
+    <div
+      id="important-modal"
+      class="modal-backdrop"
+      tabindex="-1"
+      aria-modal="true"
+      role="dialog"
+    >
+      <div class="modal-dialog">
+        <h2 class="modal-title">
+          Important Notice
+        </h2>
+        <div class="modal-body">
+          <p>
+            All food delivery and restaurant
+            services listed on this page are
+            independent third-party providers.
+            Lynx Apartment and your host are not
+            affiliated with, endorsed by, or
+            responsible for any of these
+            companies, their services, pricing, or
+            the quality of their food.
+          </p>
+          <p>
+            All orders, payments, and arrangements
+            are made directly between you and the
+            chosen provider. Please verify details
+            and terms directly with your selected
+            service before ordering.
+          </p>
+          <label class="modal-checkbox-label">
+            <input
+              type="checkbox"
+              id="modal-checkbox"
+            />
+            I have read and understand the
+            Important Notice.
+          </label>
+          <button id="modal-confirm-btn" disabled>
+            Confirm &amp; Continue
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      /* Modal Backdrop */
+      .modal-backdrop {
+        position: fixed;
+        z-index: 9999;
+        inset: 0;
+        background: rgba(30, 32, 34, 0.85);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: modal-fade-in 0.4s
+          cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      @keyframes modal-fade-in {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Modal Dialog */
+      .modal-dialog {
+        background: #23272a;
+        border-radius: 18px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+        padding: 32px 24px 24px 24px;
+        max-width: 95vw;
+        width: 400px;
+        color: #f3f3f3;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 18px;
+        position: relative;
+      }
+      .modal-title {
+        color: #ffe066;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+        text-align: center;
+      }
+      .modal-body p {
+        margin: 0 0 10px 0;
+        font-size: 1.05rem;
+        color: #f3f3f3;
+        text-align: left;
+      }
+      .modal-checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1rem;
+        margin: 10px 0 0 0;
+        color: #ffe066;
+        font-weight: 500;
+      }
+      #modal-checkbox {
+        accent-color: #ffe066;
+        width: 20px;
+        height: 20px;
+      }
+      #modal-confirm-btn {
+        margin-top: 18px;
+        padding: 12px 0;
+        background: #ffe066;
+        color: #23272a;
+        font-weight: 700;
+        font-size: 1.08rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.18s, color 0.18s,
+          opacity 0.18s;
+        opacity: 0.7;
+        letter-spacing: 0.5px;
+      }
+      #modal-confirm-btn:enabled {
+        opacity: 1;
+        background: #ffe066;
+        color: #23272a;
+      }
+      #modal-confirm-btn:disabled {
+        cursor: not-allowed;
+      }
+
+      /* Responsive */
+      @media (max-width: 600px) {
+        .modal-dialog {
+          width: 98vw;
+          padding: 18px 6vw 18px 6vw;
+          font-size: 1rem;
+        }
+        .modal-title {
+          font-size: 1.15rem;
+        }
+      }
+    </style>
+
+    <script>
+      (function () {
+        // Only show if not confirmed this session
+        if (
+          sessionStorage.getItem(
+            "foodNoticeConfirmed"
+          )
+        ) {
+          document.getElementById(
+            "important-modal"
+          ).style.display = "none";
+          return;
+        }
+        // Block scroll and interaction
+        document.body.style.overflow = "hidden";
+
+        const modal = document.getElementById(
+          "important-modal"
+        );
+        const checkbox = document.getElementById(
+          "modal-checkbox"
+        );
+        const btn = document.getElementById(
+          "modal-confirm-btn"
+        );
+
+        checkbox.addEventListener(
+          "change",
+          function () {
+            btn.disabled = !this.checked;
+          }
+        );
+
+        btn.addEventListener(
+          "click",
+          function () {
+            modal.style.display = "none";
+            sessionStorage.setItem(
+              "foodNoticeConfirmed",
+              "1"
+            );
+            document.body.style.overflow = "";
+          }
+        );
+
+        // Trap focus inside modal
+        modal.addEventListener(
+          "keydown",
+          function (e) {
+            if (e.key === "Tab") {
+              const focusables =
+                modal.querySelectorAll(
+                  "input,button"
+                );
+              const first = focusables[0],
+                last =
+                  focusables[
+                    focusables.length - 1
+                  ];
+              if (e.shiftKey) {
+                if (
+                  document.activeElement === first
+                ) {
+                  last.focus();
+                  e.preventDefault();
+                }
+              } else {
+                if (
+                  document.activeElement === last
+                ) {
+                  first.focus();
+                  e.preventDefault();
+                }
+              }
+            }
+            if (e.key === "Escape") {
+              e.preventDefault();
+            }
+          }
+        );
+        // Autofocus checkbox for accessibility
+        setTimeout(() => checkbox.focus(), 200);
+      })();
+    </script>
   </body>
 </html>
