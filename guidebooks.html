@@ -134,7 +134,7 @@
         background: var(--lynx-dark);
         color: var(--lynx-yellow);
         text-align: center;
-        padding: 40px 40px 40px 40px;
+        padding: 40px 10px 60px 10px;
         font-size: 1.08rem;
         font-family: "Poppins", Arial, sans-serif;
         z-index: 100;
@@ -175,10 +175,14 @@
       @media (max-width: 600px) {
         .main-content {
           grid-template-columns: 1fr;
+          gap: 44px !important;
         }
         #theme-toggle {
           top: 4px;
           right: 34px;
+        }
+        .section-card {
+          margin-bottom: 44px !important;
         }
       }
       body.dark-mode {
@@ -455,8 +459,8 @@
       .guidebook-section {
         display: flex;
         flex-wrap: wrap;
-        gap: 24px;
-        margin-bottom: 32px;
+        gap: 64px;
+        margin-bottom: 52px;
         justify-content: center;
       }
       .guidebook-card {
@@ -751,9 +755,9 @@
       </div>
     </div>
     <div class="footer" id="footer-contact">
-      <span id="footer-msg"
-        >Need help? Contact your Lynx host (Call,
-        SMS, Viber, WhatsApp):
+      <span id="footer-msg">
+        Need help? Contact your Lynx Apartment
+        host (call, SMS, Viber, or WhatsApp):
         <a
           href="tel:+38978364545"
           style="
@@ -761,8 +765,8 @@
             text-decoration: underline;
           "
           >+38978364545</a
-        ></span
-      >
+        >
+      </span>
     </div>
     <script>
       // Theme toggle logic
