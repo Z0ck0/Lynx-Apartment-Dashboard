@@ -26,9 +26,18 @@ export class TabsManager {
           c.classList.remove("active")
         );
         btn.classList.add("active");
-        this.tabContents[idx].classList.add(
-          "active"
-        );
+        
+        // Safety check to ensure tab content exists at this index
+        if (this.tabContents[idx]) {
+          this.tabContents[idx].classList.add(
+            "active"
+          );
+        } else {
+          console.warn(
+            `Tab content at index ${idx} does not exist. Please check DOM structure.`
+          );
+        }
+        
         this.activeTab = btn.id;
         btn.setAttribute("aria-selected", "true");
         btn.setAttribute("tabindex", "0");

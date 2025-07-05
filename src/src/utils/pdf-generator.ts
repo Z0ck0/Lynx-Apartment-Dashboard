@@ -178,8 +178,6 @@ export class PdfGenerator {
         doc.addPage();
         y = 10;
       }
-      doc.addPage();
-      y = 10;
       doc.setFontSize(16);
       doc.text("Additional Notes", 10, y);
       y += 10;
