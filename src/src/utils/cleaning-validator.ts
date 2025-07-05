@@ -156,11 +156,18 @@ export class CleaningValidator {
       this.roomValidations.get(room);
     if (!validation) return null;
 
+    // Map Macedonian room names to English CommonOversights keys
+    const roomMapping: Record<string, keyof typeof CommonOversights> = {
+      "Кујна": "Kitchen",
+      "Купатило": "Bathroom", 
+      "Спална": "Bedroom",
+      "Дневна": "Living Areas",
+      "Трпезарија": "Living Areas"
+    };
+
     // Check room-specific common oversights
-    const roomOversights =
-      CommonOversights[
-        room as keyof typeof CommonOversights
-      ] || [];
+    const oversightKey = roomMapping[room];
+    const roomOversights = oversightKey ? CommonOversights[oversightKey] : [];
 
     validation.missingItems =
       roomOversights.filter(

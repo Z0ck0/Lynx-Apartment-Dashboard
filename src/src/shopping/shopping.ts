@@ -95,6 +95,7 @@ export class ShoppingManager {
 
       li.addEventListener("dragend", () => {
         li.style.opacity = "";
+        this.dragSrcIndex = null;
       });
 
       li.addEventListener("dragover", e => {
