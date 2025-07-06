@@ -1138,7 +1138,7 @@
             const instructionForm = document.getElementById('instructionForm');
             
             if (houseRuleForm) {
-                houseRuleForm.addEventListener('submit', function(e) {
+                houseRuleForm.addEventListener('submit', async function(e) {
                     e.preventDefault();
                     
                     try {
@@ -1176,7 +1176,7 @@
                             return;
                         }
                         
-                        addHouseRule(formData);
+                        await addHouseRule(formData);
                     } catch (error) {
                         console.error('Form submission error:', error);
                         alert('An error occurred while submitting the form. Please try again.');
@@ -1185,7 +1185,7 @@
             }
             
             if (instructionForm) {
-                instructionForm.addEventListener('submit', function(e) {
+                instructionForm.addEventListener('submit', async function(e) {
                     e.preventDefault();
                     
                     try {
@@ -1210,7 +1210,7 @@
                             return;
                         }
                         
-                        addInstruction(formData);
+                        await addInstruction(formData);
                     } catch (error) {
                         console.error('Instruction form submission error:', error);
                         alert('An error occurred while submitting the instruction. Please try again.');
@@ -1368,133 +1368,101 @@
 
         // Form submissions with validation - moved to DOMContentLoaded event
 
-        function addHouseRule(data) {
+        async function addHouseRule(data) {
             try {
-                // Create the HTML for the new rule
-                let ruleHTML = `
-                    <article class="rule-section">
-                        <div class="rule-item">
-                            <div class="rule-header">
-                                <span class="rule-icon" aria-hidden="true">${data.icon}</span>
-                                <span class="rule-label">${data.title}</span>`;
+                // Show loading state
+                const submitBtn = document.querySelector('#houseRuleForm button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Creating PR & Merging...';
+                submitBtn.disabled = true;
                 
-                if (data.statusText) {
-                    ruleHTML += `<span class="status-chip ${data.status}">${data.statusText}</span>`;
-                }
+                // Create FormData for the API call
+                const formData = new FormData();
+                formData.append('icon', data.icon);
+                formData.append('title', data.title);
+                formData.append('description', data.description);
+                formData.append('status', data.status);
+                formData.append('statusText', data.statusText);
+                formData.append('type', data.type);
+                formData.append('startTime', data.startTime);
+                formData.append('endTime', data.endTime);
+                formData.append('maxGuests', data.maxGuests);
                 
-                ruleHTML += `</div><div class="rule-content">`;
-                
-                if (data.description) {
-                    ruleHTML += `<p class="rule-desc">${data.description}</p>`;
-                }
-                
-                if (data.type === 'time' && data.startTime && data.endTime) {
-                    ruleHTML += `
-                        <div class="time-settings">
-                            <div class="time-row">
-                                <span class="time-label">Start time:</span>
-                                <span class="time-value">${formatTime(data.startTime)}</span>
-                            </div>
-                            <div class="time-row">
-                                <span class="time-label">End time:</span>
-                                <span class="time-value">${formatTime(data.endTime)}</span>
-                            </div>
-                        </div>`;
-                }
-                
-                ruleHTML += `</div></div></article>`;
-                
-                // Save to localStorage for persistence
-                const existingRules = safeLocalStorage('get', 'houseRules');
-                existingRules.push({
-                    html: ruleHTML,
-                    timestamp: new Date().toISOString()
+                // Make API call to backend
+                const response = await fetch('/api/house-rules', {
+                    method: 'POST',
+                    body: formData
                 });
                 
-                if (!safeLocalStorage('set', 'houseRules', existingRules)) {
-                    throw new Error('Failed to save house rule to local storage');
-                }
+                const result = await response.json();
                 
-                showSuccessMessage();
-                resetForms();
+                if (response.ok && result.success) {
+                    showSuccessMessage('House rule added successfully! Changes have been committed and merged to main branch.');
+                    resetForms();
+                } else {
+                    throw new Error(result.error || 'Failed to add house rule');
+                }
                 
             } catch (error) {
                 console.error('Error adding house rule:', error);
-                alert('Error adding house rule. Please try again.');
+                alert('Error adding house rule: ' + error.message);
+            } finally {
+                // Reset button state
+                const submitBtn = document.querySelector('#houseRuleForm button[type="submit"]');
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
             }
         }
 
-        function addInstruction(data) {
+        async function addInstruction(data) {
             try {
-                // Create the HTML for the new instruction
-                let instructionHTML = `
-                    <div class="card">
-                        <div class="card-title">
-                            ${data.icon} ${data.title}
-                        </div>`;
+                // Show loading state
+                const submitBtn = document.querySelector('#instructionForm button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Creating PR & Merging...';
+                submitBtn.disabled = true;
                 
+                // Create FormData for the API call
+                const formData = new FormData();
+                formData.append('icon', data.icon);
+                formData.append('title', data.title);
+                formData.append('steps', data.steps);
+                
+                // Append images if any
                 if (data.images && data.images.length > 0) {
-                    instructionHTML += `
-                        <div class="carousel">
-                            <div class="checkin-gallery">`;
-                    
-                    data.images.forEach((image, index) => {
-                        const imageName = `instruction-${Date.now()}-${index}.${image.name.split('.').pop()}`;
-                        instructionHTML += `
-                            <div class="gallery-item">
-                                <img src="public/${imageName}" alt="Step ${index + 1}" class="gallery-image">
-                                <div class="gallery-caption">Step ${index + 1}</div>
-                            </div>`;
+                    Array.from(data.images).forEach(image => {
+                        formData.append('images', image);
                     });
-                    
-                    instructionHTML += `</div></div>`;
                 }
                 
-                instructionHTML += `
-                    <div class="dropdown-container">
-                        <button class="dropdown-button" onclick="toggleDropdown(this)">
-                            <span class="dropdown-text">📄 More detailed instructions</span>
-                            <span class="dropdown-arrow">▼</span>
-                        </button>
-                        <div class="dropdown-content">
-                            <div style="line-height: 1.6; font-size: 1rem;">
-                                <p>${data.steps.replace(/\n/g, '</p><p>')}</p>`;
-                
+                // Append video if any
                 if (data.video) {
-                    const videoName = `instruction-video-${Date.now()}.${data.video.name.split('.').pop()}`;
-                    instructionHTML += `
-                        <h4 style="color: var(--lynx-yellow); margin-top: 20px; margin-bottom: 10px;">🎥 Video Guide:</h4>
-                        <div style="text-align: center; margin-top: 16px;">
-                            <video controls style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
-                                <source src="public/video/${videoName}" type="video/${data.video.type}">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>`;
+                    formData.append('video', data.video);
                 }
                 
-                instructionHTML += `</div></div></div></div>`;
-                
-                // Save to localStorage for persistence
-                const existingInstructions = safeLocalStorage('get', 'instructions');
-                existingInstructions.push({
-                    html: instructionHTML,
-                    timestamp: new Date().toISOString(),
-                    files: {
-                        images: data.images ? Array.from(data.images).map(f => f.name) : [],
-                        video: data.video ? data.video.name : null
-                    }
+                // Make API call to backend
+                const response = await fetch('/api/instructions', {
+                    method: 'POST',
+                    body: formData
                 });
                 
-                if (!safeLocalStorage('set', 'instructions', existingInstructions)) {
-                    throw new Error('Failed to save instruction to local storage');
-                }
+                const result = await response.json();
                 
-                showSuccessMessage();
-                resetForms();
+                if (response.ok && result.success) {
+                    showSuccessMessage('Instruction added successfully! Changes have been committed and merged to main branch.');
+                    resetForms();
+                } else {
+                    throw new Error(result.error || 'Failed to add instruction');
+                }
                 
             } catch (error) {
                 console.error('Error adding instruction:', error);
-                alert('Error adding instruction. Please try again.');
+                alert('Error adding instruction: ' + error.message);
+            } finally {
+                // Reset button state
+                const submitBtn = document.querySelector('#instructionForm button[type="submit"]');
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
             }
         }
 
