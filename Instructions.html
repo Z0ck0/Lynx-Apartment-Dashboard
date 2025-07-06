@@ -111,6 +111,53 @@
         font-size: 1.1rem;
         text-align: center;
       }
+      .checkin-gallery {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        width: 100%;
+      }
+      .gallery-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+      }
+      .gallery-image {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 8px;
+      }
+      .gallery-caption {
+        font-size: 0.9rem;
+        color: #666;
+        text-align: center;
+        font-weight: 500;
+        padding: 4px 8px;
+        background: rgba(255, 224, 102, 0.1);
+        border-radius: 6px;
+        margin-bottom: 8px;
+      }
+      body.dark-mode .gallery-caption {
+        color: #ccc;
+        background: rgba(255, 224, 102, 0.15);
+      }
+      @media (min-width: 768px) {
+        .checkin-gallery {
+          flex-direction: row;
+          gap: 12px;
+        }
+        .gallery-item {
+          flex: 1;
+        }
+        .gallery-image {
+          height: 160px;
+          object-fit: cover;
+        }
+      }
       .footer {
         background: var(--lynx-dark);
         color: var(--lynx-yellow);
@@ -422,9 +469,19 @@
           🔑 Self Check-In (Combination Lock)
         </div>
         <div class="carousel">
-          <div class="carousel-placeholder">
-            [Self check-in video/pictures carousel
-            here]
+          <div class="checkin-gallery">
+            <div class="gallery-item">
+              <img src="public/checkin-mailbox-room.jpg" alt="Mailbox Room - Enter the mailbox room across from reception" class="gallery-image">
+              <div class="gallery-caption">Step 1: Enter the mailbox room across from reception</div>
+            </div>
+            <div class="gallery-item">
+              <img src="public/checkin-mailbox-wall.jpg" alt="Mailbox Wall - Find mailbox 109 on the wall" class="gallery-image">
+              <div class="gallery-caption">Step 2: Find mailbox 109 on the wall (top row, 6th from right)</div>
+            </div>
+            <div class="gallery-item">
+              <img src="public/checkin-combination-lock.jpg" alt="Combination Lock - Enter code 050 and turn left" class="gallery-image">
+              <div class="gallery-caption">Step 3: Enter combination 050 and turn left to open</div>
+            </div>
           </div>
         </div>
         <div style="line-height: 1.6; font-size: 1rem;">
