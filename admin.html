@@ -1210,6 +1210,7 @@
 
         // Ensure DOM is ready and modal is properly hidden
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM Content Loaded - initializing admin panel');
             // Cache DOM elements
             elements.loginSection = document.getElementById('loginSection');
             elements.adminDashboard = document.getElementById('adminDashboard');
@@ -1289,9 +1290,16 @@
             const houseRuleForm = document.getElementById('houseRuleForm');
             const instructionForm = document.getElementById('instructionForm');
             
+            console.log('Form elements:', { 
+                houseRuleForm: houseRuleForm ? 'found' : 'NOT FOUND',
+                instructionForm: instructionForm ? 'found' : 'NOT FOUND'
+            });
+            
             if (houseRuleForm) {
+                console.log('House rule form found and event listener attached');
                 houseRuleForm.addEventListener('submit', async function(e) {
                     e.preventDefault();
+                    console.log('House rule form submission triggered');
                     
                     try {
                         const formData = {
@@ -1337,8 +1345,10 @@
             }
             
             if (instructionForm) {
+                console.log('Instruction form found and event listener attached');
                 instructionForm.addEventListener('submit', async function(e) {
                     e.preventDefault();
+                    console.log('Instruction form submission triggered');
                     
                     try {
                         const formData = {
