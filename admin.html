@@ -1210,13 +1210,58 @@
                             return;
                         }
                         
+                        // Additional validation checks
+                        if (formData.title.length < 3) {
+                            alert('Instruction title must be at least 3 characters long');
+                            document.getElementById('instructionTitle').focus();
+                            return;
+                        }
+                        
+                        if (formData.steps.length < 10) {
+                            alert('Detailed instructions must be at least 10 characters long');
+                            document.getElementById('instructionSteps').focus();
+                            return;
+                        }
+                        
+                        // Sanitize input to prevent pattern validation issues
+                        formData.title = formData.title.replace(/[<>]/g, '');
+                        formData.steps = formData.steps.replace(/[<>]/g, '');
+                        
+                        // Show loading state
+                        const submitBtn = document.querySelector('#instructionForm button[type="submit"]');
+                        const originalText = submitBtn.textContent;
+                        submitBtn.textContent = 'Submitting...';
+                        submitBtn.disabled = true;
+                        
                         await addInstruction(formData);
+                        
+                        // Reset button state on success
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                        
                     } catch (error) {
                         console.error('Instruction form submission error:', error);
-                        alert('An error occurred while submitting the instruction. Please try again.');
-                                         }
-                 });
-             }
+                        
+                        // Reset button state on error
+                        const submitBtn = document.querySelector('#instructionForm button[type="submit"]');
+                        if (submitBtn) {
+                            submitBtn.textContent = 'Add Instruction';
+                            submitBtn.disabled = false;
+                        }
+                        
+                        // Show specific error message
+                        if (error.message && error.message.includes('pattern')) {
+                            alert('Invalid characters detected in your input. Please avoid using < or > symbols and try again.');
+                        } else if (error.message && error.message.includes('Failed to create branch')) {
+                            alert('Git repository error. Please contact the administrator.');
+                        } else if (error.message && error.message.includes('Failed to commit')) {
+                            alert('Error saving changes. Please try again or contact the administrator.');
+                        } else {
+                            alert('An error occurred while submitting the instruction. Please check your input and try again.');
+                        }
+                    }
+                });
+            }
              
              // Handle edit form file uploads
              const editInstructionImages = document.getElementById('editInstructionImages');
@@ -1452,17 +1497,47 @@
                     showSuccessMessage('Instruction added successfully! Changes have been committed and merged to main branch.');
                     resetForms();
                 } else {
-                    throw new Error(result.error || 'Failed to add instruction');
+                    // Handle different types of errors
+                    if (response.status === 400) {
+                        throw new Error(result.error || 'Invalid input data');
+                    } else if (response.status === 500) {
+                        if (result.error.includes('Git repository')) {
+                            throw new Error('Git repository error. Please contact the administrator.');
+                        } else if (result.error.includes('Failed to create branch')) {
+                            throw new Error('Failed to create branch. Please try again.');
+                        } else if (result.error.includes('Failed to commit')) {
+                            throw new Error('Error saving changes. Please try again or contact the administrator.');
+                        } else if (result.error.includes('Failed to merge')) {
+                            throw new Error('Error merging changes. Please contact the administrator.');
+                        } else {
+                            throw new Error(result.error || 'Server error occurred');
+                        }
+                    } else {
+                        throw new Error(result.error || 'Failed to add instruction');
+                    }
                 }
                 
             } catch (error) {
                 console.error('Error adding instruction:', error);
-                alert('Error adding instruction: ' + error.message);
+                
+                // Show user-friendly error message
+                if (error.message.includes('pattern')) {
+                    alert('Invalid characters detected in your input. Please avoid using < or > symbols and try again.');
+                } else if (error.message.includes('network') || error.message.includes('fetch')) {
+                    alert('Network error. Please check your connection and try again.');
+                } else {
+                    alert('Error adding instruction: ' + error.message);
+                }
+                
+                // Re-throw the error so it can be caught by the form submission handler
+                throw error;
             } finally {
                 // Reset button state
                 const submitBtn = document.querySelector('#instructionForm button[type="submit"]');
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
+                if (submitBtn) {
+                    submitBtn.textContent = originalText || 'Add Instruction';
+                    submitBtn.disabled = false;
+                }
             }
         }
 
