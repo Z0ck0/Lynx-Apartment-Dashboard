@@ -1,4 +1,4 @@
-THIS SHOULD BE A LINTER ERROR<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1031,6 +1031,20 @@ THIS SHOULD BE A LINTER ERROR<!DOCTYPE html>
             if (editModal) {
                 editModal.classList.add('hidden');
             }
+            
+            // Add click-outside-to-close functionality
+            editModal.addEventListener('click', function(e) {
+                if (e.target === editModal) {
+                    closeEditModal();
+                }
+            });
+            
+            // Add ESC key handling
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && !editModal.classList.contains('hidden')) {
+                    closeEditModal();
+                }
+            });
         });
 
         document.getElementById('loginForm').addEventListener('submit', function(e) {
@@ -1045,7 +1059,9 @@ THIS SHOULD BE A LINTER ERROR<!DOCTYPE html>
                 document.getElementById('loginError').classList.add('hidden');
                 
                 // Ensure the edit modal is properly hidden after login
-                closeEditModal();
+                setTimeout(() => {
+                    closeEditModal();
+                }, 100);
             } else {
                 document.getElementById('loginError').classList.remove('hidden');
             }
@@ -1356,7 +1372,9 @@ THIS SHOULD BE A LINTER ERROR<!DOCTYPE html>
             injectSavedContent();
             
             // Ensure the edit modal is properly hidden on page load
-            closeEditModal();
+            setTimeout(() => {
+                closeEditModal();
+            }, 50);
         });
 
         function injectSavedContent() {
@@ -1450,6 +1468,12 @@ THIS SHOULD BE A LINTER ERROR<!DOCTYPE html>
                 return;
             }
             
+            // Ensure user is logged in
+            if (document.getElementById('loginSection') && !document.getElementById('loginSection').classList.contains('hidden')) {
+                console.error('User not logged in');
+                return;
+            }
+            
             currentEditIndex = index;
             currentEditType = pageType;
             
@@ -1467,18 +1491,21 @@ THIS SHOULD BE A LINTER ERROR<!DOCTYPE html>
             }
             
             // Show modal and populate form
-            document.getElementById('editModal').classList.remove('hidden');
-            
-            if (pageType === 'house-rules') {
-                document.getElementById('editModalTitle').textContent = 'Edit House Rule';
-                document.getElementById('editHouseRuleForm').classList.remove('hidden');
-                document.getElementById('editInstructionForm').classList.add('hidden');
-                populateHouseRuleEditForm(entry);
-            } else if (pageType === 'instructions') {
-                document.getElementById('editModalTitle').textContent = 'Edit Instruction';
-                document.getElementById('editInstructionForm').classList.remove('hidden');
-                document.getElementById('editHouseRuleForm').classList.add('hidden');
-                populateInstructionEditForm(entry);
+            const modal = document.getElementById('editModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                
+                if (pageType === 'house-rules') {
+                    document.getElementById('editModalTitle').textContent = 'Edit House Rule';
+                    document.getElementById('editHouseRuleForm').classList.remove('hidden');
+                    document.getElementById('editInstructionForm').classList.add('hidden');
+                    populateHouseRuleEditForm(entry);
+                } else if (pageType === 'instructions') {
+                    document.getElementById('editModalTitle').textContent = 'Edit Instruction';
+                    document.getElementById('editInstructionForm').classList.remove('hidden');
+                    document.getElementById('editHouseRuleForm').classList.add('hidden');
+                    populateInstructionEditForm(entry);
+                }
             }
         }
 
@@ -1589,7 +1616,11 @@ THIS SHOULD BE A LINTER ERROR<!DOCTYPE html>
         }
 
         function saveEditedEntry() {
-            if (currentEditIndex === -1 || !currentEditType) return;
+            if (currentEditIndex === -1 || !currentEditType) {
+                console.error('No entry selected for editing');
+                closeEditModal();
+                return;
+            }
             
             let entries = [];
             if (currentEditType === 'house-rules') {
