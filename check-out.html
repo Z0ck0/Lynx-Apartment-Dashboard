@@ -1017,7 +1017,7 @@
             id="hero-logo"
           />
           <h1 class="hero-title">
-            Self Check-in & Checkout Instructions
+            Check-in & Checkout Instructions
           </h1>
           <p class="hero-subtitle">
             Smooth, easy, and secure self
@@ -1061,61 +1061,160 @@
         role="tabpanel"
         aria-labelledby="tab-checkin"
       >
-        <div class="checkin-card">
-          <div class="checkin-card-title">
-            🔑 Self Check-In (Combination Lock)
-          </div>
-          <div class="checkin-gallery">
-            <div class="gallery-item">
-              <img src="public/checkin-mailbox-room.jpg" alt="Mailbox Room - Enter the mailbox room across from reception" class="gallery-image">
-              <div class="gallery-caption">Step 1: Enter the mailbox room across from reception</div>
+        <div class="checkout-title">
+          Check-in instructions
+        </div>
+        <div class="step-row">
+          <span class="step-icon">🚪</span>
+          <div class="step-content">
+            <div class="step-title">
+              Enter the mailbox room
             </div>
-            <div class="gallery-item">
-              <img src="public/checkin-mailbox-wall.jpg" alt="Mailbox Wall - Find mailbox 109 on the wall" class="gallery-image">
-              <div class="gallery-caption">Step 2: Find mailbox 109 on the wall (top row, 6th from right)</div>
-            </div>
-            <div class="gallery-item">
-              <img src="public/checkin-combination-lock.jpg" alt="Combination Lock - Enter code 050 and turn left" class="gallery-image">
-              <div class="gallery-caption">Step 3: Enter combination 050 and turn left to open</div>
+            <div class="step-desc">
+              Enter the mailbox room located across from the reception desk in the lobby.
             </div>
           </div>
-          <div class="dropdown-container">
-            <button class="dropdown-button" onclick="toggleDropdown(this)">
-              <span class="dropdown-text">📄 More detailed instructions</span>
-              <span class="dropdown-arrow">▼</span>
-            </button>
-            <div class="dropdown-content">
-              <div style="line-height: 1.6; font-size: 1rem;">
-                <p>To access your key, please follow these steps:</p>
-                
-                <h4 style="color: var(--lynx-yellow); margin-top: 20px; margin-bottom: 10px;">📍 Locate the Mailbox</h4>
-                <ul style="margin-left: 20px; margin-bottom: 16px;">
-                  <li>Find <strong>Mailbox 109</strong> in the building's mailbox area — located just across from the reception desk in the lobby.</li>
-                  <li>The Mailbox 109 is directly in front of you as you enter the mailbox room, on the top row, 6th mailbox from the right.</li>
-                </ul>
-                
-                <h4 style="color: var(--lynx-yellow); margin-top: 20px; margin-bottom: 10px;">🔐 Open the Lock</h4>
-                <ol style="margin-left: 20px; margin-bottom: 16px;">
-                  <li><strong>Enter the code:</strong> Set the numbers to <strong>0 - 5 - 0</strong> on the lock.
-                    <ul style="margin-left: 20px; margin-top: 6px;">
-                      <li>Make sure the digits are perfectly aligned with the center line on the dial.</li>
-                    </ul>
-                  </li>
-                  <li><strong>Turn the dial counterclockwise (to the left):</strong><br>
-                    Once the correct combination is entered, gently turn the lock to the left (opposite of clock direction).</li>
-                  <li>If the lock turns, the code is correct — go ahead and open the mailbox door.</li>
-                  <li><strong>If the lock does NOT turn:</strong>
-                    <ul style="margin-left: 20px; margin-top: 6px;">
-                      <li>The combination may not be precisely aligned.</li>
-                      <li>Please realign the digits carefully and try turning left again.</li>
-                    </ul>
-                  </li>
-                  <li>Take your apartment key from inside the mailbox.</li>
-                </ol>
-                
-                <h4 style="color: var(--lynx-yellow); margin-top: 20px; margin-bottom: 10px;">📞 Need Help?</h4>
-                <p style="margin-bottom: 0;">If you have any issues, please contact me and I'll assist you right away.</p>
-              </div>
+          <span class="step-arrow"></span>
+        </div>
+        <div class="step-row">
+          <span class="step-icon">🔍</span>
+          <div class="step-content">
+            <div class="step-title">
+              Find mailbox 109
+            </div>
+            <div class="step-desc">
+              Locate mailbox 109 on the wall - it's on the top row, 6th mailbox from the right, directly in front as you enter.
+            </div>
+          </div>
+          <span class="step-arrow"></span>
+        </div>
+        <div class="step-row">
+          <span class="step-icon">🔐</span>
+          <div class="step-content">
+            <div class="step-title">
+              Enter combination code
+            </div>
+            <div class="step-desc">
+              Set the numbers to 0-5-0 on the combination lock. Make sure the digits are perfectly aligned with the center line.
+            </div>
+          </div>
+          <span class="step-arrow"></span>
+        </div>
+        <div class="step-row">
+          <span class="step-icon">↩️</span>
+          <div class="step-content">
+            <div class="step-title">
+              Turn left to open
+            </div>
+            <div class="step-desc">
+              Once the correct combination is entered, gently turn the lock counterclockwise (to the left) to open the mailbox.
+            </div>
+          </div>
+          <span class="step-arrow"></span>
+        </div>
+        <div class="step-row">
+          <span class="step-icon">🔑</span>
+          <div class="step-content">
+            <div class="step-title">
+              Retrieve your key
+            </div>
+            <div class="step-desc">
+              Take your apartment key from inside the mailbox. If you have any issues, please contact your host.
+            </div>
+          </div>
+          <span class="step-arrow"></span>
+        </div>
+        <div class="mailbox-section">
+          <div class="mailbox-title">
+            � Self Check-In Location
+          </div>
+          <div
+            class="mailbox-desc modern-mailbox-desc"
+          >
+            <ul class="mailbox-list">
+              <li><b>Mailbox Location:</b></li>
+              <ul class="mailbox-steps">
+                <li>
+                  Go to the <b>mailbox area</b> just
+                  across from the reception desk in
+                  the lobby.
+                </li>
+                <li>
+                  Find
+                  <b
+                    >Mailbox
+                    <span class="mailbox-highlight"
+                      >109</span
+                    ></b
+                  >
+                  — top row, 6th from the right,
+                  directly in front as you enter the
+                  mailbox room.
+                </li>
+                <li>
+                  Enter combination
+                  <b
+                    ><span class="mailbox-highlight"
+                      >050</span
+                    ></b
+                  >
+                  and turn left to open.
+                </li>
+              </ul>
+            </ul>
+          </div>
+          <div class="mailbox-imgs">
+            <img
+              src="public/checkin-mailbox-room.jpg"
+              alt="Mailbox Room"
+              class="mailbox-thumb"
+              onclick="openModal(0)"
+              tabindex="0"
+            />
+            <img
+              src="public/checkin-mailbox-wall.jpg"
+              alt="Mailbox Wall"
+              class="mailbox-thumb"
+              onclick="openModal(1)"
+              tabindex="0"
+            />
+          </div>
+          <!-- Modal Gallery -->
+          <div
+            id="mailboxModal"
+            class="mailbox-modal"
+            tabindex="-1"
+            aria-modal="true"
+            aria-label="Mailbox Images"
+            style="display: none"
+          >
+            <span
+              class="modal-close"
+              onclick="closeModal()"
+              tabindex="0"
+              aria-label="Close"
+              >&times;</span
+            >
+            <div class="modal-content">
+              <span
+                class="modal-arrow modal-arrow-left"
+                onclick="prevModalImg()"
+                tabindex="0"
+                aria-label="Previous image"
+                >&#10094;</span
+              >
+              <img
+                id="modalImg"
+                src=""
+                alt="Mailbox Full Size"
+              />
+              <span
+                class="modal-arrow modal-arrow-right"
+                onclick="nextModalImg()"
+                tabindex="0"
+                aria-label="Next image"
+                >&#10095;</span
+              >
             </div>
           </div>
         </div>
@@ -1321,16 +1420,7 @@
       </div>
     </div>
     
-    <!-- Image Modal for Check-in Gallery -->
-    <div id="imageModal" class="modal">
-      <div class="modal-content">
-        <span class="modal-close">&times;</span>
-        <button class="modal-nav modal-prev">&#8249;</button>
-        <img class="modal-image" id="modalImage" alt="Full size image">
-        <div class="modal-caption" id="modalCaption"></div>
-        <button class="modal-nav modal-next">&#8250;</button>
-      </div>
-    </div>
+
     
     <div class="footer" id="footer-contact">
       <span id="footer-msg"
@@ -1410,131 +1500,17 @@
         });
       });
       
-      // Dropdown toggle functionality
-      function toggleDropdown(button) {
-        const dropdownContent = button.nextElementSibling;
-        const isActive = button.classList.contains('active');
-        
-        // Close all other dropdowns
-        document.querySelectorAll('.dropdown-button.active').forEach(btn => {
-          if (btn !== button) {
-            btn.classList.remove('active');
-            btn.nextElementSibling.classList.remove('active');
-          }
-        });
-        
-        // Toggle current dropdown
-        if (isActive) {
-          button.classList.remove('active');
-          dropdownContent.classList.remove('active');
-        } else {
-          button.classList.add('active');
-          dropdownContent.classList.add('active');
-        }
-      }
-      
-      // Image modal functionality for check-in gallery
-      const checkinModal = document.getElementById('imageModal');
-      const checkinModalImage = document.getElementById('modalImage');
-      const checkinModalCaption = document.getElementById('modalCaption');
-      const checkinCloseBtn = document.querySelector('.modal-close');
-      const checkinPrevBtn = document.querySelector('.modal-prev');
-      const checkinNextBtn = document.querySelector('.modal-next');
-      
-      // Get all gallery images
-      const galleryImages = document.querySelectorAll('.gallery-image');
-      let currentImageIndex = 0;
-      
-      // Convert gallery images to array for easier manipulation
-      const imagesArray = Array.from(galleryImages);
-      
-      // Open modal when clicking on an image
-      if (galleryImages.length > 0) {
-        galleryImages.forEach((img, index) => {
-          img.addEventListener('click', function() {
-            currentImageIndex = index;
-            showCheckinModal(this);
-          });
-        });
-      }
-      
-      function showCheckinModal(clickedImage) {
-        if (checkinModal && checkinModalImage && checkinModalCaption) {
-          checkinModal.style.display = 'block';
-          checkinModalImage.src = clickedImage.src;
-          checkinModalImage.alt = clickedImage.alt;
-          checkinModalCaption.textContent = clickedImage.alt;
-          document.body.style.overflow = 'hidden';
-        }
-      }
-      
-      function closeCheckinModal() {
-        if (checkinModal) {
-          checkinModal.style.display = 'none';
-          document.body.style.overflow = 'auto';
-        }
-      }
-      
-      function showPrevCheckinImage() {
-        if (imagesArray.length > 0) {
-          currentImageIndex = (currentImageIndex - 1 + imagesArray.length) % imagesArray.length;
-          const prevImage = imagesArray[currentImageIndex];
-          checkinModalImage.src = prevImage.src;
-          checkinModalImage.alt = prevImage.alt;
-          checkinModalCaption.textContent = prevImage.alt;
-        }
-      }
-      
-      function showNextCheckinImage() {
-        if (imagesArray.length > 0) {
-          currentImageIndex = (currentImageIndex + 1) % imagesArray.length;
-          const nextImage = imagesArray[currentImageIndex];
-          checkinModalImage.src = nextImage.src;
-          checkinModalImage.alt = nextImage.alt;
-          checkinModalCaption.textContent = nextImage.alt;
-        }
-      }
-      
-      // Event listeners for modal controls
-      if (checkinCloseBtn) checkinCloseBtn.addEventListener('click', closeCheckinModal);
-      if (checkinPrevBtn) checkinPrevBtn.addEventListener('click', showPrevCheckinImage);
-      if (checkinNextBtn) checkinNextBtn.addEventListener('click', showNextCheckinImage);
-      
-      // Close modal when clicking outside the image
-      if (checkinModal) {
-        checkinModal.addEventListener('click', function(e) {
-          if (e.target === checkinModal) {
-            closeCheckinModal();
-          }
-        });
-      }
-      
-      // Keyboard navigation
-      document.addEventListener('keydown', function(e) {
-        if (checkinModal && checkinModal.style.display === 'block') {
-          switch(e.key) {
-            case 'Escape':
-              closeCheckinModal();
-              break;
-            case 'ArrowLeft':
-              showPrevCheckinImage();
-              break;
-            case 'ArrowRight':
-              showNextCheckinImage();
-              break;
-          }
-        }
-      });
+
 
       // Modal gallery logic
       const mailboxImgs = [
         {
-          src: "public/checkin-mailbox-wall.jpg",
-          alt: "Lobby Mailbox Area",
-        },
-        {
           src: "public/checkin-mailbox-room.jpg",
           alt: "Mailbox Room",
+        },
+        {
+          src: "public/checkin-mailbox-wall.jpg",
+          alt: "Mailbox Wall",
         },
       ];
       let modalIdx = 0;
