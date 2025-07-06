@@ -12,6 +12,36 @@ const PORT = process.env.PORT || 3000;
 // Initialize Git
 const git = simpleGit();
 
+// Function to initialize Git repository if needed
+async function initializeGitRepository() {
+  try {
+    // Check if we're already in a Git repository
+    await git.status();
+    console.log('Git repository already initialized');
+  } catch (error) {
+    console.log('Initializing Git repository...');
+    try {
+      await git.init();
+      await git.addConfig('user.name', 'Admin Panel');
+      await git.addConfig('user.email', 'admin@lynx-apartments.com');
+      
+      // Create initial commit if needed
+      const status = await git.status();
+      if (status.files.length > 0) {
+        await git.add('.');
+        await git.commit('Initial commit');
+      }
+      
+      console.log('Git repository initialized successfully');
+    } catch (initError) {
+      console.error('Failed to initialize Git repository:', initError);
+    }
+  }
+}
+
+// Initialize Git repository on startup
+initializeGitRepository();
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -197,19 +227,44 @@ app.post('/api/instructions', upload.fields([
     const images = req.files?.images || [];
     const video = req.files?.video?.[0];
     
+    // Input validation
+    if (!title || title.trim().length < 3) {
+      return res.status(400).json({ error: 'Title must be at least 3 characters long' });
+    }
+    
+    if (!steps || steps.trim().length < 10) {
+      return res.status(400).json({ error: 'Instructions must be at least 10 characters long' });
+    }
+    
+    // Sanitize input to prevent injection attacks
+    const sanitizedTitle = title.trim().replace(/[<>]/g, '');
+    const sanitizedSteps = steps.trim().replace(/[<>]/g, '');
+    
+    // Check if we're in a Git repository
+    try {
+      await git.status();
+    } catch (gitError) {
+      console.error('Git repository not initialized:', gitError);
+      return res.status(500).json({ error: 'Git repository not properly configured. Please contact administrator.' });
+    }
+    
     // Create a unique branch name
     const branchName = `add-instruction-${Date.now()}`;
     
     // Create branch
-    if (!(await createBranch(branchName))) {
-      return res.status(500).json({ error: 'Failed to create branch' });
+    try {
+      await git.checkoutLocalBranch(branchName);
+      console.log(`Created and switched to branch: ${branchName}`);
+    } catch (branchError) {
+      console.error('Error creating branch:', branchError);
+      return res.status(500).json({ error: 'Failed to create branch. Please try again.' });
     }
     
     // Generate HTML content
     let instructionHTML = `
         <div class="card">
           <div class="card-title">
-            ${icon} ${title}
+            ${icon || '📝'} ${sanitizedTitle}
           </div>`;
     
     if (images.length > 0) {
@@ -236,7 +291,7 @@ app.post('/api/instructions', upload.fields([
             </button>
             <div class="dropdown-content">
               <div style="line-height: 1.6; font-size: 1rem;">
-                <p>${steps.replace(/\n/g, '</p><p>')}</p>`;
+                <p>${sanitizedSteps.replace(/\n/g, '</p><p>')}</p>`;
     
     if (video) {
       instructionHTML += `
@@ -253,25 +308,57 @@ app.post('/api/instructions', upload.fields([
     
     // Inject content into Instructions.html
     const filePath = path.join(__dirname, 'Instructions.html');
-    if (!(await injectContentToFile(filePath, instructionHTML))) {
-      return res.status(500).json({ error: 'Failed to inject content' });
+    
+    try {
+      const contentInjected = await injectContentToFile(filePath, instructionHTML);
+      if (!contentInjected) {
+        throw new Error('Failed to inject content into file');
+      }
+    } catch (fileError) {
+      console.error('Error injecting content:', fileError);
+      // Try to switch back to main branch
+      try {
+        await git.checkout('main');
+        await git.deleteLocalBranch(branchName);
+      } catch (cleanupError) {
+        console.error('Error cleaning up branch:', cleanupError);
+      }
+      return res.status(500).json({ error: 'Failed to update Instructions.html file' });
     }
     
     // Commit changes
-    if (!(await commitChanges(`Add instruction: ${title}`))) {
-      return res.status(500).json({ error: 'Failed to commit changes' });
+    try {
+      await git.add('.');
+      await git.commit(`Add instruction: ${sanitizedTitle}`);
+      console.log(`Committed changes: Add instruction: ${sanitizedTitle}`);
+    } catch (commitError) {
+      console.error('Error committing changes:', commitError);
+      // Try to switch back to main branch
+      try {
+        await git.checkout('main');
+        await git.deleteLocalBranch(branchName);
+      } catch (cleanupError) {
+        console.error('Error cleaning up branch:', cleanupError);
+      }
+      return res.status(500).json({ error: 'Failed to commit changes. Please try again.' });
     }
     
     // Merge branch to main
-    if (!(await mergeBranch(branchName))) {
-      return res.status(500).json({ error: 'Failed to merge branch' });
+    try {
+      await git.checkout('main');
+      await git.mergeFromTo(branchName, 'main');
+      await git.deleteLocalBranch(branchName);
+      console.log(`Merged branch ${branchName} to main and deleted branch`);
+    } catch (mergeError) {
+      console.error('Error merging branch:', mergeError);
+      return res.status(500).json({ error: 'Failed to merge changes. Please contact administrator.' });
     }
     
     res.json({ success: true, message: 'Instruction added successfully via Git workflow' });
     
   } catch (error) {
     console.error('Error processing instruction:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error: ' + error.message });
   }
 });
 
