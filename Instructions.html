@@ -754,6 +754,113 @@
           localStorage.getItem("lynx-theme");
         setTheme(saved === "dark" || !saved);
       })();
+      
+      // Image modal functionality
+      const modal = document.getElementById('imageModal');
+      const modalImage = document.getElementById('modalImage');
+      const modalCaption = document.getElementById('modalCaption');
+      const closeBtn = document.querySelector('.modal-close');
+      const prevBtn = document.querySelector('.modal-prev');
+      const nextBtn = document.querySelector('.modal-next');
+      
+      // Get all gallery images
+      const galleryImages = document.querySelectorAll('.gallery-image');
+      let currentImageIndex = 0;
+      
+      // Convert gallery images to array for easier manipulation
+      const imagesArray = Array.from(galleryImages);
+      
+      // Open modal when clicking on an image
+      galleryImages.forEach((img, index) => {
+        img.addEventListener('click', function() {
+          currentImageIndex = index;
+          showModal(this);
+        });
+      });
+      
+      function showModal(clickedImage) {
+        modal.style.display = 'block';
+        modalImage.src = clickedImage.src;
+        modalImage.alt = clickedImage.alt;
+        modalCaption.textContent = clickedImage.alt;
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      }
+      
+      function closeModal() {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Restore background scrolling
+      }
+      
+      function showPrevImage() {
+        currentImageIndex = (currentImageIndex - 1 + imagesArray.length) % imagesArray.length;
+        const prevImage = imagesArray[currentImageIndex];
+        modalImage.src = prevImage.src;
+        modalImage.alt = prevImage.alt;
+        modalCaption.textContent = prevImage.alt;
+      }
+      
+      function showNextImage() {
+        currentImageIndex = (currentImageIndex + 1) % imagesArray.length;
+        const nextImage = imagesArray[currentImageIndex];
+        modalImage.src = nextImage.src;
+        modalImage.alt = nextImage.alt;
+        modalCaption.textContent = nextImage.alt;
+      }
+      
+      // Event listeners for modal controls
+      closeBtn.addEventListener('click', closeModal);
+      prevBtn.addEventListener('click', showPrevImage);
+      nextBtn.addEventListener('click', showNextImage);
+      
+      // Close modal when clicking outside the image
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+      
+      // Keyboard navigation
+      document.addEventListener('keydown', function(e) {
+        if (modal.style.display === 'block') {
+          switch(e.key) {
+            case 'Escape':
+              closeModal();
+              break;
+            case 'ArrowLeft':
+              showPrevImage();
+              break;
+            case 'ArrowRight':
+              showNextImage();
+              break;
+          }
+        }
+      });
+      
+      // Touch/swipe support for mobile
+      let touchStartX = 0;
+      let touchEndX = 0;
+      
+      modalImage.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+      });
+      
+      modalImage.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+      });
+      
+      function handleSwipe() {
+        const swipeThreshold = 50;
+        const swipeDistance = touchEndX - touchStartX;
+        
+        if (Math.abs(swipeDistance) > swipeThreshold) {
+          if (swipeDistance > 0) {
+            showPrevImage(); // Swipe right = previous image
+          } else {
+            showNextImage(); // Swipe left = next image
+          }
+        }
+      }
     </script>
   </body>
 </html>
