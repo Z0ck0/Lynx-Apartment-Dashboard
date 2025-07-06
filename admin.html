@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+THIS SHOULD BE A LINTER ERROR<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1756,34 +1756,37 @@
         }
 
         function closeEditModal() {
-            document.getElementById('editModal').classList.add('hidden');
-            document.getElementById('editHouseRuleForm').classList.add('hidden');
-            document.getElementById('editInstructionForm').classList.add('hidden');
-            
-            // Reset form fields
-            document.getElementById('editRuleIcon').value = '';
-            document.getElementById('editRuleTitle').value = '';
-            document.getElementById('editRuleDescription').value = '';
-            document.getElementById('editStatusText').value = '';
-            document.getElementById('editRuleType').value = 'simple';
-            document.getElementById('editStartTime').value = '';
-            document.getElementById('editEndTime').value = '';
-            document.getElementById('editMaxGuests').value = '';
-            
-            document.getElementById('editInstructionIcon').value = '';
-            document.getElementById('editInstructionTitle').value = '';
-            document.getElementById('editInstructionSteps').value = '';
-            
-            // Reset status selection
-            document.querySelectorAll('#editHouseRuleForm .status-chip').forEach(chip => {
-                chip.classList.remove('selected');
-            });
-            
-            selectedEditStatus = '';
-            selectedEditFiles = [];
-            selectedEditVideo = null;
-            currentEditIndex = -1;
-            currentEditType = '';
+            const modal = document.getElementById('editModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                document.getElementById('editHouseRuleForm').classList.add('hidden');
+                document.getElementById('editInstructionForm').classList.add('hidden');
+                
+                // Reset form fields
+                document.getElementById('editRuleIcon').value = '';
+                document.getElementById('editRuleTitle').value = '';
+                document.getElementById('editRuleDescription').value = '';
+                document.getElementById('editStatusText').value = '';
+                document.getElementById('editRuleType').value = 'simple';
+                document.getElementById('editStartTime').value = '';
+                document.getElementById('editEndTime').value = '';
+                document.getElementById('editMaxGuests').value = '';
+                
+                document.getElementById('editInstructionIcon').value = '';
+                document.getElementById('editInstructionTitle').value = '';
+                document.getElementById('editInstructionSteps').value = '';
+                
+                // Reset status selection
+                document.querySelectorAll('#editHouseRuleForm .status-chip').forEach(chip => {
+                    chip.classList.remove('selected');
+                });
+                
+                selectedEditStatus = '';
+                selectedEditFiles = [];
+                selectedEditVideo = null;
+                currentEditIndex = -1;
+                currentEditType = '';
+            }
         }
 
                  // Handle edit form file uploads
