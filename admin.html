@@ -640,6 +640,102 @@
                 height: 40px;
                 font-size: 1rem;
             }
+            
+            /* Mobile-specific form improvements */
+            .form-input,
+            .form-select,
+            .form-textarea {
+                font-size: 16px; /* Prevents zoom on iOS */
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+            }
+            
+            .status-chip {
+                padding: 12px 20px;
+                font-size: 1rem;
+                min-height: 48px; /* Touch target size */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .btn {
+                padding: 16px 24px;
+                font-size: 1.1rem;
+                min-height: 48px; /* Touch target size */
+                -webkit-tap-highlight-color: rgba(0, 120, 215, 0.3);
+            }
+            
+            .file-upload-area {
+                padding: 32px 16px;
+                font-size: 1.1rem;
+                min-height: 60px;
+                -webkit-tap-highlight-color: rgba(0, 120, 215, 0.3);
+            }
+            
+            .file-item {
+                padding: 12px 16px;
+                font-size: 1rem;
+            }
+            
+            .file-item button {
+                padding: 8px 12px;
+                font-size: 1.2rem;
+                min-width: 40px;
+                min-height: 40px;
+            }
+            
+            /* Modal improvements for mobile */
+            .modal-content {
+                width: 95%;
+                max-height: 90vh;
+                margin: 20px auto;
+            }
+            
+            .modal-header {
+                padding: 16px 20px;
+            }
+            
+            .modal-body {
+                padding: 20px;
+            }
+            
+            .modal-footer {
+                padding: 16px 20px;
+                flex-direction: column;
+            }
+            
+            .modal-footer .btn {
+                width: 100%;
+                margin-bottom: 8px;
+            }
+            
+            /* Prevent horizontal scrolling on mobile */
+            body {
+                overflow-x: hidden;
+            }
+        }
+        
+        /* Mobile touch improvements */
+        @media (max-width: 768px) and (pointer: coarse) {
+            .status-chip,
+            .btn,
+            .file-upload-area {
+                cursor: pointer;
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+            
+            .status-chip:active,
+            .btn:active,
+            .file-upload-area:active {
+                transform: scale(0.98);
+            }
         }
 
         /* Focus Visible for better accessibility */
@@ -1033,6 +1129,62 @@
             }
         });
 
+        // Mobile-specific touch event handlers
+        function addMobileTouchHandlers() {
+            // Detect if device is mobile
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                           (navigator.maxTouchPoints && navigator.maxTouchPoints > 2);
+            
+            if (isMobile) {
+                // Add touch event handlers for status chips
+                document.addEventListener('touchstart', function(e) {
+                    if (e.target.classList.contains('status-chip')) {
+                        e.target.style.transform = 'scale(0.98)';
+                    }
+                });
+                
+                document.addEventListener('touchend', function(e) {
+                    if (e.target.classList.contains('status-chip')) {
+                        e.target.style.transform = '';
+                        // Trigger click after touch ends
+                        setTimeout(() => {
+                            e.target.click();
+                        }, 50);
+                    }
+                });
+                
+                // Enhanced file upload handling for mobile
+                const fileUploadAreas = document.querySelectorAll('.file-upload-area');
+                fileUploadAreas.forEach(area => {
+                    area.addEventListener('touchstart', function(e) {
+                        e.preventDefault();
+                        this.style.transform = 'scale(0.98)';
+                    });
+                    
+                    area.addEventListener('touchend', function(e) {
+                        e.preventDefault();
+                        this.style.transform = '';
+                        // Find the associated file input
+                        const fileInput = this.previousElementSibling;
+                        if (fileInput && fileInput.type === 'file') {
+                            fileInput.click();
+                        }
+                    });
+                });
+                
+                // Prevent double-tap zoom on buttons
+                const buttons = document.querySelectorAll('.btn');
+                buttons.forEach(button => {
+                    button.addEventListener('touchend', function(e) {
+                        e.preventDefault();
+                    });
+                });
+            }
+        }
+        
+        // Initialize mobile handlers after DOM is loaded
+        document.addEventListener('DOMContentLoaded', addMobileTouchHandlers);
+
                     // Authentication - WARNING: This is not secure for production use
             // TODO: Implement proper server-side authentication
             const ADMIN_USERNAME = 'Zoki';
@@ -1341,11 +1493,35 @@
         }
 
         function selectStatus(element, status) {
-            document.querySelectorAll('.status-chip').forEach(chip => {
-                chip.classList.remove('selected');
-            });
+            // Remove selected class from all status chips in the same form
+            const parentForm = element.closest('form') || element.closest('.card');
+            if (parentForm) {
+                parentForm.querySelectorAll('.status-chip').forEach(chip => {
+                    chip.classList.remove('selected');
+                });
+            } else {
+                document.querySelectorAll('.status-chip').forEach(chip => {
+                    chip.classList.remove('selected');
+                });
+            }
+            
             element.classList.add('selected');
             selectedStatus = status;
+            
+            // Provide visual feedback on mobile
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            if (isMobile) {
+                // Brief haptic feedback if available
+                if ('vibrate' in navigator) {
+                    navigator.vibrate(50);
+                }
+                
+                // Visual feedback
+                element.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    element.style.transform = '';
+                }, 150);
+            }
         }
 
         function showRuleTypeFields() {
@@ -1433,11 +1609,42 @@
                 formData.append('endTime', data.endTime);
                 formData.append('maxGuests', data.maxGuests);
                 
-                // Make API call to backend
-                const response = await fetch('/api/house-rules', {
-                    method: 'POST',
-                    body: formData
-                });
+                // Mobile-specific fetch with enhanced timeout and retry logic
+                const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), isMobile ? 60000 : 30000); // Longer timeout for mobile
+                
+                let response;
+                let retryCount = 0;
+                const maxRetries = isMobile ? 3 : 1;
+                
+                while (retryCount <= maxRetries) {
+                    try {
+                        response = await fetch('/api/house-rules', {
+                            method: 'POST',
+                            body: formData,
+                            signal: controller.signal,
+                            headers: {
+                                'Cache-Control': 'no-cache',
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        });
+                        
+                        clearTimeout(timeoutId);
+                        break;
+                    } catch (fetchError) {
+                        retryCount++;
+                        console.log(`Attempt ${retryCount} failed:`, fetchError);
+                        
+                        if (retryCount > maxRetries) {
+                            clearTimeout(timeoutId);
+                            throw new Error('Network error: Unable to submit after multiple attempts. Please check your connection and try again.');
+                        }
+                        
+                        // Wait before retrying (exponential backoff)
+                        await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, retryCount - 1)));
+                    }
+                }
                 
                 const result = await response.json();
                 
@@ -1450,12 +1657,22 @@
                 
             } catch (error) {
                 console.error('Error adding house rule:', error);
-                alert('Error adding house rule: ' + error.message);
+                
+                // Show user-friendly error message
+                if (error.name === 'AbortError') {
+                    alert('Request timed out. Please check your connection and try again.');
+                } else if (error.message.includes('network') || error.message.includes('fetch') || error.message.includes('Network error')) {
+                    alert('Network error. Please check your connection and try again.');
+                } else {
+                    alert('Error adding house rule: ' + error.message);
+                }
             } finally {
                 // Reset button state
                 const submitBtn = document.querySelector('#houseRuleForm button[type="submit"]');
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
+                if (submitBtn) {
+                    submitBtn.textContent = originalText || 'Add House Rule';
+                    submitBtn.disabled = false;
+                }
             }
         }
 
@@ -1485,11 +1702,42 @@
                     formData.append('video', data.video);
                 }
                 
-                // Make API call to backend
-                const response = await fetch('/api/instructions', {
-                    method: 'POST',
-                    body: formData
-                });
+                // Mobile-specific fetch with enhanced timeout and retry logic
+                const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), isMobile ? 60000 : 30000); // Longer timeout for mobile
+                
+                let response;
+                let retryCount = 0;
+                const maxRetries = isMobile ? 3 : 1;
+                
+                while (retryCount <= maxRetries) {
+                    try {
+                        response = await fetch('/api/instructions', {
+                            method: 'POST',
+                            body: formData,
+                            signal: controller.signal,
+                            headers: {
+                                'Cache-Control': 'no-cache',
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        });
+                        
+                        clearTimeout(timeoutId);
+                        break;
+                    } catch (fetchError) {
+                        retryCount++;
+                        console.log(`Attempt ${retryCount} failed:`, fetchError);
+                        
+                        if (retryCount > maxRetries) {
+                            clearTimeout(timeoutId);
+                            throw new Error('Network error: Unable to submit after multiple attempts. Please check your connection and try again.');
+                        }
+                        
+                        // Wait before retrying (exponential backoff)
+                        await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, retryCount - 1)));
+                    }
+                }
                 
                 const result = await response.json();
                 
@@ -1521,9 +1769,11 @@
                 console.error('Error adding instruction:', error);
                 
                 // Show user-friendly error message
-                if (error.message.includes('pattern')) {
+                if (error.name === 'AbortError') {
+                    alert('Request timed out. Please check your connection and try again.');
+                } else if (error.message.includes('pattern')) {
                     alert('Invalid characters detected in your input. Please avoid using < or > symbols and try again.');
-                } else if (error.message.includes('network') || error.message.includes('fetch')) {
+                } else if (error.message.includes('network') || error.message.includes('fetch') || error.message.includes('Network error')) {
                     alert('Network error. Please check your connection and try again.');
                 } else {
                     alert('Error adding instruction: ' + error.message);
@@ -1897,6 +2147,21 @@
             });
             element.classList.add('selected');
             selectedEditStatus = status;
+            
+            // Provide visual feedback on mobile
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            if (isMobile) {
+                // Brief haptic feedback if available
+                if ('vibrate' in navigator) {
+                    navigator.vibrate(50);
+                }
+                
+                // Visual feedback
+                element.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    element.style.transform = '';
+                }, 150);
+            }
         }
 
         function showEditRuleTypeFields() {
