@@ -1,4 +1,4 @@
-THIS SHOULD BE A LINTER ERROR<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -682,10 +682,10 @@ THIS SHOULD BE A LINTER ERROR<!DOCTYPE html>
                 <button type="submit" class="btn btn-primary btn-block">Login</button>
             </form>
             
-            <div id="loginError" class="error-message hidden">
+            <div id="loginError" class="error-message hidden" role="alert">
                 Invalid username or password. Please try again.
             </div>
-        </div>
+        </section>
 
         <!-- Admin Dashboard -->
         <div id="adminDashboard" class="hidden">
@@ -730,9 +730,19 @@ THIS SHOULD BE A LINTER ERROR<!DOCTYPE html>
                     
                     <div class="form-group">
                         <label class="form-label">Status</label>
-                        <div class="status-chip-group">
-                            <span class="status-chip allowed" onclick="selectStatus(this, 'allowed')">Allowed</span>
-                            <span class="status-chip not-allowed" onclick="selectStatus(this, 'not-allowed')">Not Allowed</span>
+                        <div class="status-chip-group" role="group" aria-labelledby="status-label">
+                            <span class="status-chip allowed" 
+                                  role="button" 
+                                  tabindex="0"
+                                  aria-label="Set rule status to allowed"
+                                  onclick="selectStatus(this, 'allowed')"
+                                  onkeydown="handleStatusKeydown(event, this, 'allowed')">Allowed</span>
+                            <span class="status-chip not-allowed" 
+                                  role="button" 
+                                  tabindex="0"
+                                  aria-label="Set rule status to not allowed"
+                                  onclick="selectStatus(this, 'not-allowed')"
+                                  onkeydown="handleStatusKeydown(event, this, 'not-allowed')">Not Allowed</span>
                         </div>
                     </div>
                     
