@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lynx Apartments - Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --lynx-blue: #0078d7;
+            --lynx-yellow: #ffe066;
+            --lynx-bg: #f9f9f9;
+            --lynx-dark: #23272a;
+            --lynx-card: #fff;
+            --lynx-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --lynx-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.12);
+            --border-radius: 12px;
+            --transition: all 0.2s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Roboto", Arial, sans-serif;
+            background: var(--lynx-bg);
+            color: var(--lynx-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            padding: 24px;
+        }
+
+        .admin-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .admin-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--lynx-yellow);
+            font-family: "Poppins", Arial, sans-serif;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 24px;
+        }
+
+        .card {
+            background: var(--lynx-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--lynx-shadow);
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--lynx-dark);
+            font-family: "Poppins", Arial, sans-serif;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: "Roboto", Arial, sans-serif;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--lynx-blue);
+            box-shadow: 0 0 0 3px rgba(0, 120, 215, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: "Poppins", Arial, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: var(--lynx-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #005a9e;
+            transform: translateY(-2px);
+            box-shadow: var(--lynx-shadow-hover);
+        }
+
+        .btn-success {
+            background: var(--lynx-yellow);
+            color: var(--lynx-dark);
+        }
+
+        .btn-success:hover {
+            background: #f5d752;
+            transform: translateY(-2px);
+            box-shadow: var(--lynx-shadow-hover);
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        .status-chip-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .status-chip {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .status-chip.allowed {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .status-chip.not-allowed {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .status-chip.selected {
+            border-color: var(--lynx-blue);
+            box-shadow: 0 0 0 2px rgba(0, 120, 215, 0.2);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .file-upload-area {
+            border: 2px dashed #e0e0e0;
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 8px;
+        }
+
+        .file-upload-area:hover {
+            border-color: var(--lynx-blue);
+            background: rgba(0, 120, 215, 0.02);
+        }
+
+        .file-upload-area.dragover {
+            border-color: var(--lynx-blue);
+            background: rgba(0, 120, 215, 0.05);
+        }
+
+        .file-list {
+            margin-top: 16px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .file-item button {
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .file-item button:hover {
+            background: #ffebee;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 16px;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 16px;
+            border: 1px solid #f5c6cb;
+        }
+
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: 2px solid var(--lynx-yellow);
+            color: var(--lynx-yellow);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .logout-btn:hover {
+            background: var(--lynx-yellow);
+            color: var(--lynx-dark);
+        }
+
+        .instructions-form .form-row {
+            display: block;
+        }
+
+        .instructions-form .form-row .form-group {
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+            
+            .admin-title {
+                font-size: 2rem;
+            }
+            
+            .form-row {
+                flex-direction: column;
+            }
+            
+            .logout-btn {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-bottom: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Form -->
+        <div id="loginSection" class="card">
+            <div class="admin-header">
+                <h1 class="admin-title">Admin Panel</h1>
+                <p class="admin-subtitle">Please log in to access the content management system</p>
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" id="username" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" class="form-input" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+            
+            <div id="loginError" class="error-message hidden">
+                Invalid username or password. Please try again.
+            </div>
+        </div>
+
+        <!-- Admin Dashboard -->
+        <div id="adminDashboard" class="hidden">
+            <button class="logout-btn" onclick="logout()">Logout</button>
+            
+            <div class="admin-header">
+                <h1 class="admin-title">Content Management</h1>
+                <p class="admin-subtitle">Add new entries to House Rules or Instructions</p>
+            </div>
+
+            <div class="card">
+                <div class="form-group">
+                    <label for="pageSelect" class="form-label">Select Page</label>
+                    <select id="pageSelect" class="form-select" onchange="showForm()">
+                        <option value="">Choose a page...</option>
+                        <option value="house-rules">House Rules</option>
+                        <option value="instructions">Instructions</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- House Rules Form -->
+            <div id="houseRulesForm" class="card hidden">
+                <h2 style="margin-bottom: 24px; color: var(--lynx-blue); font-family: 'Poppins', Arial, sans-serif;">Add New House Rule</h2>
+                
+                <form id="houseRuleForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ruleIcon" class="form-label">Icon (Emoji)</label>
+                            <input type="text" id="ruleIcon" class="form-input" placeholder="🏠" maxlength="2">
+                        </div>
+                        <div class="form-group">
+                            <label for="ruleTitle" class="form-label">Rule Title</label>
+                            <input type="text" id="ruleTitle" class="form-input" placeholder="Rule Title" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ruleDescription" class="form-label">Description</label>
+                        <textarea id="ruleDescription" class="form-textarea" placeholder="Rule description..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <div class="status-chip-group">
+                            <span class="status-chip allowed" onclick="selectStatus(this, 'allowed')">Allowed</span>
+                            <span class="status-chip not-allowed" onclick="selectStatus(this, 'not-allowed')">Not Allowed</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="statusText" class="form-label">Status Text (optional)</label>
+                        <input type="text" id="statusText" class="form-input" placeholder="e.g., 'Yes', 'No', '3', etc.">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ruleType" class="form-label">Rule Type</label>
+                        <select id="ruleType" class="form-select" onchange="showRuleTypeFields()">
+                            <option value="simple">Simple Rule</option>
+                            <option value="time">Time-based Rule</option>
+                            <option value="guest">Guest-based Rule</option>
+                        </select>
+                    </div>
+                    
+                    <div id="timeFields" class="hidden">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="startTime" class="form-label">Start Time</label>
+                                <input type="time" id="startTime" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label for="endTime" class="form-label">End Time</label>
+                                <input type="time" id="endTime" class="form-input">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="guestFields" class="hidden">
+                        <div class="form-group">
+                            <label for="maxGuests" class="form-label">Maximum Guests</label>
+                            <input type="number" id="maxGuests" class="form-input" min="1" max="20">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success btn-block">Add House Rule</button>
+                </form>
+            </div>
+
+            <!-- Instructions Form -->
+            <div id="instructionsForm" class="card hidden instructions-form">
+                <h2 style="margin-bottom: 24px; color: var(--lynx-blue); font-family: 'Poppins', Arial, sans-serif;">Add New Instruction</h2>
+                
+                <form id="instructionForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="instructionIcon" class="form-label">Icon (Emoji)</label>
+                            <input type="text" id="instructionIcon" class="form-input" placeholder="🛠️" maxlength="2">
+                        </div>
+                        <div class="form-group">
+                            <label for="instructionTitle" class="form-label">Instruction Title</label>
+                            <input type="text" id="instructionTitle" class="form-input" placeholder="How to..." required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="instructionImages" class="form-label">Images</label>
+                        <input type="file" id="instructionImages" class="form-input" multiple accept="image/*">
+                        <div class="file-upload-area" onclick="document.getElementById('instructionImages').click()">
+                            <p>Click to select images or drag and drop</p>
+                            <small>Supports: JPG, PNG, GIF</small>
+                        </div>
+                        <div id="imagesList" class="file-list"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="instructionVideo" class="form-label">Video (optional)</label>
+                        <input type="file" id="instructionVideo" class="form-input" accept="video/*">
+                        <div class="file-upload-area" onclick="document.getElementById('instructionVideo').click()">
+                            <p>Click to select video or drag and drop</p>
+                            <small>Supports: MP4, WebM, MOV</small>
+                        </div>
+                        <div id="videoList" class="file-list"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="instructionSteps" class="form-label">Detailed Instructions</label>
+                        <textarea id="instructionSteps" class="form-textarea" placeholder="Step-by-step instructions..." rows="8"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success btn-block">Add Instruction</button>
+                </form>
+            </div>
+
+            <div id="successMessage" class="success-message hidden">
+                Entry added successfully!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Authentication
+        const ADMIN_USERNAME = 'Zoki';
+        const ADMIN_PASSWORD = 'Zoki2107!';
+        let selectedStatus = '';
+        let selectedFiles = [];
+        let selectedVideo = null;
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                document.getElementById('loginError').classList.add('hidden');
+            } else {
+                document.getElementById('loginError').classList.remove('hidden');
+            }
+        });
+
+        function logout() {
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('adminDashboard').classList.add('hidden');
+            document.getElementById('loginForm').reset();
+            resetForms();
+        }
+
+        function showForm() {
+            const pageSelect = document.getElementById('pageSelect').value;
+            const houseRulesForm = document.getElementById('houseRulesForm');
+            const instructionsForm = document.getElementById('instructionsForm');
+            
+            houseRulesForm.classList.add('hidden');
+            instructionsForm.classList.add('hidden');
+            
+            if (pageSelect === 'house-rules') {
+                houseRulesForm.classList.remove('hidden');
+            } else if (pageSelect === 'instructions') {
+                instructionsForm.classList.remove('hidden');
+            }
+        }
+
+        function selectStatus(element, status) {
+            document.querySelectorAll('.status-chip').forEach(chip => {
+                chip.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            selectedStatus = status;
+        }
+
+        function showRuleTypeFields() {
+            const ruleType = document.getElementById('ruleType').value;
+            const timeFields = document.getElementById('timeFields');
+            const guestFields = document.getElementById('guestFields');
+            
+            timeFields.classList.add('hidden');
+            guestFields.classList.add('hidden');
+            
+            if (ruleType === 'time') {
+                timeFields.classList.remove('hidden');
+            } else if (ruleType === 'guest') {
+                guestFields.classList.remove('hidden');
+            }
+        }
+
+        // File handling
+        document.getElementById('instructionImages').addEventListener('change', function(e) {
+            handleImageFiles(e.target.files);
+        });
+
+        document.getElementById('instructionVideo').addEventListener('change', function(e) {
+            handleVideoFile(e.target.files[0]);
+        });
+
+        function handleImageFiles(files) {
+            const imagesList = document.getElementById('imagesList');
+            imagesList.innerHTML = '';
+            selectedFiles = Array.from(files);
+            
+            selectedFiles.forEach((file, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <span>${file.name}</span>
+                    <button type="button" onclick="removeFile(${index})">×</button>
+                `;
+                imagesList.appendChild(fileItem);
+            });
+        }
+
+        function handleVideoFile(file) {
+            const videoList = document.getElementById('videoList');
+            videoList.innerHTML = '';
+            selectedVideo = file;
+            
+            if (file) {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <span>${file.name}</span>
+                    <button type="button" onclick="removeVideo()">×</button>
+                `;
+                videoList.appendChild(fileItem);
+            }
+        }
+
+        function removeFile(index) {
+            selectedFiles.splice(index, 1);
+            const dt = new DataTransfer();
+            selectedFiles.forEach(file => dt.items.add(file));
+            document.getElementById('instructionImages').files = dt.files;
+            handleImageFiles(selectedFiles);
+        }
+
+        function removeVideo() {
+            selectedVideo = null;
+            document.getElementById('instructionVideo').value = '';
+            document.getElementById('videoList').innerHTML = '';
+        }
+
+        // Form submissions
+        document.getElementById('houseRuleForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                icon: document.getElementById('ruleIcon').value,
+                title: document.getElementById('ruleTitle').value,
+                description: document.getElementById('ruleDescription').value,
+                status: selectedStatus,
+                statusText: document.getElementById('statusText').value,
+                type: document.getElementById('ruleType').value,
+                startTime: document.getElementById('startTime').value,
+                endTime: document.getElementById('endTime').value,
+                maxGuests: document.getElementById('maxGuests').value
+            };
+            
+            if (!selectedStatus) {
+                alert('Please select a status (Allowed/Not Allowed)');
+                return;
+            }
+            
+            addHouseRule(formData);
+        });
+
+        document.getElementById('instructionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                icon: document.getElementById('instructionIcon').value,
+                title: document.getElementById('instructionTitle').value,
+                steps: document.getElementById('instructionSteps').value,
+                images: selectedFiles,
+                video: selectedVideo
+            };
+            
+            addInstruction(formData);
+        });
+
+        function addHouseRule(data) {
+            try {
+                // Create the HTML for the new rule
+                let ruleHTML = `
+                    <article class="rule-section">
+                        <div class="rule-item">
+                            <div class="rule-header">
+                                <span class="rule-icon" aria-hidden="true">${data.icon}</span>
+                                <span class="rule-label">${data.title}</span>`;
+                
+                if (data.statusText) {
+                    ruleHTML += `<span class="status-chip ${data.status}">${data.statusText}</span>`;
+                }
+                
+                ruleHTML += `</div><div class="rule-content">`;
+                
+                if (data.description) {
+                    ruleHTML += `<p class="rule-desc">${data.description}</p>`;
+                }
+                
+                if (data.type === 'time' && data.startTime && data.endTime) {
+                    ruleHTML += `
+                        <div class="time-settings">
+                            <div class="time-row">
+                                <span class="time-label">Start time:</span>
+                                <span class="time-value">${formatTime(data.startTime)}</span>
+                            </div>
+                            <div class="time-row">
+                                <span class="time-label">End time:</span>
+                                <span class="time-value">${formatTime(data.endTime)}</span>
+                            </div>
+                        </div>`;
+                }
+                
+                ruleHTML += `</div></div></article>`;
+                
+                // Save to localStorage for persistence
+                const existingRules = JSON.parse(localStorage.getItem('houseRules') || '[]');
+                existingRules.push({
+                    html: ruleHTML,
+                    timestamp: new Date().toISOString()
+                });
+                localStorage.setItem('houseRules', JSON.stringify(existingRules));
+                
+                showSuccessMessage();
+                resetForms();
+                
+            } catch (error) {
+                console.error('Error adding house rule:', error);
+                alert('Error adding house rule. Please try again.');
+            }
+        }
+
+        function addInstruction(data) {
+            try {
+                // Create the HTML for the new instruction
+                let instructionHTML = `
+                    <div class="card">
+                        <div class="card-title">
+                            ${data.icon} ${data.title}
+                        </div>`;
+                
+                if (data.images && data.images.length > 0) {
+                    instructionHTML += `
+                        <div class="carousel">
+                            <div class="checkin-gallery">`;
+                    
+                    data.images.forEach((image, index) => {
+                        const imageName = `instruction-${Date.now()}-${index}.${image.name.split('.').pop()}`;
+                        instructionHTML += `
+                            <div class="gallery-item">
+                                <img src="public/${imageName}" alt="Step ${index + 1}" class="gallery-image">
+                                <div class="gallery-caption">Step ${index + 1}</div>
+                            </div>`;
+                    });
+                    
+                    instructionHTML += `</div></div>`;
+                }
+                
+                instructionHTML += `
+                    <div class="dropdown-container">
+                        <button class="dropdown-button" onclick="toggleDropdown(this)">
+                            <span class="dropdown-text">📄 More detailed instructions</span>
+                            <span class="dropdown-arrow">▼</span>
+                        </button>
+                        <div class="dropdown-content">
+                            <div style="line-height: 1.6; font-size: 1rem;">
+                                <p>${data.steps.replace(/\n/g, '</p><p>')}</p>`;
+                
+                if (data.video) {
+                    const videoName = `instruction-video-${Date.now()}.${data.video.name.split('.').pop()}`;
+                    instructionHTML += `
+                        <h4 style="color: var(--lynx-yellow); margin-top: 20px; margin-bottom: 10px;">🎥 Video Guide:</h4>
+                        <div style="text-align: center; margin-top: 16px;">
+                            <video controls style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
+                                <source src="public/video/${videoName}" type="video/${data.video.type}">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>`;
+                }
+                
+                instructionHTML += `</div></div></div></div>`;
+                
+                // Save to localStorage for persistence
+                const existingInstructions = JSON.parse(localStorage.getItem('instructions') || '[]');
+                existingInstructions.push({
+                    html: instructionHTML,
+                    timestamp: new Date().toISOString(),
+                    files: {
+                        images: data.images ? Array.from(data.images).map(f => f.name) : [],
+                        video: data.video ? data.video.name : null
+                    }
+                });
+                localStorage.setItem('instructions', JSON.stringify(existingInstructions));
+                
+                showSuccessMessage();
+                resetForms();
+                
+            } catch (error) {
+                console.error('Error adding instruction:', error);
+                alert('Error adding instruction. Please try again.');
+            }
+        }
+
+        function formatTime(timeString) {
+            const [hours, minutes] = timeString.split(':');
+            const hour = parseInt(hours);
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const hour12 = hour % 12 || 12;
+            return `${hour12}:${minutes} ${ampm}`;
+        }
+
+        function showSuccessMessage() {
+            const successMessage = document.getElementById('successMessage');
+            successMessage.classList.remove('hidden');
+            setTimeout(() => {
+                successMessage.classList.add('hidden');
+            }, 3000);
+        }
+
+        function resetForms() {
+            document.getElementById('houseRuleForm').reset();
+            document.getElementById('instructionForm').reset();
+            document.getElementById('pageSelect').value = '';
+            selectedStatus = '';
+            selectedFiles = [];
+            selectedVideo = null;
+            document.querySelectorAll('.status-chip').forEach(chip => {
+                chip.classList.remove('selected');
+            });
+            document.getElementById('imagesList').innerHTML = '';
+            document.getElementById('videoList').innerHTML = '';
+            document.getElementById('houseRulesForm').classList.add('hidden');
+            document.getElementById('instructionsForm').classList.add('hidden');
+            document.getElementById('timeFields').classList.add('hidden');
+            document.getElementById('guestFields').classList.add('hidden');
+        }
+
+        // Load and inject saved content on page load
+        window.addEventListener('load', function() {
+            injectSavedContent();
+        });
+
+        function injectSavedContent() {
+            // This function would typically interact with the actual HTML files
+            // For now, we'll just log the saved content
+            const savedRules = JSON.parse(localStorage.getItem('houseRules') || '[]');
+            const savedInstructions = JSON.parse(localStorage.getItem('instructions') || '[]');
+            
+            if (savedRules.length > 0) {
+                console.log('Saved House Rules:', savedRules);
+            }
+            
+            if (savedInstructions.length > 0) {
+                console.log('Saved Instructions:', savedInstructions);
+            }
+        }
+    </script>
+</body>
+</html>
