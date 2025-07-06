@@ -879,9 +879,19 @@
                             
                             <div class="form-group">
                                 <label class="form-label">Status</label>
-                                <div class="status-chip-group">
-                                    <span class="status-chip allowed" onclick="selectEditStatus(this, 'allowed')">Allowed</span>
-                                    <span class="status-chip not-allowed" onclick="selectEditStatus(this, 'not-allowed')">Not Allowed</span>
+                                <div class="status-chip-group" role="group" aria-labelledby="edit-status-label">
+                                    <span class="status-chip allowed" 
+                                          role="button" 
+                                          tabindex="0"
+                                          aria-label="Set rule status to allowed"
+                                          onclick="selectEditStatus(this, 'allowed')"
+                                          onkeydown="handleEditStatusKeydown(event, this, 'allowed')">Allowed</span>
+                                    <span class="status-chip not-allowed" 
+                                          role="button" 
+                                          tabindex="0"
+                                          aria-label="Set rule status to not allowed"
+                                          onclick="selectEditStatus(this, 'not-allowed')"
+                                          onkeydown="handleEditStatusKeydown(event, this, 'not-allowed')">Not Allowed</span>
                                 </div>
                             </div>
                             
@@ -1629,6 +1639,13 @@
             selectedEditStatus = status;
         }
 
+        function handleEditStatusKeydown(event, element, status) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                selectEditStatus(element, status);
+            }
+        }
+
         function showEditRuleTypeFields() {
             const ruleType = document.getElementById('editRuleType').value;
             const timeFields = document.getElementById('editTimeFields');
@@ -1862,10 +1879,19 @@
             selectedEditFiles.forEach((file, index) => {
                 const fileItem = document.createElement('div');
                 fileItem.className = 'file-item';
-                fileItem.innerHTML = `
-                    <span>${file.name}</span>
-                    <button type="button" onclick="removeEditFile(${index})">×</button>
-                `;
+                
+                // Create span element safely
+                const fileNameSpan = document.createElement('span');
+                fileNameSpan.textContent = file.name;
+                
+                // Create button element safely
+                const removeButton = document.createElement('button');
+                removeButton.type = 'button';
+                removeButton.textContent = '×';
+                removeButton.onclick = () => removeEditFile(index);
+                
+                fileItem.appendChild(fileNameSpan);
+                fileItem.appendChild(removeButton);
                 imagesList.appendChild(fileItem);
             });
         }
@@ -1878,10 +1904,19 @@
             if (file) {
                 const fileItem = document.createElement('div');
                 fileItem.className = 'file-item';
-                fileItem.innerHTML = `
-                    <span>${file.name}</span>
-                    <button type="button" onclick="removeEditVideo()">×</button>
-                `;
+                
+                // Create span element safely
+                const fileNameSpan = document.createElement('span');
+                fileNameSpan.textContent = file.name;
+                
+                // Create button element safely
+                const removeButton = document.createElement('button');
+                removeButton.type = 'button';
+                removeButton.textContent = '×';
+                removeButton.onclick = () => removeEditVideo();
+                
+                fileItem.appendChild(fileNameSpan);
+                fileItem.appendChild(removeButton);
                 videoList.appendChild(fileItem);
             }
         }
