@@ -531,6 +531,130 @@
         padding-right: 12px;
         box-sizing: border-box;
       }
+      
+      /* Dropdown styles */
+      .dropdown-container {
+        margin-top: 16px;
+        width: 100%;
+      }
+      
+      .dropdown-button {
+        background: linear-gradient(135deg, var(--lynx-yellow), #f5d752);
+        color: var(--lynx-dark);
+        border: none;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .dropdown-button:hover {
+        background: linear-gradient(135deg, #f5d752, var(--lynx-yellow));
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+      
+      .dropdown-button:active {
+        transform: translateY(0);
+      }
+      
+      .dropdown-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+      }
+      
+      .dropdown-button:hover::before {
+        transform: translateX(100%);
+      }
+      
+      .dropdown-text {
+        font-size: 1rem;
+        font-weight: 600;
+        z-index: 1;
+        position: relative;
+      }
+      
+      .dropdown-arrow {
+        font-size: 1.2rem;
+        font-weight: bold;
+        transition: transform 0.3s ease;
+        z-index: 1;
+        position: relative;
+      }
+      
+      .dropdown-button.active .dropdown-arrow {
+        transform: rotate(180deg);
+      }
+      
+      .dropdown-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease, padding 0.4s ease;
+        background: rgba(255, 224, 102, 0.05);
+        border-radius: 0 0 8px 8px;
+        border: 1px solid rgba(255, 224, 102, 0.2);
+        border-top: none;
+      }
+      
+      .dropdown-content.active {
+        max-height: 1000px;
+        padding: 16px;
+        padding-top: 20px;
+      }
+      
+      .dropdown-content div {
+        line-height: 1.6;
+        font-size: 1rem;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+      }
+      
+      .dropdown-content.active div {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      body.dark-mode .dropdown-content {
+        background: rgba(255, 224, 102, 0.1);
+        border-color: rgba(255, 224, 102, 0.3);
+      }
+      
+      body.dark-mode .dropdown-button {
+        background: linear-gradient(135deg, var(--lynx-yellow), #f5d752);
+        color: var(--lynx-dark);
+      }
+      
+      body.dark-mode .dropdown-button:hover {
+        background: linear-gradient(135deg, #f5d752, var(--lynx-yellow));
+      }
+      
+      @media (max-width: 600px) {
+        .dropdown-button {
+          font-size: 0.95rem;
+          padding: 10px 14px;
+        }
+        .dropdown-text {
+          font-size: 0.95rem;
+        }
+      }
     </style>
   </head>
   <body>
@@ -587,9 +711,16 @@
             carousel here]
           </div>
         </div>
-        <div>
-          Step-by-step instructions for assembling
-          the sofa bed will be shown here.
+        <div class="dropdown-container">
+          <button class="dropdown-button" onclick="toggleDropdown(this)">
+            <span class="dropdown-text">📄 More detailed instructions</span>
+            <span class="dropdown-arrow">▼</span>
+          </button>
+          <div class="dropdown-content">
+            <div style="line-height: 1.6; font-size: 1rem;">
+              <p>Step-by-step instructions for assembling the sofa bed will be shown here.</p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="card">
@@ -616,35 +747,43 @@
             </div>
           </div>
         </div>
-        <div style="line-height: 1.6; font-size: 1rem;">
-          <p>In case I forgot to mention this during check-in — or if you simply need a reminder — here's where to dispose of your trash during your stay:</p>
-          
-          <h4 style="color: var(--lynx-yellow); margin-top: 20px; margin-bottom: 10px;">📍 The designated trash bin is located in a small service room near the elevator on your floor.</h4>
-          
-          <h4 style="color: var(--lynx-yellow); margin-top: 20px; margin-bottom: 10px;">🚶 From Apartment 109:</h4>
-          <ul style="margin-left: 20px; margin-bottom: 16px;">
-            <li>Exit and turn right into the hallway</li>
-            <li>Walk straight past the elevators and enter the emergency door on your right (marked with an EXIT sign)</li>
-            <li>Inside, you'll see another door directly in front of you—open it</li>
-            <li>You'll now be in the emergency stairwell area</li>
-            <li>Stay on the same floor and turn right</li>
-            <li>The utility room will be just ahead on your right</li>
-            <li>Inside, you'll find a green wheeled bin for household waste</li>
-          </ul>
-          
-          <h4 style="color: var(--lynx-yellow); margin-top: 20px; margin-bottom: 10px;">📋 Important Notes:</h4>
-          <ul style="margin-left: 20px; margin-bottom: 16px;">
-            <li><strong>Please make sure all trash is securely tied in bags</strong> before placing it in the bin.</li>
-            <li><strong>Kindly avoid leaving any loose items or bags outside the container.</strong></li>
-            <li>Let us know if you need extra trash bags — we're happy to help!</li>
-          </ul>
-          
-          <h4 style="color: var(--lynx-yellow); margin-top: 20px; margin-bottom: 10px;">🎥 Video Guide:</h4>
-          <div style="text-align: center; margin-top: 16px;">
-            <video controls style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
-              <source src="public/video/trash-disposal-guide.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
+        <div class="dropdown-container">
+          <button class="dropdown-button" onclick="toggleDropdown(this)">
+            <span class="dropdown-text">📄 More detailed instructions</span>
+            <span class="dropdown-arrow">▼</span>
+          </button>
+          <div class="dropdown-content">
+            <div style="line-height: 1.6; font-size: 1rem;">
+              <p>In case I forgot to mention this during check-in — or if you simply need a reminder — here's where to dispose of your trash during your stay:</p>
+              
+              <h4 style="color: var(--lynx-yellow); margin-top: 20px; margin-bottom: 10px;">📍 The designated trash bin is located in a small service room near the elevator on your floor.</h4>
+              
+              <h4 style="color: var(--lynx-yellow); margin-top: 20px; margin-bottom: 10px;">🚶 From Apartment 109:</h4>
+              <ul style="margin-left: 20px; margin-bottom: 16px;">
+                <li>Exit and turn right into the hallway</li>
+                <li>Walk straight past the elevators and enter the emergency door on your right (marked with an EXIT sign)</li>
+                <li>Inside, you'll see another door directly in front of you—open it</li>
+                <li>You'll now be in the emergency stairwell area</li>
+                <li>Stay on the same floor and turn right</li>
+                <li>The utility room will be just ahead on your right</li>
+                <li>Inside, you'll find a green wheeled bin for household waste</li>
+              </ul>
+              
+              <h4 style="color: var(--lynx-yellow); margin-top: 20px; margin-bottom: 10px;">📋 Important Notes:</h4>
+              <ul style="margin-left: 20px; margin-bottom: 16px;">
+                <li><strong>Please make sure all trash is securely tied in bags</strong> before placing it in the bin.</li>
+                <li><strong>Kindly avoid leaving any loose items or bags outside the container.</strong></li>
+                <li>Let us know if you need extra trash bags — we're happy to help!</li>
+              </ul>
+              
+              <h4 style="color: var(--lynx-yellow); margin-top: 20px; margin-bottom: 10px;">🎥 Video Guide:</h4>
+              <div style="text-align: center; margin-top: 16px;">
+                <video controls style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
+                  <source src="public/video/trash-disposal-guide.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -668,36 +807,44 @@
             </div>
           </div>
         </div>
-        <div style="line-height: 1.6; font-size: 1rem;">
-          <p>To access your key, please follow these steps:</p>
-          
-          <h4 style="color: var(--lynx-yellow); margin-top: 20px; margin-bottom: 10px;">📍 Locate the Mailbox</h4>
-          <ul style="margin-left: 20px; margin-bottom: 16px;">
-            <li>Find <strong>Mailbox 109</strong> in the building's mailbox area — located just across from the reception desk in the lobby.</li>
-            <li>The Mailbox 109 is directly in front of you as you enter the mailbox room, on the top row, 6th mailbox from the right.</li>
-          </ul>
-          
-          <h4 style="color: var(--lynx-yellow); margin-top: 20px; margin-bottom: 10px;">🔐 Open the Lock</h4>
-          <ol style="margin-left: 20px; margin-bottom: 16px;">
-            <li><strong>Enter the code:</strong> Set the numbers to <strong>0 - 5 - 0</strong> on the lock.
-              <ul style="margin-left: 20px; margin-top: 6px;">
-                <li>Make sure the digits are perfectly aligned with the center line on the dial.</li>
+        <div class="dropdown-container">
+          <button class="dropdown-button" onclick="toggleDropdown(this)">
+            <span class="dropdown-text">📄 More detailed instructions</span>
+            <span class="dropdown-arrow">▼</span>
+          </button>
+          <div class="dropdown-content">
+            <div style="line-height: 1.6; font-size: 1rem;">
+              <p>To access your key, please follow these steps:</p>
+              
+              <h4 style="color: var(--lynx-yellow); margin-top: 20px; margin-bottom: 10px;">📍 Locate the Mailbox</h4>
+              <ul style="margin-left: 20px; margin-bottom: 16px;">
+                <li>Find <strong>Mailbox 109</strong> in the building's mailbox area — located just across from the reception desk in the lobby.</li>
+                <li>The Mailbox 109 is directly in front of you as you enter the mailbox room, on the top row, 6th mailbox from the right.</li>
               </ul>
-            </li>
-            <li><strong>Turn the dial counterclockwise (to the left):</strong><br>
-              Once the correct combination is entered, gently turn the lock to the left (opposite of clock direction).</li>
-            <li>If the lock turns, the code is correct — go ahead and open the mailbox door.</li>
-            <li><strong>If the lock does NOT turn:</strong>
-              <ul style="margin-left: 20px; margin-top: 6px;">
-                <li>The combination may not be precisely aligned.</li>
-                <li>Please realign the digits carefully and try turning left again.</li>
-              </ul>
-            </li>
-            <li>Take your apartment key from inside the mailbox.</li>
-          </ol>
-          
-          <h4 style="color: var(--lynx-yellow); margin-top: 20px; margin-bottom: 10px;">📞 Need Help?</h4>
-          <p style="margin-bottom: 0;">If you have any issues, please contact me and I'll assist you right away.</p>
+              
+              <h4 style="color: var(--lynx-yellow); margin-top: 20px; margin-bottom: 10px;">🔐 Open the Lock</h4>
+              <ol style="margin-left: 20px; margin-bottom: 16px;">
+                <li><strong>Enter the code:</strong> Set the numbers to <strong>0 - 5 - 0</strong> on the lock.
+                  <ul style="margin-left: 20px; margin-top: 6px;">
+                    <li>Make sure the digits are perfectly aligned with the center line on the dial.</li>
+                  </ul>
+                </li>
+                <li><strong>Turn the dial counterclockwise (to the left):</strong><br>
+                  Once the correct combination is entered, gently turn the lock to the left (opposite of clock direction).</li>
+                <li>If the lock turns, the code is correct — go ahead and open the mailbox door.</li>
+                <li><strong>If the lock does NOT turn:</strong>
+                  <ul style="margin-left: 20px; margin-top: 6px;">
+                    <li>The combination may not be precisely aligned.</li>
+                    <li>Please realign the digits carefully and try turning left again.</li>
+                  </ul>
+                </li>
+                <li>Take your apartment key from inside the mailbox.</li>
+              </ol>
+              
+              <h4 style="color: var(--lynx-yellow); margin-top: 20px; margin-bottom: 10px;">📞 Need Help?</h4>
+              <p style="margin-bottom: 0;">If you have any issues, please contact me and I'll assist you right away.</p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="card">
@@ -710,9 +857,16 @@
             carousel here]
           </div>
         </div>
-        <div>
-          Instructions for safely turning the
-          boiler on and off will be shown here.
+        <div class="dropdown-container">
+          <button class="dropdown-button" onclick="toggleDropdown(this)">
+            <span class="dropdown-text">📄 More detailed instructions</span>
+            <span class="dropdown-arrow">▼</span>
+          </button>
+          <div class="dropdown-content">
+            <div style="line-height: 1.6; font-size: 1rem;">
+              <p>Instructions for safely turning the boiler on and off will be shown here.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -900,6 +1054,29 @@
           } else {
             showNextImage(); // Swipe left = next image
           }
+        }
+      }
+      
+      // Dropdown toggle functionality
+      function toggleDropdown(button) {
+        const dropdownContent = button.nextElementSibling;
+        const isActive = button.classList.contains('active');
+        
+        // Close all other dropdowns
+        document.querySelectorAll('.dropdown-button.active').forEach(btn => {
+          if (btn !== button) {
+            btn.classList.remove('active');
+            btn.nextElementSibling.classList.remove('active');
+          }
+        });
+        
+        // Toggle current dropdown
+        if (isActive) {
+          button.classList.remove('active');
+          dropdownContent.classList.remove('active');
+        } else {
+          button.classList.add('active');
+          dropdownContent.classList.add('active');
         }
       }
     </script>
