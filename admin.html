@@ -151,6 +151,17 @@
             box-shadow: var(--lynx-shadow-hover);
         }
 
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+            transform: translateY(-2px);
+            box-shadow: var(--lynx-shadow-hover);
+        }
+
         .btn-block {
             width: 100%;
         }
@@ -466,12 +477,44 @@
                 </form>
             </div>
 
+            <!-- Generated Content Display -->
+            <div id="generatedContent" class="card hidden">
+                <h2 style="margin-bottom: 24px; color: var(--lynx-blue); font-family: 'Poppins', Arial, sans-serif;">Generated Content</h2>
+                
+                <div class="form-group">
+                    <label class="form-label">Generated HTML Code:</label>
+                    <textarea id="generatedHtml" class="form-textarea" readonly style="min-height: 200px; font-family: 'Courier New', monospace; font-size: 0.9rem;"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Manual Integration Instructions:</label>
+                    <textarea id="integrationInstructions" class="form-textarea" readonly style="min-height: 150px;"></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <button type="button" id="copyHtmlBtn" class="btn btn-primary">📋 Copy HTML</button>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" id="downloadHtmlBtn" class="btn btn-success">💾 Download HTML</button>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" id="closeContentBtn" class="btn btn-secondary">❌ Close</button>
+                    </div>
+                </div>
+                
+                <div id="copySuccess" class="success-message hidden">
+                    HTML copied to clipboard!
+                </div>
+            </div>
+
             <div id="successMessage" class="success-message hidden">
                 Entry added successfully!
             </div>
         </div>
     </div>
 
+    <script src="admin-content-manager.js"></script>
     <script>
         // Authentication
         const ADMIN_USERNAME = 'Zoki';
@@ -479,6 +522,7 @@
         let selectedStatus = '';
         let selectedFiles = [];
         let selectedVideo = null;
+        let contentManager = null;
 
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -490,6 +534,9 @@
                 document.getElementById('loginSection').classList.add('hidden');
                 document.getElementById('adminDashboard').classList.remove('hidden');
                 document.getElementById('loginError').classList.add('hidden');
+                
+                // Initialize content manager
+                contentManager = new AdminContentManager();
             } else {
                 document.getElementById('loginError').classList.remove('hidden');
             }
@@ -633,52 +680,25 @@
             addInstruction(formData);
         });
 
-        function addHouseRule(data) {
+        async function addHouseRule(data) {
             try {
-                // Create the HTML for the new rule
-                let ruleHTML = `
-                    <article class="rule-section">
-                        <div class="rule-item">
-                            <div class="rule-header">
-                                <span class="rule-icon" aria-hidden="true">${data.icon}</span>
-                                <span class="rule-label">${data.title}</span>`;
+                const result = await contentManager.addHouseRule(data);
                 
-                if (data.statusText) {
-                    ruleHTML += `<span class="status-chip ${data.status}">${data.statusText}</span>`;
+                if (result.success) {
+                    // Save to localStorage for persistence
+                    const existingRules = JSON.parse(localStorage.getItem('houseRules') || '[]');
+                    existingRules.push({
+                        html: result.html,
+                        timestamp: new Date().toISOString(),
+                        data: data
+                    });
+                    localStorage.setItem('houseRules', JSON.stringify(existingRules));
+                    
+                    showGeneratedContent('house-rules', result.html, result.serverInjected);
+                    resetForms();
+                } else {
+                    alert('Error: ' + result.error);
                 }
-                
-                ruleHTML += `</div><div class="rule-content">`;
-                
-                if (data.description) {
-                    ruleHTML += `<p class="rule-desc">${data.description}</p>`;
-                }
-                
-                if (data.type === 'time' && data.startTime && data.endTime) {
-                    ruleHTML += `
-                        <div class="time-settings">
-                            <div class="time-row">
-                                <span class="time-label">Start time:</span>
-                                <span class="time-value">${formatTime(data.startTime)}</span>
-                            </div>
-                            <div class="time-row">
-                                <span class="time-label">End time:</span>
-                                <span class="time-value">${formatTime(data.endTime)}</span>
-                            </div>
-                        </div>`;
-                }
-                
-                ruleHTML += `</div></div></article>`;
-                
-                // Save to localStorage for persistence
-                const existingRules = JSON.parse(localStorage.getItem('houseRules') || '[]');
-                existingRules.push({
-                    html: ruleHTML,
-                    timestamp: new Date().toISOString()
-                });
-                localStorage.setItem('houseRules', JSON.stringify(existingRules));
-                
-                showSuccessMessage();
-                resetForms();
                 
             } catch (error) {
                 console.error('Error adding house rule:', error);
@@ -686,70 +706,29 @@
             }
         }
 
-        function addInstruction(data) {
+        async function addInstruction(data) {
             try {
-                // Create the HTML for the new instruction
-                let instructionHTML = `
-                    <div class="card">
-                        <div class="card-title">
-                            ${data.icon} ${data.title}
-                        </div>`;
+                const result = await contentManager.addInstruction(data);
                 
-                if (data.images && data.images.length > 0) {
-                    instructionHTML += `
-                        <div class="carousel">
-                            <div class="checkin-gallery">`;
-                    
-                    data.images.forEach((image, index) => {
-                        const imageName = `instruction-${Date.now()}-${index}.${image.name.split('.').pop()}`;
-                        instructionHTML += `
-                            <div class="gallery-item">
-                                <img src="public/${imageName}" alt="Step ${index + 1}" class="gallery-image">
-                                <div class="gallery-caption">Step ${index + 1}</div>
-                            </div>`;
+                if (result.success) {
+                    // Save to localStorage for persistence
+                    const existingInstructions = JSON.parse(localStorage.getItem('instructions') || '[]');
+                    existingInstructions.push({
+                        html: result.html,
+                        timestamp: new Date().toISOString(),
+                        data: data,
+                        files: {
+                            images: data.images ? Array.from(data.images).map(f => f.name) : [],
+                            video: data.video ? data.video.name : null
+                        }
                     });
+                    localStorage.setItem('instructions', JSON.stringify(existingInstructions));
                     
-                    instructionHTML += `</div></div>`;
+                    showGeneratedContent('instructions', result.html, result.serverInjected);
+                    resetForms();
+                } else {
+                    alert('Error: ' + result.error);
                 }
-                
-                instructionHTML += `
-                    <div class="dropdown-container">
-                        <button class="dropdown-button" onclick="toggleDropdown(this)">
-                            <span class="dropdown-text">📄 More detailed instructions</span>
-                            <span class="dropdown-arrow">▼</span>
-                        </button>
-                        <div class="dropdown-content">
-                            <div style="line-height: 1.6; font-size: 1rem;">
-                                <p>${data.steps.replace(/\n/g, '</p><p>')}</p>`;
-                
-                if (data.video) {
-                    const videoName = `instruction-video-${Date.now()}.${data.video.name.split('.').pop()}`;
-                    instructionHTML += `
-                        <h4 style="color: var(--lynx-yellow); margin-top: 20px; margin-bottom: 10px;">🎥 Video Guide:</h4>
-                        <div style="text-align: center; margin-top: 16px;">
-                            <video controls style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
-                                <source src="public/video/${videoName}" type="video/${data.video.type}">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>`;
-                }
-                
-                instructionHTML += `</div></div></div></div>`;
-                
-                // Save to localStorage for persistence
-                const existingInstructions = JSON.parse(localStorage.getItem('instructions') || '[]');
-                existingInstructions.push({
-                    html: instructionHTML,
-                    timestamp: new Date().toISOString(),
-                    files: {
-                        images: data.images ? Array.from(data.images).map(f => f.name) : [],
-                        video: data.video ? data.video.name : null
-                    }
-                });
-                localStorage.setItem('instructions', JSON.stringify(existingInstructions));
-                
-                showSuccessMessage();
-                resetForms();
                 
             } catch (error) {
                 console.error('Error adding instruction:', error);
@@ -757,13 +736,7 @@
             }
         }
 
-        function formatTime(timeString) {
-            const [hours, minutes] = timeString.split(':');
-            const hour = parseInt(hours);
-            const ampm = hour >= 12 ? 'PM' : 'AM';
-            const hour12 = hour % 12 || 12;
-            return `${hour12}:${minutes} ${ampm}`;
-        }
+
 
         function showSuccessMessage() {
             const successMessage = document.getElementById('successMessage');
@@ -772,6 +745,57 @@
                 successMessage.classList.add('hidden');
             }, 3000);
         }
+
+        function showGeneratedContent(type, html, serverInjected = false) {
+            const generatedContent = document.getElementById('generatedContent');
+            const generatedHtml = document.getElementById('generatedHtml');
+            const integrationInstructions = document.getElementById('integrationInstructions');
+            
+            generatedContent.classList.remove('hidden');
+            generatedHtml.value = html;
+            
+            if (serverInjected) {
+                integrationInstructions.value = `✅ Content has been automatically injected into the ${type === 'house-rules' ? 'house-rules.html' : 'Instructions.html'} file!
+
+The new entry is now live on your website. You can view it by opening the corresponding page.
+
+Generated HTML code is shown above for reference.`;
+            } else {
+                integrationInstructions.value = contentManager.exportForManualInsertion(type, html);
+            }
+            
+            // Scroll to the generated content
+            generatedContent.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Event handlers for generated content buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('copyHtmlBtn').addEventListener('click', async function() {
+                const html = document.getElementById('generatedHtml').value;
+                const success = await contentManager.copyToClipboard(html);
+                
+                if (success) {
+                    const copySuccess = document.getElementById('copySuccess');
+                    copySuccess.classList.remove('hidden');
+                    setTimeout(() => {
+                        copySuccess.classList.add('hidden');
+                    }, 2000);
+                } else {
+                    alert('Failed to copy to clipboard. Please select and copy manually.');
+                }
+            });
+
+            document.getElementById('downloadHtmlBtn').addEventListener('click', function() {
+                const html = document.getElementById('generatedHtml').value;
+                const type = document.getElementById('pageSelect').value;
+                const filename = `${type}-new-entry-${Date.now()}.html`;
+                contentManager.downloadContent(html, filename);
+            });
+
+            document.getElementById('closeContentBtn').addEventListener('click', function() {
+                document.getElementById('generatedContent').classList.add('hidden');
+            });
+        });
 
         function resetForms() {
             document.getElementById('houseRuleForm').reset();
@@ -789,6 +813,22 @@
             document.getElementById('instructionsForm').classList.add('hidden');
             document.getElementById('timeFields').classList.add('hidden');
             document.getElementById('guestFields').classList.add('hidden');
+            document.getElementById('generatedContent').classList.add('hidden');
+        }
+
+        // Toggle dropdown function for instructions (referenced in generated HTML)
+        function toggleDropdown(button) {
+            const content = button.nextElementSibling;
+            const arrow = button.querySelector('.dropdown-arrow');
+            
+            button.classList.toggle('active');
+            content.classList.toggle('active');
+            
+            if (content.classList.contains('active')) {
+                arrow.style.transform = 'rotate(180deg)';
+            } else {
+                arrow.style.transform = 'rotate(0deg)';
+            }
         }
 
         // Load and inject saved content on page load

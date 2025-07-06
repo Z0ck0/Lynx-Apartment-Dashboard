@@ -1,5 +1,21 @@
 {
+  "name": "lynx-apartment-admin",
+  "version": "1.0.0",
+  "description": "Admin panel for managing Lynx Apartment content",
+  "main": "admin-server.js",
+  "scripts": {
+    "start": "node admin-server.js",
+    "dev": "nodemon admin-server.js"
+  },
   "dependencies": {
-    "jspdf": "^3.0.1"
-  }
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": ["admin", "content-management", "lynx-apartment"],
+  "author": "Lynx Apartment",
+  "license": "MIT"
 }
