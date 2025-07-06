@@ -777,6 +777,15 @@
         let currentEditIndex = -1;
         let currentEditType = '';
 
+        // Ensure DOM is ready and modal is properly hidden
+        document.addEventListener('DOMContentLoaded', function() {
+            // Force hide the edit modal on DOM load
+            const editModal = document.getElementById('editModal');
+            if (editModal) {
+                editModal.classList.add('hidden');
+            }
+        });
+
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -787,6 +796,9 @@
                 document.getElementById('loginSection').classList.add('hidden');
                 document.getElementById('adminDashboard').classList.remove('hidden');
                 document.getElementById('loginError').classList.add('hidden');
+                
+                // Ensure the edit modal is properly hidden after login
+                closeEditModal();
             } else {
                 document.getElementById('loginError').classList.remove('hidden');
             }
@@ -797,6 +809,9 @@
             document.getElementById('adminDashboard').classList.add('hidden');
             document.getElementById('loginForm').reset();
             resetForms();
+            
+            // Ensure the edit modal is properly hidden on logout
+            closeEditModal();
         }
 
         function showForm() {
@@ -1092,6 +1107,9 @@
         // Load and inject saved content on page load
         window.addEventListener('load', function() {
             injectSavedContent();
+            
+            // Ensure the edit modal is properly hidden on page load
+            closeEditModal();
         });
 
         function injectSavedContent() {
@@ -1179,6 +1197,12 @@
         }
 
         function editEntry(index, pageType) {
+            // Validate parameters to prevent modal from showing inappropriately
+            if (index === undefined || index === null || index < 0 || !pageType) {
+                console.error('Invalid parameters for editEntry function');
+                return;
+            }
+            
             currentEditIndex = index;
             currentEditType = pageType;
             
@@ -1190,7 +1214,10 @@
             }
             
             const entry = entries[index];
-            if (!entry) return;
+            if (!entry) {
+                console.error('Entry not found at index:', index);
+                return;
+            }
             
             // Show modal and populate form
             document.getElementById('editModal').classList.remove('hidden');
