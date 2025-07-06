@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+THIS SHOULD BE A LINTER ERROR<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,8 +17,6 @@
             --lynx-shadow-hover: 0 8px 32px rgba(0, 120, 215, 0.15);
             --lynx-border-radius: 16px;
             --lynx-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --border-radius: 12px;
-            --transition: all 0.2s ease;
         }
 
         * {
@@ -664,11 +662,11 @@
 
     <div class="container">
         <!-- Login Form -->
-        <div id="loginSection" class="card">
-            <div class="admin-header">
+        <section id="loginSection" class="card">
+            <header class="admin-header">
                 <h1 class="admin-title">Admin Panel</h1>
                 <p class="admin-subtitle">Please log in to access the content management system</p>
-            </div>
+            </header>
             
             <form id="loginForm">
                 <div class="form-group">
@@ -1012,9 +1010,8 @@
         // Initialize theme on load
         document.addEventListener("DOMContentLoaded", initializeTheme);
 
-        // Authentication
-        const ADMIN_USERNAME = 'Zoki';
-        const ADMIN_PASSWORD = 'Zoki2107!';
+        // Authentication - SECURITY: Remove hardcoded credentials
+        // TODO: Implement server-side authentication
         let selectedStatus = '';
         let selectedFiles = [];
         let selectedVideo = null;
@@ -1033,23 +1030,47 @@
             }
         });
 
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             
-            if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-                document.getElementById('loginSection').classList.add('hidden');
-                document.getElementById('adminDashboard').classList.remove('hidden');
-                document.getElementById('loginError').classList.add('hidden');
+            try {
+                // TODO: Replace with actual server-side authentication
+                const response = await authenticateUser(username, password);
                 
-                // Ensure the edit modal is properly hidden after login
-                closeEditModal();
-            } else {
+                if (response.success) {
+                    document.getElementById('loginSection').classList.add('hidden');
+                    document.getElementById('adminDashboard').classList.remove('hidden');
+                    document.getElementById('loginError').classList.add('hidden');
+                    
+                    // Ensure the edit modal is properly hidden after login
+                    closeEditModal();
+                } else {
+                    document.getElementById('loginError').classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Authentication error:', error);
                 document.getElementById('loginError').classList.remove('hidden');
             }
         });
+
+        // TODO: Implement actual server-side authentication
+        async function authenticateUser(username, password) {
+            // TEMPORARY: Mock authentication for demonstration
+            // In production, this should call a secure API endpoint
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    // This is just for demonstration - remove in production
+                    if (username === 'admin' && password === 'secure_password') {
+                        resolve({ success: true, token: 'mock-token' });
+                    } else {
+                        resolve({ success: false, error: 'Invalid credentials' });
+                    }
+                }, 500);
+            });
+        }
 
         function logout() {
             document.getElementById('loginSection').classList.remove('hidden');
@@ -1116,10 +1137,19 @@
             selectedFiles.forEach((file, index) => {
                 const fileItem = document.createElement('div');
                 fileItem.className = 'file-item';
-                fileItem.innerHTML = `
-                    <span>${file.name}</span>
-                    <button type="button" onclick="removeFile(${index})">×</button>
-                `;
+                
+                // Create span element safely
+                const fileNameSpan = document.createElement('span');
+                fileNameSpan.textContent = file.name;
+                
+                // Create button element safely
+                const removeButton = document.createElement('button');
+                removeButton.type = 'button';
+                removeButton.textContent = '×';
+                removeButton.onclick = () => removeFile(index);
+                
+                fileItem.appendChild(fileNameSpan);
+                fileItem.appendChild(removeButton);
                 imagesList.appendChild(fileItem);
             });
         }
@@ -1132,10 +1162,19 @@
             if (file) {
                 const fileItem = document.createElement('div');
                 fileItem.className = 'file-item';
-                fileItem.innerHTML = `
-                    <span>${file.name}</span>
-                    <button type="button" onclick="removeVideo()">×</button>
-                `;
+                
+                // Create span element safely
+                const fileNameSpan = document.createElement('span');
+                fileNameSpan.textContent = file.name;
+                
+                // Create button element safely
+                const removeButton = document.createElement('button');
+                removeButton.type = 'button';
+                removeButton.textContent = '×';
+                removeButton.onclick = () => removeVideo();
+                
+                fileItem.appendChild(fileNameSpan);
+                fileItem.appendChild(removeButton);
                 videoList.appendChild(fileItem);
             }
         }
