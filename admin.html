@@ -1066,7 +1066,170 @@
             if (elements.editModal) {
                 elements.editModal.classList.add('hidden');
             }
-        });
+            
+            // Add login form event listener after DOM is loaded
+            if (elements.loginForm) {
+                elements.loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    try {
+                        const username = document.getElementById('username').value.trim();
+                        const password = document.getElementById('password').value;
+                        
+                        // Debug logging
+                        console.log('Login attempt:', { username, password });
+                        console.log('Expected:', { username: ADMIN_USERNAME, password: ADMIN_PASSWORD });
+                        console.log('Username match:', username === ADMIN_USERNAME);
+                        console.log('Password match:', password === ADMIN_PASSWORD);
+                        console.log('Password characters:', password.split('').map(c => c.charCodeAt(0)));
+                        
+                        // Basic validation
+                        if (!username || !password) {
+                            showError('Please enter both username and password');
+                            return;
+                        }
+                        
+                        if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+                            // Successful login
+                            console.log('Login successful');
+                            if (elements.loginSection) elements.loginSection.classList.add('hidden');
+                            if (elements.adminDashboard) elements.adminDashboard.classList.remove('hidden');
+                            if (elements.loginError) elements.loginError.classList.add('hidden');
+                            
+                            // Clear form for security
+                            document.getElementById('username').value = '';
+                            document.getElementById('password').value = '';
+                            
+                            // Ensure the edit modal is properly hidden after login
+                            closeEditModal();
+                        } else {
+                            console.log('Login failed - credentials do not match');
+                            showError('Invalid username or password. Please try again.');
+                        }
+                    } catch (error) {
+                        console.error('Login error:', error);
+                        showError('An error occurred during login. Please try again.');
+                    }
+                });
+            }
+            
+            // File handling event listeners
+            const instructionImagesEl = document.getElementById('instructionImages');
+            const instructionVideoEl = document.getElementById('instructionVideo');
+            
+            if (instructionImagesEl) {
+                instructionImagesEl.addEventListener('change', function(e) {
+                    handleImageFiles(e.target.files);
+                });
+            }
+            
+            if (instructionVideoEl) {
+                instructionVideoEl.addEventListener('change', function(e) {
+                    handleVideoFile(e.target.files[0]);
+                });
+            }
+            
+            // Form submissions with validation
+            const houseRuleForm = document.getElementById('houseRuleForm');
+            const instructionForm = document.getElementById('instructionForm');
+            
+            if (houseRuleForm) {
+                houseRuleForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    try {
+                        const formData = {
+                            icon: document.getElementById('ruleIcon').value.trim(),
+                            title: document.getElementById('ruleTitle').value.trim(),
+                            description: document.getElementById('ruleDescription').value.trim(),
+                            status: selectedStatus,
+                            statusText: document.getElementById('statusText').value.trim(),
+                            type: document.getElementById('ruleType').value,
+                            startTime: document.getElementById('startTime').value,
+                            endTime: document.getElementById('endTime').value,
+                            maxGuests: document.getElementById('maxGuests').value
+                        };
+                        
+                        // Enhanced validation
+                        if (!formData.title) {
+                            alert('Please enter a rule title');
+                            document.getElementById('ruleTitle').focus();
+                            return;
+                        }
+                        
+                        if (!selectedStatus) {
+                            alert('Please select a status (Allowed/Not Allowed)');
+                            return;
+                        }
+                        
+                        if (formData.type === 'time' && (!formData.startTime || !formData.endTime)) {
+                            alert('Please specify both start and end times for time-based rules');
+                            return;
+                        }
+                        
+                        if (formData.type === 'guest' && (!formData.maxGuests || formData.maxGuests < 1)) {
+                            alert('Please specify a valid maximum number of guests');
+                            return;
+                        }
+                        
+                        addHouseRule(formData);
+                    } catch (error) {
+                        console.error('Form submission error:', error);
+                        alert('An error occurred while submitting the form. Please try again.');
+                    }
+                });
+            }
+            
+            if (instructionForm) {
+                instructionForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    try {
+                        const formData = {
+                            icon: document.getElementById('instructionIcon').value.trim(),
+                            title: document.getElementById('instructionTitle').value.trim(),
+                            steps: document.getElementById('instructionSteps').value.trim(),
+                            images: selectedFiles,
+                            video: selectedVideo
+                        };
+                        
+                        // Enhanced validation
+                        if (!formData.title) {
+                            alert('Please enter an instruction title');
+                            document.getElementById('instructionTitle').focus();
+                            return;
+                        }
+                        
+                        if (!formData.steps) {
+                            alert('Please enter detailed instructions');
+                            document.getElementById('instructionSteps').focus();
+                            return;
+                        }
+                        
+                        addInstruction(formData);
+                    } catch (error) {
+                        console.error('Instruction form submission error:', error);
+                        alert('An error occurred while submitting the instruction. Please try again.');
+                                         }
+                 });
+             }
+             
+             // Handle edit form file uploads
+             const editInstructionImages = document.getElementById('editInstructionImages');
+             const editInstructionVideo = document.getElementById('editInstructionVideo');
+             
+             if (editInstructionImages) {
+                 editInstructionImages.addEventListener('change', function(e) {
+                     handleEditImageFiles(e.target.files);
+                 });
+             }
+             
+             if (editInstructionVideo) {
+                 editInstructionVideo.addEventListener('change', function(e) {
+                     handleEditVideoFile(e.target.files[0]);
+                 });
+             }
+         });
         
         // Missing toggleDropdown function
         function toggleDropdown(button) {
@@ -1087,39 +1250,7 @@
             }
         }
 
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            try {
-                const username = document.getElementById('username').value.trim();
-                const password = document.getElementById('password').value;
-                
-                // Basic validation
-                if (!username || !password) {
-                    showError('Please enter both username and password');
-                    return;
-                }
-                
-                if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-                    // Successful login
-                    if (elements.loginSection) elements.loginSection.classList.add('hidden');
-                    if (elements.adminDashboard) elements.adminDashboard.classList.remove('hidden');
-                    if (elements.loginError) elements.loginError.classList.add('hidden');
-                    
-                    // Clear form for security
-                    document.getElementById('username').value = '';
-                    document.getElementById('password').value = '';
-                    
-                    // Ensure the edit modal is properly hidden after login
-                    closeEditModal();
-                } else {
-                    showError('Invalid username or password. Please try again.');
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                showError('An error occurred during login. Please try again.');
-            }
-        });
+
         
         function showError(message) {
             const errorElement = elements.loginError || document.getElementById('loginError');
@@ -1183,14 +1314,7 @@
             }
         }
 
-        // File handling
-        document.getElementById('instructionImages').addEventListener('change', function(e) {
-            handleImageFiles(e.target.files);
-        });
-
-        document.getElementById('instructionVideo').addEventListener('change', function(e) {
-            handleVideoFile(e.target.files[0]);
-        });
+        // File handling - moved to DOMContentLoaded event
 
         function handleImageFiles(files) {
             const imagesList = document.getElementById('imagesList');
@@ -1238,83 +1362,7 @@
             document.getElementById('videoList').innerHTML = '';
         }
 
-        // Form submissions with validation
-        document.getElementById('houseRuleForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            try {
-                const formData = {
-                    icon: document.getElementById('ruleIcon').value.trim(),
-                    title: document.getElementById('ruleTitle').value.trim(),
-                    description: document.getElementById('ruleDescription').value.trim(),
-                    status: selectedStatus,
-                    statusText: document.getElementById('statusText').value.trim(),
-                    type: document.getElementById('ruleType').value,
-                    startTime: document.getElementById('startTime').value,
-                    endTime: document.getElementById('endTime').value,
-                    maxGuests: document.getElementById('maxGuests').value
-                };
-                
-                // Enhanced validation
-                if (!formData.title) {
-                    alert('Please enter a rule title');
-                    document.getElementById('ruleTitle').focus();
-                    return;
-                }
-                
-                if (!selectedStatus) {
-                    alert('Please select a status (Allowed/Not Allowed)');
-                    return;
-                }
-                
-                if (formData.type === 'time' && (!formData.startTime || !formData.endTime)) {
-                    alert('Please specify both start and end times for time-based rules');
-                    return;
-                }
-                
-                if (formData.type === 'guest' && (!formData.maxGuests || formData.maxGuests < 1)) {
-                    alert('Please specify a valid maximum number of guests');
-                    return;
-                }
-                
-                addHouseRule(formData);
-            } catch (error) {
-                console.error('Form submission error:', error);
-                alert('An error occurred while submitting the form. Please try again.');
-            }
-        });
-
-        document.getElementById('instructionForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            try {
-                const formData = {
-                    icon: document.getElementById('instructionIcon').value.trim(),
-                    title: document.getElementById('instructionTitle').value.trim(),
-                    steps: document.getElementById('instructionSteps').value.trim(),
-                    images: selectedFiles,
-                    video: selectedVideo
-                };
-                
-                // Enhanced validation
-                if (!formData.title) {
-                    alert('Please enter an instruction title');
-                    document.getElementById('instructionTitle').focus();
-                    return;
-                }
-                
-                if (!formData.steps) {
-                    alert('Please enter detailed instructions');
-                    document.getElementById('instructionSteps').focus();
-                    return;
-                }
-                
-                addInstruction(formData);
-            } catch (error) {
-                console.error('Instruction form submission error:', error);
-                alert('An error occurred while submitting the instruction. Please try again.');
-            }
-        });
+        // Form submissions with validation - moved to DOMContentLoaded event
 
         function addHouseRule(data) {
             try {
@@ -2038,14 +2086,7 @@
             }
         }
 
-                 // Handle edit form file uploads
-        document.getElementById('editInstructionImages').addEventListener('change', function(e) {
-            handleEditImageFiles(e.target.files);
-        });
-
-        document.getElementById('editInstructionVideo').addEventListener('change', function(e) {
-            handleEditVideoFile(e.target.files[0]);
-        });
+                 // Handle edit form file uploads - moved to DOMContentLoaded event
 
         function handleEditImageFiles(files) {
             const imagesList = document.getElementById('editImagesList');
