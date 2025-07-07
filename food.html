@@ -615,7 +615,12 @@
         gap: 8px;
       }
 
-      .section-title::before {
+      .food-section:not(.restaurants-section) .section-title::before {
+        content: "🛴";
+        font-size: 1.2em;
+      }
+
+      .restaurants-section .section-title::before {
         content: "🍕";
         font-size: 1.2em;
       }
