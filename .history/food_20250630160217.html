@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lynx Apartments – Food Delivery</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --lynx-blue: #0078d7;
+        --lynx-yellow: #ffe066;
+        --lynx-bg: #f9f9f9;
+        --lynx-dark: #23272a;
+        --lynx-card: #fff;
+        --lynx-shadow: 0 2px 8px
+          rgba(0, 0, 0, 0.08);
+      }
+      body {
+        font-family: "Roboto", Arial, sans-serif;
+        background: var(--lynx-bg);
+        color: var(--lynx-dark);
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        box-sizing: border-box;
+      }
+      .header {
+        background: var(--lynx-card);
+        box-shadow: var(--lynx-shadow);
+        padding: 24px 0 12px 0;
+        text-align: center;
+      }
+      .lynx-logo {
+        width: 90px;
+        margin-bottom: 8px;
+      }
+      .guidebooks-title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--lynx-yellow);
+        margin-top: 12px;
+        margin-bottom: 8px;
+      }
+      .welcome {
+        font-family: "Poppins", Arial, sans-serif;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: var(--lynx-blue);
+      }
+      .main-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 32px auto 0 auto;
+        max-width: 900px;
+        padding: 0 12px;
+      }
+      .card {
+        background: var(--lynx-card);
+        border-radius: 16px;
+        box-shadow: var(--lynx-shadow);
+        padding: 28px 24px 20px 24px;
+        min-width: 320px;
+        max-width: 400px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        position: relative;
+      }
+      .card-title {
+        font-family: "Poppins", Arial, sans-serif;
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .list {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+      .list li {
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.08rem;
+      }
+      .icon {
+        font-size: 1.3em;
+        margin-right: 2px;
+      }
+      .phone-link {
+        color: var(--lynx-blue);
+        font-weight: bold;
+        text-decoration: none;
+        font-family: monospace;
+        margin-right: 6px;
+        transition: color 0.2s;
+      }
+      .phone-link:hover {
+        color: var(--lynx-yellow);
+      }
+      .copy-btn {
+        background: var(--lynx-blue);
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 2px 8px;
+        font-size: 0.95em;
+        margin-left: 2px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .copy-btn:hover {
+        background: var(--lynx-yellow);
+        color: var(--lynx-dark);
+      }
+      .desc {
+        color: var(--lynx-dark);
+        margin-left: 2px;
+      }
+      .map-link {
+        color: #2e7d32;
+        font-size: 1.1em;
+        margin-left: 6px;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .map-link:hover {
+        color: var(--lynx-blue);
+      }
+      .footer {
+        background: var(--lynx-dark);
+        color: var(--lynx-yellow);
+        text-align: center;
+        padding: px 10px 40px 10px;
+        font-size: 1.08rem;
+        font-family: "Poppins", Arial, sans-serif;
+        z-index: 100;
+        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
+        letter-spacing: 0.5px;
+      }
+      @media (max-width: 700px) {
+        .main-content {
+          padding: 0 2vw;
+        }
+        .card {
+          min-width: 0;
+          width: 100%;
+          max-width: 100vw;
+        }
+      }
+      body.dark-mode {
+        background: #23272a;
+        color: #f3f3f3;
+      }
+      body.dark-mode .header,
+      body.dark-mode .card {
+        background: #23272a;
+        color: #f3f3f3;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      }
+      body.dark-mode .footer {
+        background: #23272a;
+        color: #ffe066;
+      }
+      body.dark-mode .desc,
+      body.dark-mode .card-title,
+      body.dark-mode .welcome {
+        color: #ffe066;
+      }
+      body.dark-mode .phone-link,
+      body.dark-mode .copy-btn {
+        color: #ffe066;
+      }
+      body.dark-mode .copy-btn {
+        background: #23272a;
+        border: 1px solid #ffe066;
+      }
+      body.dark-mode .copy-btn:hover {
+        background: #ffe066;
+        color: #23272a;
+      }
+      body.dark-mode .map-link {
+        color: #ffe066;
+      }
+      #theme-toggle {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        font-size: 1.5rem;
+        background: #f0f0f0;
+        color: #222;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 6px 10px;
+        cursor: pointer;
+        z-index: 1000;
+        transition: background 0.2s, color 0.2s;
+      }
+      body.dark-mode #theme-toggle {
+        background: #23272a;
+        color: #ffe066;
+        border-color: #23272a;
+      }
+      #theme-toggle:hover {
+        background: transparent;
+      }
+      @media (max-width: 600px) {
+        #theme-toggle {
+          top: 12px;
+          right: 12px;
+        }
+      }
+      .address-card {
+        margin-bottom: 24px;
+        background: var(--lynx-card);
+        border-radius: 16px;
+        box-shadow: var(--lynx-shadow);
+        padding: 20px 20px 16px 20px;
+        font-size: 1.08rem;
+        color: var(--lynx-dark);
+      }
+      body.dark-mode .address-card {
+        background: #23272a;
+        color: #ffe066;
+      }
+      .address-text {
+        margin-top: 6px;
+        line-height: 1.5;
+      }
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 14px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.5s,
+          visibility 0.5s ease-in-out;
+        z-index: 9999;
+      }
+      .toast.show {
+        opacity: 1;
+        visibility: visible;
+      }
+      .hero-section {
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .hero-bg-full {
+        width: 100vw;
+        height: 390px;
+        margin: 0;
+        background: url("https://hungerbay.com/assets/images/b6.jpg")
+          center center/cover no-repeat;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .hero-overlay-full {
+        width: 100vw;
+        /* height: 390px; */
+        /* background: rgba(24, 26, 27, 0.45); */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        position: relative;
+        z-index: 2;
+        padding: 0 16px;
+      }
+      .hero-logo-full {
+        width: 100px;
+        margin-bottom: 18px;
+        filter: drop-shadow(
+          0 2px 8px rgba(0, 0, 0, 0.25)
+        );
+      }
+      .hero-title {
+        color: #ffe066;
+        font-size: 2.5rem;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 12px;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      }
+      .hero-subtitle {
+        color: #f3f3f3;
+        font-size: 1.15rem;
+        text-align: center;
+        font-weight: 500;
+        text-shadow: 0 1px 6px rgba(0, 0, 0, 0.18);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      @media (max-width: 1200px) {
+        .hero-bg-full,
+        .hero-overlay-full {
+          width: 103vw;
+        }
+      }
+      @media (max-width: 600px) {
+        .hero-bg-full,
+        .hero-overlay-full {
+          height: 240px;
+        }
+        .hero-overlay-full {
+          padding: 0 8px;
+        }
+        .hero-logo-full {
+          width: 60px;
+          margin-bottom: 10px;
+        }
+        .hero-title {
+          font-size: 1.3rem;
+        }
+        .hero-subtitle {
+          font-size: 0.98rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button
+      id="theme-toggle"
+      aria-label="Toggle dark mode"
+    >
+      🌙
+    </button>
+    <section class="hero-section">
+      <div class="hero-bg-full">
+        <div class="hero-overlay-full">
+          <img
+            src="logo-lynx-dark.png"
+            alt="Lynx Logo"
+            class="hero-logo-full"
+            id="hero-logo"
+          />
+          <h1 class="hero-title">
+            Food Delivery
+          </h1>
+          <p class="hero-subtitle">
+            Discover and order from trusted
+            delivery apps during your stay at Lynx
+            Apartment.
+          </p>
+        </div>
+      </div>
+    </section>
+    <div class="main-content">
+      <div class="card address-card">
+        <div class="card-title">
+          <span class="icon">📍</span>Delivery
+          Address
+        </div>
+        <div
+          class="address-text"
+          id="delivery-address"
+        >
+          Boulevard Serbia 31<br />
+          Cevahir Sky City <br />
+          Tower C, Floor 11, Apartment 109
+        </div>
+        <button
+          class="copy-btn"
+          style="margin-top: 10px"
+          onclick="copyAddress()"
+        >
+          Copy Address
+        </button>
+        <div
+          class="desc"
+          style="
+            margin-top: 8px;
+            font-size: 0.98em;
+            color: #888;
+          "
+        >
+          <span style="color: inherit"
+            >Tip: You can copy the full address
+            above and paste it directly into Wolt,
+            Glovo, or any other delivery app for
+            accurate delivery.</span
+          >
+        </div>
+      </div>
+      <div class="card" id="food-card">
+        <div class="card-title">
+          <span class="icon">🍕</span>
+          <span id="food-title"
+            >Available Food Services</span
+          >
+        </div>
+        <ul class="list" id="food-list">
+          <li>
+            <a
+              href="https://wolt.com/en/discovery/restaurants"
+              target="_blank"
+              class="map-link"
+              style="
+                font-weight: 600;
+                font-size: 1.08em;
+              "
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Wolt-app-icon-2019.png"
+                alt="Wolt"
+                style="
+                  height: 22px;
+                  width: auto;
+                  vertical-align: middle;
+                  margin-right: 6px;
+                "
+              />Wolt</a
+            >
+            <span class="desc"
+              >– Online food delivery</span
+            >
+          </li>
+          <li>
+            <a
+              href="https://korpa.mk/"
+              target="_blank"
+              class="map-link"
+              style="
+                font-weight: 600;
+                font-size: 1.08em;
+              "
+            >
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGYtkCylNZTznicGPQ6O5BBQ1EWgH0Ib1_Rw&s"
+                alt="Korpa"
+                style="
+                  height: 22px;
+                  width: auto;
+                  vertical-align: middle;
+                  margin-right: 6px;
+                "
+              />Korpa</a
+            >
+            <span class="desc"
+              >– Online food delivery</span
+            >
+          </li>
+          <li>
+            <a
+              href="tel:+38923060200"
+              class="phone-link"
+            >
+              +38923060200</a
+            >
+            <button
+              class="copy-btn"
+              onclick="copyPhone('+38923060200')"
+            >
+              Copy
+            </button>
+            <span class="desc"
+              >–
+              <a
+                href="https://kliknijadi.mk"
+                target="_blank"
+                class="map-link"
+                >kliknijadi.mk</a
+              ></span
+            >
+          </li>
+          <li>
+            <a
+              href="tel:+38972575756"
+              class="phone-link"
+            >
+              +38972575756</a
+            >
+            <button
+              class="copy-btn"
+              onclick="copyPhone('+38972575756')"
+            >
+              Copy
+            </button>
+            <span class="desc"
+              >–
+              <a
+                href="https://lapizza.mk"
+                target="_blank"
+                class="map-link"
+                >La pizza</a
+              ></span
+            >
+          </li>
+          <li>
+            <a
+              href="tel:+38923125125"
+              class="phone-link"
+            >
+              +38923125125</a
+            >
+            <button
+              class="copy-btn"
+              onclick="copyPhone('+38923125125')"
+            >
+              Copy
+            </button>
+            <span class="desc"
+              >–
+              <a
+                href="https://dominos.mk"
+                target="_blank"
+                class="map-link"
+                >Dominos pizza</a
+              ></span
+            >
+          </li>
+          <li>
+            <a
+              href="tel:+38926090555"
+              class="phone-link"
+            >
+              +38926090555</a
+            >
+            <button
+              class="copy-btn"
+              onclick="copyPhone('+38926090555')"
+            >
+              Copy
+            </button>
+            <span class="desc"
+              >–
+              <a
+                href="https://equilibrium.mk"
+                target="_blank"
+                class="map-link"
+                >equilibrium.mk</a
+              ></span
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer" id="footer-contact">
+      <span id="footer-msg"
+        >Need help? Contact your Lynx host (Call,
+        SMS, Viber, WhatsApp):
+        <a
+          href="tel:+38978364545"
+          style="
+            color: #ffe066;
+            text-decoration: underline;
+          "
+          >+38978364545</a
+        ></span
+      >
+    </div>
+    <div class="toast" id="toast">
+      Address copied!
+    </div>
+    <script>
+      // Dark mode logic
+      const themeToggle = document.getElementById(
+        "theme-toggle"
+      );
+      const logoImg =
+        document.getElementById("lynx-logo");
+      function setTheme(dark) {
+        if (dark) {
+          document.body.classList.add(
+            "dark-mode"
+          );
+          themeToggle.textContent = "☀️";
+          logoImg.src = "logo-lynx-dark.png";
+          localStorage.setItem(
+            "lynx-theme",
+            "dark"
+          );
+        } else {
+          document.body.classList.remove(
+            "dark-mode"
+          );
+          themeToggle.textContent = "🌙";
+          logoImg.src = "logo-lynx.png";
+          localStorage.setItem(
+            "lynx-theme",
+            "light"
+          );
+        }
+        // Always use dark logo in hero
+        const heroLogo =
+          document.getElementById("hero-logo");
+        if (heroLogo)
+          heroLogo.src = "logo-lynx-dark.png";
+      }
+      themeToggle.onclick = function () {
+        setTheme(
+          !document.body.classList.contains(
+            "dark-mode"
+          )
+        );
+      };
+      // Default to dark mode
+      (function () {
+        const saved =
+          localStorage.getItem("lynx-theme");
+        setTheme(saved === "dark" || !saved);
+      })();
+
+      // Copy to clipboard
+      function copyPhone(phone) {
+        navigator.clipboard.writeText(phone);
+        const btns =
+          document.querySelectorAll(".copy-btn");
+        btns.forEach(btn => {
+          if (
+            btn.onclick &&
+            btn.onclick.toString().includes(phone)
+          ) {
+            btn.textContent = "Copied!";
+            setTimeout(() => {
+              btn.textContent = "Copy";
+            }, 1200);
+          }
+        });
+      }
+      function copyAddress() {
+        const address = `Boulevard Serbia 31, Cevahir Complex, Tower C, Floor 11, Apartment 109`;
+        navigator.clipboard.writeText(address);
+        showToast("Address copied!");
+      }
+      function showToast(message) {
+        const toast =
+          document.createElement("div");
+        toast.className = "toast";
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+          toast.classList.add("show");
+        }, 100);
+        setTimeout(() => {
+          toast.classList.remove("show");
+          setTimeout(() => {
+            toast.remove();
+          }, 500);
+        }, 1000);
+      }
+    </script>
+  </body>
+</html>

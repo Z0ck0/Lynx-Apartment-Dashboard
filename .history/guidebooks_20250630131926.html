@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lynx Apartments – Guidebooks</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --lynx-blue: #0078d7;
+        --lynx-yellow: #ffe066;
+        --lynx-bg: #f9f9f9;
+        --lynx-dark: #23272a;
+        --lynx-card: #fff;
+        --lynx-shadow: 0 2px 8px
+          rgba(0, 0, 0, 0.08);
+      }
+      body {
+        font-family: "Roboto", Arial, sans-serif;
+        background: var(--lynx-bg);
+        color: var(--lynx-dark);
+        margin: 0;
+        padding: 0 0 80px 0;
+        min-height: 100vh;
+        box-sizing: border-box;
+      }
+      .header {
+        background: var(--lynx-card);
+        box-shadow: var(--lynx-shadow);
+        padding: 24px 0 12px 0;
+        text-align: center;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+      .lynx-logo {
+        width: 90px;
+        margin-bottom: 8px;
+      }
+      .welcome {
+        font-family: "Poppins", Arial, sans-serif;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: var(--lynx-blue);
+      }
+      .main-content {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 50px 50px;
+        margin: 32px auto 0 auto;
+        max-width: 1200px;
+        padding: 0 12px;
+        align-items: flex-start;
+      }
+      .card {
+        background: var(--lynx-card);
+        border-radius: 16px;
+        box-shadow: var(--lynx-shadow);
+        padding: 28px 24px 20px 24px;
+        min-width: 320px;
+        max-width: 400px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        position: relative;
+        margin-bottom: 0;
+      }
+      .card-title {
+        font-family: "Poppins", Arial, sans-serif;
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .guidebook-link {
+        color: var(--lynx-blue);
+        font-weight: bold;
+        text-decoration: underline;
+        font-size: 1.08rem;
+        margin-top: 4px;
+        transition: color 0.2s;
+      }
+      .guidebook-link:hover {
+        color: var(--lynx-yellow);
+      }
+      .address-card {
+        grid-column: 1 / -1;
+        margin-bottom: 24px;
+        background: var(--lynx-card);
+        border-radius: 16px;
+        box-shadow: var(--lynx-shadow);
+        padding: 20px 20px 16px 20px;
+        font-size: 1.08rem;
+        color: var(--lynx-dark);
+      }
+      body.dark-mode .address-card {
+        background: #23272a;
+        color: #ffe066;
+      }
+      .address-text {
+        margin-top: 6px;
+        line-height: 1.5;
+      }
+      .footer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--lynx-dark);
+        color: var(--lynx-yellow);
+        text-align: center;
+        padding: 14px 10px 10px 10px;
+        font-size: 1.08rem;
+        font-family: "Poppins", Arial, sans-serif;
+        z-index: 100;
+        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
+        letter-spacing: 0.5px;
+      }
+      #theme-toggle {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        font-size: 1.5rem;
+        background: #f0f0f0;
+        color: #222;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 6px 10px;
+        cursor: pointer;
+        z-index: 1000;
+        transition: background 0.2s, color 0.2s;
+      }
+      body.dark-mode #theme-toggle {
+        background: #23272a;
+        color: #ffe066;
+        border-color: #23272a;
+      }
+      #theme-toggle:hover {
+        background: transparent;
+      }
+      @media (max-width: 900px) {
+        .main-content {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 600px) {
+        .main-content {
+          grid-template-columns: 1fr;
+        }
+        #theme-toggle {
+          top: 12px;
+          right: 12px;
+        }
+      }
+      body.dark-mode {
+        background: #23272a;
+        color: #f3f3f3;
+      }
+      body.dark-mode .header,
+      body.dark-mode .card {
+        background: #23272a;
+        color: #f3f3f3;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      }
+      body.dark-mode .footer {
+        background: #23272a;
+        color: #ffe066;
+      }
+      body.dark-mode .desc,
+      body.dark-mode .card-title,
+      body.dark-mode .welcome {
+        color: #ffe066;
+      }
+      body.dark-mode .guidebook-link {
+        color: #ffe066;
+      }
+      body.dark-mode .guidebook-link:hover {
+        color: #0078d7;
+      }
+    </style>
+  </head>
+  <body>
+    <button
+      id="theme-toggle"
+      aria-label="Toggle dark mode"
+    >
+      🌙
+    </button>
+    <div class="header">
+      <img
+        src="logo-lynx.png"
+        alt="Lynx Logo"
+        class="lynx-logo"
+        id="lynx-logo"
+      />
+      <div class="welcome" id="welcome-msg">
+        Welcome to Lynx Apartment – Your comfort
+        is our priority!
+      </div>
+    </div>
+    <div class="main-content">
+      <div class="card">
+        <div class="card-title">
+          <span class="icon">🍽️🍷</span
+          >Restaurants & Bars
+        </div>
+        <a
+          class="guidebook-link"
+          href="https://www.airbnb.com/s/guidebooks?refinement_paths%5B%5D=%2Fguidebooks%2F6445854&s=67&unique_share_id=17f2527a-9d7d-4f70-a124-94ff42cbb9c2"
+          target="_blank"
+          >View Guidebook</a
+        >
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <span class="icon">🌳</span>Outdoor
+          Activities & Nature
+        </div>
+        <a
+          class="guidebook-link"
+          href="https://www.airbnb.com/s/guidebooks?refinement_paths%5B%5D=%2Fguidebooks%2F6445888&s=67&unique_share_id=bfb07e6f-ed1f-4b67-86dc-74be5a45ed4d"
+          target="_blank"
+          >View Guidebook</a
+        >
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <span class="icon">🛍️</span>Shopping &
+          Local Markets
+        </div>
+        <a
+          class="guidebook-link"
+          href="https://www.airbnb.com/s/guidebooks?refinement_paths%5B%5D=%2Fguidebooks%2F6445904&s=67&unique_share_id=f99bf10b-19ce-4f3c-a555-f81f0760bb7f"
+          target="_blank"
+          >View Guidebook</a
+        >
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <span class="icon">🏛️</span>Attractions
+          & Sightseeing
+        </div>
+        <a
+          class="guidebook-link"
+          href="https://www.airbnb.com/s/guidebooks?refinement_paths%5B%5D=%2Fguidebooks%2F6445913&s=67&unique_share_id=a69aee32-a072-4f91-ae0d-86b038428fca"
+          target="_blank"
+          >View Guidebook</a
+        >
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <span class="icon">🖼️</span>Museums &
+          Galleries
+        </div>
+        <a
+          class="guidebook-link"
+          href="https://www.airbnb.com/s/guidebooks?refinement_paths%5B%5D=%2Fguidebooks%2F6445919&s=67&unique_share_id=5c0d8f7f-7c7f-495b-ab18-3348941659f6"
+          target="_blank"
+          >View Guidebook</a
+        >
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <span class="icon">🎭</span
+          >Entertainment & Nightlife Skopje
+        </div>
+        <a
+          class="guidebook-link"
+          href="https://www.airbnb.com/s/guidebooks?refinement_paths%5B%5D=%2Fguidebooks%2F6445924&s=67&unique_share_id=0c0fd1e8-504a-42f5-8388-f218fd7fce7e"
+          target="_blank"
+          >View Guidebook</a
+        >
+      </div>
+    </div>
+    <div class="footer" id="footer-contact">
+      <span id="footer-msg"
+        >Need help? Contact your Lynx host (Call,
+        SMS, Viber, WhatsApp):
+        <a
+          href="tel:+38978364545"
+          style="
+            color: #ffe066;
+            text-decoration: underline;
+          "
+          >+38978364545</a
+        ></span
+      >
+    </div>
+    <script>
+      // Dark mode logic
+      const themeToggle = document.getElementById(
+        "theme-toggle"
+      );
+      const logoImg =
+        document.getElementById("lynx-logo");
+      function setTheme(dark) {
+        if (dark) {
+          document.body.classList.add(
+            "dark-mode"
+          );
+          themeToggle.textContent = "☀️";
+          logoImg.src = "logo-lynx-dark.png";
+          localStorage.setItem(
+            "lynx-theme",
+            "dark"
+          );
+        } else {
+          document.body.classList.remove(
+            "dark-mode"
+          );
+          themeToggle.textContent = "🌙";
+          logoImg.src = "logo-lynx.png";
+          localStorage.setItem(
+            "lynx-theme",
+            "light"
+          );
+        }
+      }
+      themeToggle.onclick = function () {
+        setTheme(
+          !document.body.classList.contains(
+            "dark-mode"
+          )
+        );
+      };
+      // Default to dark mode
+      (function () {
+        const saved =
+          localStorage.getItem("lynx-theme");
+        setTheme(saved === "dark" || !saved);
+      })();
+    </script>
+  </body>
+</html>

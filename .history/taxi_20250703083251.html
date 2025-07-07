@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lynx Apartments – Taxi Services</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --lynx-blue: #0078d7;
+        --lynx-yellow: #ffe066;
+        --lynx-bg: #f9f9f9;
+        --lynx-dark: #23272a;
+        --lynx-card: #fff;
+        --lynx-shadow: 0 2px 8px
+          rgba(0, 0, 0, 0.08);
+        --nav-bg: rgba(30, 32, 34, 0.92);
+        --nav-text: #fff;
+        --nav-accent: #ffe066;
+        --nav-shadow: 0 2px 8px
+          rgba(0, 0, 0, 0.12);
+        --nav-height: 62px;
+        --nav-radius: 16px;
+          margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+      }
+      body {
+        font-family: "Roboto", Arial, sans-serif;
+        background: var(--lynx-bg);
+        color: var(--lynx-dark);
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        box-sizing: border-box;
+        padding-top: 52px;
+      }
+      .header {
+        background: var(--lynx-card);
+        box-shadow: var(--lynx-shadow);
+        padding: 24px 0 12px 0;
+        text-align: center;
+      }
+      .lynx-logo {
+        width: 90px;
+        margin-bottom: 8px;
+      }
+      .guidebooks-title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--lynx-yellow);
+        margin-top: 12px;
+        margin-bottom: 8px;
+      }
+      .welcome {
+        font-family: "Poppins", Arial, sans-serif;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: var(--lynx-blue);
+      }
+      .main-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 2px auto 0 auto;
+        max-width: 900px;
+        padding: 0 12px;
+      }
+      .card {
+        background: var(--lynx-card);
+        border-radius: 16px;
+        box-shadow: var(--lynx-shadow);
+        padding: 28px 24px 20px 24px;
+        width: 100%;
+        max-width: 480px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        position: relative;
+      }
+      .card-title {
+        font-family: "Poppins", Arial, sans-serif;
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .list {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+      .list li {
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.08rem;
+        padding: 10px 0 10px 0;
+        border-radius: 8px;
+        transition: background 0.18s;
+      }
+      .list li:active,
+      .list li:hover {
+        background: rgba(255, 224, 102, 0.08);
+      }
+      .phone-link {
+        color: var(--lynx-blue);
+        font-weight: bold;
+        text-decoration: none;
+        font-family: monospace;
+        margin-right: 6px;
+        transition: color 0.2s;
+      }
+      .phone-link:hover {
+        color: var(--lynx-yellow);
+      }
+      .copy-btn {
+        background: var(--lynx-blue);
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 2px 8px;
+        font-size: 0.95em;
+        margin-left: 2px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .copy-btn:hover {
+        background: var(--lynx-yellow);
+        color: var(--lynx-dark);
+      }
+      .desc {
+        color: var(--lynx-dark);
+        margin-left: 2px;
+      }
+      .map-link {
+        color: #2e7d32;
+        font-size: 1.1em;
+        margin-left: 6px;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .map-link:hover {
+        color: var(--lynx-blue);
+      }
+      .footer {
+        background: var(--lynx-dark);
+        color: var(--lynx-yellow);
+        text-align: center;
+        padding: 40px 10px 60px 10px;
+        font-size: 1.08rem;
+        font-family: "Poppins", Arial, sans-serif;
+        z-index: 100;
+        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
+        letter-spacing: 0.5px;
+      }
+      @media (max-width: 700px) {
+        .main-content {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+        .card {
+          margin-left: 0;
+          margin-right: 0;
+          width: 100%;
+          max-width: 100vw;
+        }
+        .taxi-section {
+          width: 100%;
+        }
+        .address-card {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+      }
+      body.dark-mode {
+        background: #23272a;
+        color: #f3f3f3;
+      }
+      body.dark-mode .header,
+      body.dark-mode .card {
+        background: #23272a;
+        color: #f3f3f3;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      }
+      body.dark-mode .footer {
+        background: #23272a;
+        color: #ffe066;
+      }
+      body.dark-mode .desc,
+      body.dark-mode .card-title,
+      body.dark-mode .welcome {
+        color: #ffe066;
+      }
+      body.dark-mode .phone-link,
+      body.dark-mode .copy-btn {
+        color: #ffe066;
+      }
+      body.dark-mode .copy-btn {
+        background: #23272a;
+        border: 1px solid #ffe066;
+      }
+      body.dark-mode .copy-btn:hover {
+        background: #ffe066;
+        color: #23272a;
+      }
+      body.dark-mode .map-link {
+        color: #ffe066;
+      }
+      /* Theme Toggle Button */
+      #theme-toggle {
+        position: absolute;
+        top: 8px;
+        right: 15px;
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        background: var(--lynx-card);
+        color: var(--lynx-dark);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        transition: var(--lynx-transition);
+        box-shadow: var(--lynx-shadow);
+      }
+      #home-btn {
+        position: static;
+        float: right;
+        background: var(--lynx-yellow);
+        color: var(--lynx-dark);
+        border: none;
+        border-radius: 8px;
+        font-family: "Poppins", Arial, sans-serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+        padding: 6px 18px;
+        cursor: pointer;
+        z-index: 1001;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        transition: background 0.2s, color 0.2s;
+        margin: 18px 0 24px 0;
+      }
+      #home-btn:hover {
+        background: #ffd43b;
+        color: #23272a;
+      }
+      body.dark-mode #theme-toggle {
+        background: #23272a;
+        color: #ffe066;
+        border-color: #23272a;
+      }
+      #theme-toggle:hover {
+        background: transparent;
+      }
+      @media (max-width: 600px) {
+        #theme-toggle {
+          top: 4px;
+          right: 34px;
+        }
+      }
+      .address-card, #taxi-card, .disclaimer-section {
+        max-width: 900px;
+        margin:24px auto;
+        padding-left: 12px;
+        padding-right: 12px;
+        box-sizing: border-box;
+      }
+      .address-card {
+        margin-bottom: 24px;
+        background: var(--lynx-card);
+        border-radius: 16px;
+        box-shadow: var(--lynx-shadow);
+        padding: 0px 20px 16px 20px;
+        font-size: 1.08rem;
+        color: var(--lynx-dark);
+      }
+      body.dark-mode .address-card {
+        background: #23272a;
+        color: #ffe066;
+      }
+      .address-text {
+        margin-top: 6px;
+        line-height: 1.5;
+      }
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 14px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.5s,
+          visibility 0.5s ease-in-out;
+        z-index: 9999;
+      }
+      .toast.show {
+        opacity: 1;
+        visibility: visible;
+      }
+      .hero-section {
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .hero-bg-full {
+        width: 100vw;
+        height: 400px;
+        margin: 0;
+        background: url("public/taxi-banner.png")
+          center center/cover no-repeat;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .hero-overlay-full {
+        width: 100vw;
+        height: 400px;
+        background: rgba(27, 29, 29, 0.45);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        position: relative;
+        z-index: 2;
+        padding: 0 16px;
+      }
+      .hero-logo-full {
+        width: 100px;
+        margin-bottom: 18px;
+        filter: drop-shadow(
+          0 2px 8px rgba(0, 0, 0, 0.25)
+        );
+      }
+      .hero-title {
+        color: #ffd43b;
+        font-size: 2.5rem;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 12px;
+        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.6),
+          0 2px 6px rgba(0, 0, 0, 0.4);
+      }
+      .hero-subtitle {
+        color: #ffd43b;
+        font-size: 1.25rem;
+        text-align: center;
+        font-weight: 570;
+        text-shadow: 0 3px 8px
+            rgba(20, 19, 19, 0.8),
+          0 1px 4px rgba(22, 20, 20, 0.6);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      @media (max-width: 1200px) {
+        .hero-bg-full,
+        .hero-overlay-full {
+          width: 103vw;
+        }
+      }
+      @media (max-width: 600px) {
+        .hero-bg-full,
+        .hero-overlay-full {
+          height: 260px;
+        }
+        .hero-overlay-full {
+          padding: 0 8px;
+        }
+        .hero-logo-full {
+          width: 60px;
+          margin-bottom: 10px;
+        }
+        .hero-title {
+          font-size: 1.3rem;
+        }
+        .hero-subtitle {
+          font-size: 0.98rem;
+        }
+      }
+      .lynx-name-emphasized {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--lynx-yellow);
+        margin-top: 4px;
+        letter-spacing: 0.5px;
+        text-align: center;
+        text-shadow: 0 9px 9px rgba(0, 0, 0, 1.7),
+          0 2px 1px rgba(0, 0, 0, 0.5);
+      }
+
+      @media (max-width: 600px) {
+        .lynx-name-emphasized {
+          font-size: 1.05rem;
+        }
+      }
+      .arrow-icon {
+        font-size: 1.3em;
+        margin-left: 6px;
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .app-store-buttons {
+        display: flex;
+        gap: 8px;
+        margin-left: 10px;
+      }
+      .app-store-button {
+        height: 32px;
+        width: auto;
+        transition: transform 0.2s ease;
+      }
+      .app-store-button:hover {
+        transform: scale(1.05);
+      }
+      @media (max-width: 600px) {
+        .app-store-buttons {
+          gap: 6px;
+          margin-left: 6px;
+        }
+        .app-store-button {
+          height: 28px;
+        }
+      }
+      /* --- Taxi Services Flex List --- */
+      .taxi-services-list {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        margin: 0 auto;
+        max-width: 480px;
+        padding: 18px 0;
+      }
+      .taxi-service-item {
+        display: flex;
+        align-items: center;
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 16px;
+        gap: 12px;
+        transition: all 0.2s ease;
+        border-left: 4px solid var(--lynx-blue);
+        width: 100%;
+        box-sizing: border-box;
+        min-height: 64px;
+      }
+      .taxi-service-item:hover,
+      .taxi-service-item:focus-within {
+        box-shadow: 0 4px 24px 1px #ffe066cc !important;
+        transition: box-shadow 0.18s;
+      }
+      .taxi-logo {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.7rem;
+        background: #181a1b;
+        border-radius: 10px;
+        margin-right: 10px;
+        flex-shrink: 0;
+      }
+      .taxi-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 8px;
+        background: #fff;
+      }
+      .taxi-label {
+        color: #ffe066;
+        font-weight: 600;
+        font-size: 1.08rem;
+        flex: 1 1 auto;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .taxi-desc {
+        color: #f3f3f3;
+        font-weight: 400;
+        font-size: 0.98rem;
+        margin-left: 4px;
+      }
+      .taxi-icon {
+        font-size: 1.35rem;
+        margin-left: 10px;
+        color: #ffe066;
+        text-decoration: none;
+        border-radius: 50%;
+        padding: 4px;
+        transition: background 0.18s, color 0.18s,
+          box-shadow 0.18s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .taxi-icon:active,
+      .taxi-icon:hover,
+      .taxi-service-item:focus-within .taxi-icon {
+        background: #ffe06622;
+        color: #fff;
+        box-shadow: 0 0 0 2px #ffe06655;
+        outline: none;
+      }
+      @media (max-width: 600px) {
+        .taxi-services-list {
+          max-width: 100vw;
+          padding: 8px 0;
+          gap: 12px;
+        }
+        .taxi-service-item {
+          padding: 10px 8px;
+          gap: 8px;
+        }
+        .taxi-logo {
+          width: 28px;
+          height: 28px;
+          font-size: 1.2rem;
+          margin-right: 6px;
+        }
+        .taxi-label {
+          font-size: 0.98rem;
+        }
+        .taxi-desc {
+          font-size: 0.92rem;
+        }
+        .taxi-icon {
+          font-size: 1.1rem;
+          margin-left: 6px;
+          padding: 3px;
+        }
+      }
+      .home-btn-row {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+        max-width: 1750px;
+        margin: 0 auto;
+      }
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--nav-height);
+        background: var(--nav-bg);
+        color: var(--nav-text);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        z-index: 1000;
+        box-shadow: var(--nav-shadow);
+        padding: 0 24px;
+        backdrop-filter: blur(8px);
+      }
+      .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+      .nav-logo {
+        height: 38px;
+        width: auto;
+        margin-right: 8px;
+      }
+      .nav-home {
+        background: none;
+        border: none;
+        color: var(--nav-accent);
+        font-size: 1.1rem;
+        font-weight: 700;
+        font-family: "Poppins", Arial, sans-serif;
+        cursor: pointer;
+        padding: 6px 16px;
+        border-radius: 8px;
+        transition: background 0.18s, color 0.18s;
+      }
+      .nav-home:hover,
+      .nav-home:focus {
+        background: var(--nav-accent);
+        color: #23272a;
+        outline: none;
+      }
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .theme-toggle {
+        background: #23272a;
+        color: #ffe066;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.5rem;
+        padding: 6px 10px;
+        cursor: pointer;
+        transition: background 0.18s, color 0.18s;
+      }
+      .theme-toggle:hover,
+      .theme-toggle:focus {
+        background: #ffe066;
+        color: #23272a;
+        outline: none;
+      }
+      @media (max-width: 600px) {
+        .navbar {
+          padding: 0 8px;
+          height: 54px;
+        }
+        .nav-logo {
+          height: 28px;
+        }
+        .nav-home {
+          font-size: 1rem;
+          padding: 4px 10px;
+        }
+        .theme-toggle {
+          font-size: 1.2rem;
+          padding: 4px 8px;
+        }
+      }
+      body.dark-mode {
+        background: #23272a;
+        color: #ffe066;
+      }
+      body.dark-mode .navbar {
+        background: rgba(35, 39, 42, 0.98);
+        color: #ffe066;
+      }
+      body.dark-mode .nav-home {
+        color: #ffe066;
+      }
+      body.dark-mode .nav-home:hover,
+      body.dark-mode .nav-home:focus {
+        background: #ffe066;
+        color: #23272a;
+      }
+      body.dark-mode .theme-toggle {
+        background: #ffe066;
+        color: #23272a;
+      }
+      body.dark-mode .theme-toggle:hover,
+      body.dark-mode .theme-toggle:focus {
+        background: #23272a;
+        color: #ffe066;
+      }
+      
+      /* Taxi Section Styles */
+      .taxi-section {
+        margin-bottom: 32px;
+      }
+      
+      .section-title {
+        font-family: "Poppins", Arial, sans-serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--lynx-blue);
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid var(--lynx-yellow);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      
+      .section-title::before {
+        content: "📍";
+        font-size: 1.2em;
+      }
+      
+      .airport-section .section-title::before {
+        content: "✈️";
+      }
+      
+      .taxi-services-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      
+      .taxi-service-item {
+        display: flex;
+        align-items: center;
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 16px;
+        gap: 12px;
+        transition: all 0.2s ease;
+        border-left: 4px solid var(--lynx-blue);
+      }
+      
+      .airport-section .taxi-service-item {
+        border-left-color: #28a745;
+        background: #f8fff9;
+      }
+      
+      .taxi-service-item:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+      }
+      
+      .taxi-logo {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        background: #fff;
+        border-radius: 8px;
+        flex-shrink: 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      
+      .taxi-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 6px;
+      }
+      
+      .taxi-label {
+        flex: 1;
+        font-weight: 600;
+        color: var(--lynx-dark);
+        font-size: 1rem;
+      }
+      
+      .taxi-desc {
+        font-weight: 400;
+        color: #666;
+        font-size: 0.9rem;
+        margin-left: 4px;
+      }
+      
+      .taxi-icon {
+        color: var(--lynx-blue);
+        text-decoration: none;
+        font-size: 1.2rem;
+        padding: 8px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .taxi-icon:hover {
+        background: var(--lynx-blue);
+        color: white;
+        transform: scale(1.1);
+      }
+      
+      .app-store-buttons {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      
+      .app-store-button {
+        height: 32px;
+        width: auto;
+        transition: transform 0.2s ease;
+      }
+      
+      .app-store-button:hover {
+        transform: scale(1.05);
+      }
+      
+      /* Disclaimer Styles */
+      .disclaimer-section {
+        background: #fff3cd;
+        border: 2px solid #ffeaa7;
+        border-radius: 22px;
+        margin: 24px 4px;
+        width: 100%;
+        padding: 0 12px;
+      }
+      
+      .disclaimer-content {
+        padding: 20px;
+      }
+      
+      .disclaimer-content h4 {
+        color: #856404;
+        font-family: "Poppins", Arial, sans-serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      
+      .disclaimer-content h4::before {
+        content: "⚠️";
+        font-size: 1.2em;
+      }
+      
+      .disclaimer-content p {
+        color: #856404;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 12px;
+      }
+      
+      .disclaimer-content p:last-child {
+        margin-bottom: 10;
+      }
+      
+      /* Dark Mode Styles */
+      body.dark-mode .section-title {
+        color: var(--lynx-yellow);
+        border-bottom-color: var(--lynx-blue);
+      }
+      
+      body.dark-mode .taxi-service-item {
+        background: #2d3748;
+        border-left-color: var(--lynx-yellow);
+      }
+      
+      body.dark-mode .airport-section .taxi-service-item {
+        background: #2d4a2d;
+        border-left-color: #4ade80;
+      }
+      
+      body.dark-mode .taxi-label {
+        color: #f3f3f3;
+      }
+      
+      body.dark-mode .taxi-desc {
+        color: #a0aec0;
+      }
+      
+      body.dark-mode .taxi-icon {
+        color: var(--lynx-yellow);
+      }
+      
+      body.dark-mode .taxi-icon:hover {
+        background: var(--lynx-yellow);
+        color: var(--lynx-dark);
+      }
+      
+      body.dark-mode .disclaimer-section {
+        background: #2d3748;
+        border-color: #4a5568;
+      }
+      
+      body.dark-mode .disclaimer-content h4,
+      body.dark-mode .disclaimer-content p {
+        color: #fbd38d;
+      }
+      
+      /* Responsive Design */
+      @media (max-width: 700px) {
+        .taxi-service-item {
+          padding: 12px;
+          gap: 8px;
+        }
+        
+        .taxi-logo {
+          width: 32px;
+          height: 32px;
+          font-size: 1.2rem;
+        }
+        
+        .taxi-label {
+          font-size: 0.9rem;
+        }
+        
+        .taxi-desc {
+          font-size: 0.8rem;
+        }
+        
+        .app-store-button {
+          height: 28px;
+        }
+        
+        .disclaimer-content {
+          padding: 16px;
+        }
+        
+        .disclaimer-content h4 {
+          font-size: 1rem;
+        }
+        
+        .disclaimer-content p {
+          font-size: 0.9rem;
+        }
+      }
+      html, body {
+        overflow-x: hidden;
+        box-sizing: border-box;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 480px;
+        /* min-width removed for responsiveness */
+      }
+
+      .hero-section,
+      .hero-bg-full,
+      .hero-overlay-full {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+      }
+
+      @media (max-width: 700px) {
+        .main-content {
+          max-width: 100vw;
+          width: 100%;
+          box-sizing: border-box;
+        }
+        .card {
+          max-width: 100vw;
+          width: 100%;
+        }
+        .address-card,
+        #taxi-card,
+        .disclaimer-section {
+          max-width: 100vw;
+          width: 100%;
+          margin-left: 0;
+          margin-right: 0;
+          box-sizing: border-box;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-left">
+        <!-- <img src="public/logo-lynx.png" alt="Lynx Logo" class="nav-logo" /> -->
+        <button
+          class="nav-home"
+          onclick="location.href='home.html'"
+        >
+          Home
+        </button>
+      </div>
+      <div class="nav-right">
+        <button
+          class="theme-toggle"
+          id="theme-toggle"
+          aria-label="Toggle dark mode"
+        >
+          🌙
+        </button>
+      </div>
+    </nav>
+    <section class="hero-section">
+      <div class="hero-bg-full">
+        <div class="hero-overlay-full">
+          <img
+            src="logo-lynx-dark.png"
+            alt="Lynx Logo"
+            class="hero-logo-full"
+            id="hero-logo"
+          />
+          <h1 class="hero-title">
+            Taxi Services
+          </h1>
+          <p class="hero-subtitle">
+            Reliable transportation options during
+            your stay at
+          </p>
+          <p class="lynx-name-emphasized">
+            Lynx Apartment
+          </p>
+        </div>
+      </div>
+    </section>
+    <div class="main-content">
+      <div class="card address-card">
+        <div class="card-title">
+          <span class="icon">📍</span>Pickup
+          Address
+        </div>
+        <div
+          class="address-text"
+          id="pickup-address"
+        >
+          Boulevard Serbia 31<br />
+          Cevahir Sky City<br />
+          Tower C, Floor 11, Apartment 109
+        </div>
+        <button
+          class="copy-btn"
+          style="margin-top: 10px"
+          onclick="copyAddress()"
+        >
+          Copy Address
+        </button>
+        <div
+          class="desc"
+          style="
+            margin-top: 8px;
+            font-size: 0.98em;
+            color: #888;
+          "
+        >
+          <span style="color: inherit"
+            >Tip: You can copy the full address
+            above and paste it directly into Wolt
+            or any other delivery app for accurate
+            delivery.</span
+          >
+        </div>
+      </div>
+      <div class="card" id="taxi-card">
+        <div class="card-title">
+          <span class="icon">🚖</span>
+          <span id="taxi-title"
+            >Available Taxi Providers</span
+          >
+        </div>
+        
+        <!-- City Taxi Services Section -->
+        <div class="taxi-section">
+          <h3 class="section-title">City Taxi Services</h3>
+          <div class="taxi-services-list">
+          <!-- Wizi ex Cammeo -->
+          <div class="taxi-service-item">
+            <div class="taxi-logo">
+              <img
+                src="https://play-lh.googleusercontent.com/d8bn4MToIfNklmW-uEfA9SLnUp4lwsLcZ0wDkI-stI8QGnKjLllwpAFccm8gaVEAriE=w240-h480-rw"
+                alt="Wizi ex Cammeo"
+              />
+            </div>
+            <div class="taxi-label">
+              Wizi ex Cammeo
+            </div>
+            <div class="app-store-buttons">
+              <a
+                href="https://apps.apple.com/mt/app/wizi/id1078895979"
+                target="_blank"
+                aria-label="Download Wizi on App Store"
+              >
+                <img
+                  src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg"
+                  alt="Download on the App Store"
+                  class="app-store-button"
+                />
+              </a>
+              <a
+                href="https://play.google.com/store/apps/details?id=com.binom.cammeo&hl=en"
+                target="_blank"
+                aria-label="Download Wizi on Google Play"
+              >
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/1280px-Google_Play_Store_badge_EN.svg.png"
+                  alt="Get it on Google Play"
+                  class="app-store-button"
+                />
+              </a>
+            </div>
+          </div>
+          <!-- Vikni Taksi -->
+          <div class="taxi-service-item">
+            <div class="taxi-logo">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPbm0_aHdwIztY7owCp85vLsAE-2_HkLzjRA&s"
+                alt="Vikni Taksi"
+              />
+            </div>
+            <div class="taxi-label">
+              Vikni Taksi
+              <span class="taxi-desc"
+                ></span
+              >
+            </div>
+            <div class="app-store-buttons">
+              <a
+                href="https://apps.apple.com/gb/app/vikni-taksi-%D0%B2%D0%B8%D0%BA%D0%BD%D0%B8-%D1%82%D0%B0%D0%BA%D1%81%D0%B8/id1193069721"
+                target="_blank"
+                aria-label="Download Vikni Taksi on App Store"
+              >
+                <img
+                  src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg"
+                  alt="Download on the App Store"
+                  class="app-store-button"
+                />
+              </a>
+            </div>
+            <a
+              href="https://viknitaksi.mk/"
+              target="_blank"
+              class="taxi-icon"
+              aria-label="Vikni Taksi Website"
+            >
+              🌐
+            </a>
+          </div>
+          <!-- Express -->
+          <div class="taxi-service-item">
+            <div class="taxi-logo">🚕</div>
+            <div class="taxi-label">
+              Express
+              <span class="taxi-desc"
+                ></span
+              >
+            </div>
+            <a
+              href="tel:+38971215196"
+              class="taxi-icon"
+              aria-label="Call Express"
+              ><img
+                src="public/icons8-phone.gif"
+                alt="Phone"
+                style="
+                  width: 25px;
+                  height: 25px;
+                  vertical-align: middle;
+                "
+            /></a>
+          </div>
+          <!-- Riva -->
+          <div class="taxi-service-item">
+            <div class="taxi-logo">🚖</div>
+            <div class="taxi-label">
+              Riva
+              <span class="taxi-desc"
+                ></span
+              >
+            </div>
+            <a
+              href="tel:+38975215161"
+              class="taxi-icon"
+              aria-label="Call Riva"
+              ><img
+                src="public/icons8-phone.gif"
+                alt="Phone"
+                style="
+                  width: 25px;
+                  height: 25px;
+                  vertical-align: middle;
+                "
+            /></a>
+          </div>
+          <!-- City -->
+          <div class="taxi-service-item">
+            <div class="taxi-logo">🚗</div>
+            <div class="taxi-label">
+              City
+              <span class="taxi-desc"
+                ></span
+              >
+            </div>
+            <a
+              href="tel:+38972315181"
+              class="taxi-icon"
+              aria-label="Call City"
+              ><img
+                src="public/icons8-phone.gif"
+                alt="Phone"
+                style="
+                  width: 25px;
+                  height: 25px;
+                  vertical-align: middle;
+                "
+            /></a>
+          </div>
+          <!-- Blue Lagoon -->
+          <div class="taxi-service-item">
+            <div class="taxi-logo">🚙</div>
+            <div class="taxi-label">
+              Blue Lagoon
+              <span class="taxi-desc"
+                ></span
+              >
+            </div>
+            <a
+              href="tel:+38921592"
+              class="taxi-icon"
+              aria-label="Call Blue Lagoon"
+              ><img
+                src="public/icons8-phone.gif"
+                alt="Phone"
+                style="
+                  width: 25px;
+                  height: 25px;
+                  vertical-align: middle;
+                "
+            /></a>
+          </div>
+        </div>
+        
+        <!-- Airport Taxi Services Section -->
+        <div class="taxi-section airport-section">
+          <h3 class="section-title">Airport Taxi Services</h3>
+          <div class="taxi-services-list">
+            <!-- Airport Taxi Service -->
+            <div class="taxi-service-item">
+              <div class="taxi-logo">✈️</div>
+              <div class="taxi-label">
+                Airport Taxi Service
+                <span class="taxi-desc"
+                  ></span
+                >
+              </div>
+              <a
+                href="tel:+38970813037"
+                class="taxi-icon"
+                aria-label="Call Airport Taxi Service"
+              >
+                <img
+                  src="public/icons8-phone.gif"
+                  alt="Phone"
+                  style="
+                    width: 25px;
+                    height: 25px;
+                    vertical-align: middle;
+                  "
+                />
+              </a>
+              <a
+                href="https://skp.airports.com.mk/en-EN/passenger-guide/to-from-the-airport/page/taxi"
+                target="_blank"
+                class="taxi-icon"
+                aria-label="Airport Taxi Service Website"
+              >
+                🌐
+              </a>
+            </div>
+            
+            <!-- Taxi Skopje Service -->
+            <div class="taxi-service-item">
+              <div class="taxi-logo">🚙</div>
+              <div class="taxi-label">
+                Taxi Skopje Service
+                <span class="taxi-desc"
+                  ></span
+                >
+              </div>
+              <a
+                href="tel:+38970361287"
+                class="taxi-icon"
+                aria-label="Call Taxi Skopje Service"
+              >
+                <img
+                  src="public/icons8-phone.gif"
+                  alt="Phone"
+                  style="
+                    width: 25px;
+                    height: 25px;
+                    vertical-align: middle;
+                  "
+                />
+              </a>
+              <a
+                href="https://taxiskopjeairport.com/"
+                target="_blank"
+                class="taxi-icon"
+                aria-label="Taxi Skopje Service Website"
+              >
+                🌐
+              </a>
+            </div>
+            
+            <!-- Book Taxi Skopje -->
+            <div class="taxi-service-item">
+              <div class="taxi-logo">🚗</div>
+              <div class="taxi-label">
+                Book Taxi Skopje
+                <span class="taxi-desc"
+                  ></span
+                >
+              </div>
+              <a
+                href="tel:+38978202368"
+                class="taxi-icon"
+                aria-label="Call Book Taxi Skopje"
+              >
+                <img
+                  src="public/icons8-phone.gif"
+                  alt="Phone"
+                  style="
+                    width: 25px;
+                    height: 25px;
+                    vertical-align: middle;
+                  "
+                />
+              </a>
+              <a
+                href="https://booktaxiskopje.com/"
+                target="_blank"
+                class="taxi-icon"
+                aria-label="Book Taxi Skopje Website"
+              >
+                🌐
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Disclaimer Section -->
+    <div class="disclaimer-section">
+      <div class="disclaimer-content">
+        <h4>Important Notice</h4>
+        <p>
+          The taxi services listed above are provided for your convenience as independent third-party providers. 
+          Lynx Apartment and your host are not affiliated with, endorsed by, or responsible for any of these taxi companies, 
+          their services, pricing, availability, or the quality of their transportation services.
+        </p>
+        <p>
+          We cannot guarantee the reliability, safety, or availability of these services. 
+          All bookings, payments, and service arrangements are made directly between you and the chosen taxi provider. 
+          Please verify pricing, availability, and terms directly with your selected taxi service before booking.
+        </p>
+        <p>
+          For airport transfers, we recommend booking in advance and confirming your reservation directly with the taxi company.
+        </p>
+      </div>
+    </div>
+    
+    <div class="footer" id="footer-contact">
+      <span id="footer-msg"
+        >Need help? Contact Zoran, your Lynx
+        Apartment host (call, SMS, Viber, or
+        WhatsApp):
+        <a
+          href="tel:+38978364545"
+          style="
+            color: #ffe066;
+            text-decoration: underline;
+          "
+          >+38978364545</a
+        ></span
+      >
+    </div>
+    <div class="toast" id="toast">
+      <!-- Toast content will be dynamically added here -->
+    </div>
+    <script>
+      // Theme toggle logic
+      const themeToggle = document.getElementById(
+        "theme-toggle"
+      );
+      function setTheme(dark) {
+        if (dark) {
+          document.body.classList.add(
+            "dark-mode"
+          );
+          themeToggle.textContent = "☀️";
+          localStorage.setItem(
+            "lynx-theme",
+            "dark"
+          );
+        } else {
+          document.body.classList.remove(
+            "dark-mode"
+          );
+          themeToggle.textContent = "🌙";
+          localStorage.setItem(
+            "lynx-theme",
+            "light"
+          );
+        }
+      }
+      themeToggle.onclick = function () {
+        setTheme(
+          !document.body.classList.contains(
+            "dark-mode"
+          )
+        );
+      };
+      (function () {
+        const saved =
+          localStorage.getItem("lynx-theme");
+        setTheme(saved === "dark" || !saved);
+      })();
+
+      // Copy to clipboard
+      function copyPhone(phone) {
+        navigator.clipboard.writeText(phone);
+        const btns =
+          document.querySelectorAll(".copy-btn");
+        btns.forEach(btn => {
+          if (
+            btn.onclick &&
+            btn.onclick.toString().includes(phone)
+          ) {
+            btn.textContent = "Copied!";
+            setTimeout(() => {
+              btn.textContent = "Copy";
+            }, 1200);
+          }
+        });
+      }
+      function copyAddress() {
+        const address = `Boulevard Serbia 31, Cevahir Sky City, Tower C, Floor 11, Apartment 109`;
+        navigator.clipboard.writeText(address);
+        showToast("Address copied!");
+      }
+      function showToast(message) {
+        const toast =
+          document.createElement("div");
+        toast.className = "toast";
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+          toast.classList.add("show");
+        }, 100);
+        setTimeout(() => {
+          toast.classList.remove("show");
+          setTimeout(() => {
+            toast.remove();
+          }, 500);
+        }, 1000);
+      }
+    </script>
+  </body>
+</html>

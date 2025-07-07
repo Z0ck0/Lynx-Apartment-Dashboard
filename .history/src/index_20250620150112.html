@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lynx Apartment Host Dashboard</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <button
+        id="theme-toggle"
+        aria-label="Toggle dark mode"
+      >
+        🌙
+      </button>
+
+      <div class="date-wrapper">
+        <label for="date"
+          >Датум на инспекција:</label
+        >
+        <select id="date"></select>
+      </div>
+
+      <img
+        src="/logo-lynx.png"
+        alt="Lynx Logo"
+        class="logo"
+        id="lynx-logo"
+      />
+      <h1>Lynx Apartment Dashboard</h1>
+
+      <!-- Search Container -->
+      <div class="search-container">
+        <input
+          type="text"
+          class="search-input"
+          id="search-input"
+          placeholder="Search items..."
+        />
+      </div>
+
+      <!-- Sticky Tabs -->
+      <nav
+        class="tabs sticky-tabs"
+        role="tablist"
+      >
+        <button
+          class="tab-btn active"
+          id="tab-checklist"
+          role="tab"
+          aria-selected="true"
+          aria-controls="content-checklist"
+          tabindex="0"
+        >
+          Чистење
+        </button>
+        <button
+          class="tab-btn"
+          id="tab-consumables"
+          role="tab"
+          aria-selected="false"
+          aria-controls="content-consumables"
+          tabindex="-1"
+        >
+          Потрошан Материјал
+        </button>
+        <button
+          class="tab-btn"
+          id="tab-inventory"
+          role="tab"
+          aria-selected="false"
+          aria-controls="content-inventory"
+          tabindex="-1"
+        >
+          Инвентура
+        </button>
+        <button
+          class="tab-btn"
+          id="tab-shopping"
+          role="tab"
+          aria-selected="false"
+          aria-controls="content-shopping"
+          tabindex="-1"
+        >
+          Шопинг листа
+        </button>
+      </nav>
+
+      <!-- Cleaning List Section -->
+      <div
+        id="content-checklist"
+        class="tab-content active"
+        role="tabpanel"
+        aria-labelledby="tab-checklist"
+      >
+        <div id="checklist-sections">
+          <!-- Cleaning checklist items will be rendered here -->
+        </div>
+        <div class="section">
+          <label>Additional Notes</label>
+          <input
+            type="text"
+            id="notes"
+            placeholder="Any extra details..."
+          />
+        </div>
+      </div>
+
+      <!-- Consumables List Section -->
+      <div
+        id="content-consumables"
+        class="tab-content"
+        role="tabpanel"
+        aria-labelledby="tab-consumables"
+      >
+        <div id="consumables-sections">
+          <!-- Consumables items rendered here -->
+        </div>
+      </div>
+
+      <!-- Inventory List Section -->
+      <div
+        id="content-inventory"
+        class="tab-content"
+        role="tabpanel"
+        aria-labelledby="tab-inventory"
+      >
+        <div id="inventory-sections">
+          <!-- Inventory items rendered here -->
+        </div>
+      </div>
+
+      <!-- Shopping List Section -->
+      <div
+        id="content-shopping"
+        class="tab-content"
+        role="tabpanel"
+        aria-labelledby="tab-shopping"
+      >
+        <div class="section">
+          <ul
+            id="shopping-list"
+            class="checkbox-group"
+            style="
+              list-style: none;
+              padding-left: 0;
+            "
+          ></ul>
+          <button
+            class="add-btn"
+            id="add-shopping-item"
+          >
+            + Додади ставка
+          </button>
+        </div>
+      </div>
+
+      <!-- Global Save Checklist Button -->
+      <div
+        style="
+          text-align: center;
+          margin: 32px 0 0 0;
+        "
+      >
+        <button id="save-checklist-global">
+          Зачувај листа
+        </button>
+      </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <script
+      type="module"
+      src="/src/main.ts"
+    ></script>
+  </body>
+</html>

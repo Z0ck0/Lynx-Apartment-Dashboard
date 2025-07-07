@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Taxi List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+        background: #f9f9f9;
+        color: #23272a;
+        transition: background 0.2s, color 0.2s;
+      }
+      .container {
+        max-width: 500px;
+        margin: 40px auto;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+        padding: 32px 24px 24px 24px;
+      }
+      img.logo {
+        display: block;
+        margin: 0 auto 16px auto;
+        width: 100px;
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 24px;
+        font-size: 2rem;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+      .taxi-list-title {
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-bottom: 18px;
+        text-decoration: underline;
+      }
+      ul.taxi-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      ul.taxi-list li {
+        font-size: 1.08rem;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      ul.taxi-list li .phone {
+        font-weight: bold;
+        color: #0078d7;
+        font-family: monospace;
+        margin-right: 8px;
+      }
+      ul.taxi-list li .desc {
+        color: #23272a;
+      }
+      ul.taxi-list li a {
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: opacity 0.2s;
+      }
+      ul.taxi-list li a:hover {
+        opacity: 0.8;
+      }
+      /* Dark mode */
+      body.dark-mode {
+        background: #23272a;
+        color: #f3f3f3;
+      }
+      body.dark-mode .container {
+        background: #23272a;
+        color: #f3f3f3;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      }
+      body.dark-mode ul.taxi-list li .desc {
+        color: #ffe066;
+      }
+      body.dark-mode ul.taxi-list li .phone {
+        color: #ffe066;
+      }
+      body.dark-mode h1,
+      body.dark-mode .taxi-list-title {
+        color: #ffe066;
+      }
+      #theme-toggle {
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        font-size: 1.5rem;
+        background: #f0f0f0;
+        color: #222;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 6px 10px;
+        cursor: pointer;
+        z-index: 1000;
+        transition: background 0.2s, color 0.2s;
+      }
+      body.dark-mode #theme-toggle {
+        background: #23272a;
+        color: #ffe066;
+        border-color: #23272a;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 16px 4vw 16px 4vw;
+        }
+        #theme-toggle {
+          top: 12px;
+          right: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+    <div class="container">
+      <img src="logo-lynx.png" alt="Lynx Logo" class="logo" id="lynx-logo" />
+      <h1>Taxi List</h1>
+      <div class="taxi-list-title">List of taxies:</div>
+      <ul class="taxi-list">
+        <li>Wizi ex Cammeo – App on play store</li>
+        <li>
+          <a href="tel:+38971215196">
+            <span class="phone">+38971215196</span>
+            <span class="desc">– Express</span>
+          </a>
+        </li>
+        <li>
+          <a href="tel:+38975215161">
+            <span class="phone">+38975215161</span>
+            <span class="desc">– Riva</span>
+          </a>
+        </li>
+        <li>
+          <a href="tel:+38972315181">
+            <span class="phone">+38972315181</span>
+            <span class="desc">– City</span>
+          </a>
+        </li>
+        <li>
+          <a href="tel:+38921592">
+            <span class="phone">+38921592</span>
+            <span class="desc">– Blue Lagoon</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <script>
+      // Dark mode logic
+      const themeToggle = document.getElementById("theme-toggle");
+      const logoImg = document.getElementById("lynx-logo");
+      function setTheme(dark) {
+        if (dark) {
+          document.body.classList.add("dark-mode");
+          themeToggle.textContent = "☀️";
+          logoImg.src = "logo-lynx-dark.png";
+          localStorage.setItem("lynx-theme", "dark");
+        } else {
+          document.body.classList.remove("dark-mode");
+          themeToggle.textContent = "🌙";
+          logoImg.src = "logo-lynx.png";
+          localStorage.setItem("lynx-theme", "light");
+        }
+      }
+      themeToggle.onclick = function () {
+        setTheme(!document.body.classList.contains("dark-mode"));
+      };
+      (function () {
+        const saved = localStorage.getItem("lynx-theme");
+        setTheme(saved === "dark");
+      })();
+    </script>
+  </body>
+</html>

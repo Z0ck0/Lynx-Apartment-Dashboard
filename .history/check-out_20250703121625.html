@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>
+      Lynx Apartments – Checkout Instructions
+    </title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --lynx-blue: #0078d7;
+        --lynx-yellow: #ffe066;
+        --lynx-bg: #f9f9f9;
+        --lynx-dark: #23272a;
+        --lynx-card: #fff;
+        --lynx-shadow: 0 2px 8px
+          rgba(0, 0, 0, 0.08);
+        --nav-bg: rgba(30, 32, 34, 0.92);
+        --nav-text: #fff;
+        --nav-accent: #ffe066;
+        --nav-shadow: 0 2px 8px
+          rgba(0, 0, 0, 0.12);
+        --nav-height: 62px;
+        --nav-radius: 16px;
+      }
+      body {
+        font-family: "Roboto", Arial, sans-serif;
+        background: var(--lynx-bg);
+        color: var(--lynx-dark);
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        box-sizing: border-box;
+        padding-top: 52px;
+      }
+      .header {
+        background: var(--lynx-card);
+        box-shadow: var(--lynx-shadow);
+        padding: 24px 0 12px 0;
+        text-align: center;
+        position: relative;
+      }
+      .lynx-logo {
+        width: 90px;
+        margin-bottom: 8px;
+      }
+      #theme-toggle {
+        position: absolute;
+        top: 4px;
+        right: 15px;
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        background: var(--lynx-card);
+        color: var(--lynx-dark);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        transition: var(--lynx-transition);
+        box-shadow: var(--lynx-shadow);
+      }
+      body.dark-mode #theme-toggle {
+        background: #23272a;
+        color: #ffe066;
+        border-color: #23272a;
+      }
+      .checkout-title {
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: var(--lynx-yellow);
+        margin-top: 18px;
+        margin-bottom: 8px;
+        font-family: "Poppins", Arial, sans-serif;
+        letter-spacing: 0.5px;
+      }
+      .home-btn-row {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+        max-width: 1750px;
+        margin: 0 auto 18px auto;
+      }
+      #home-btn {
+        position: static;
+        float: right;
+        background: var(--lynx-yellow);
+        color: var(--lynx-dark);
+        border: none;
+        border-radius: 8px;
+        font-family: "Poppins", Arial, sans-serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+        padding: 6px 18px;
+        cursor: pointer;
+        z-index: 1001;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        transition: background 0.2s, color 0.2s;
+        margin: 0 0 18px 0;
+      }
+      #home-btn:hover {
+        background: #ffd43b;
+        color: #23272a;
+      }
+      .instructions-container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: var(--lynx-card);
+        border-radius: 118px;
+        box-shadow: var(--lynx-shadow);
+        padding: 32px 32px 24px 32px;
+        margin-bottom: 40px;
+      }
+      .step-row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        border-bottom: 1px solid #e0e0e0;
+        padding: 22px 0 12px 0;
+        gap: 18px;
+      }
+      .step-row:last-child {
+        border-bottom: none;
+      }
+      .step-icon {
+        font-size: 2rem;
+        margin-right: 18px;
+        flex-shrink: 0;
+        width: 38px;
+        text-align: center;
+      }
+      .step-content {
+        flex: 1 1 auto;
+      }
+      .step-title {
+        font-size: 1.18rem;
+        font-weight: 600;
+        color: var(--lynx-dark);
+        font-family: "Poppins", Arial, sans-serif;
+        margin-bottom: 2px;
+      }
+      .step-desc {
+        font-size: 1.02rem;
+        color: #b0b0b0 ;
+      }
+      .step-arrow {
+        font-size: 1.3rem;
+        color: #bbb;
+        margin-left: 12px;
+        align-self: center;
+      }
+      .mailbox-section {
+        margin: 36px 0 0 0;
+        padding: 0;
+      }
+      .mailbox-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--lynx-yellow);
+        margin-bottom: 8px;
+        font-family: "Poppins", Arial, sans-serif;
+      }
+      .mailbox-desc {
+        font-size: 1.05rem;
+        color: #23272a;
+        margin-bottom: 12px;
+      }
+      .mailbox-imgs {
+        display: flex;
+        gap: 18px;
+        margin: 18px 0 0 0;
+        flex-wrap: wrap;
+      }
+      .mailbox-imgs img {
+        width: 320px;
+        max-width: 90vw;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        background: #eee;
+      }
+      .parking-section {
+        margin: 36px 0 0 0;
+        padding: 0;
+      }
+      .parking-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #e74c3c;
+        margin-bottom: 8px;
+        font-family: "Poppins", Arial, sans-serif;
+      }
+      .parking-desc {
+        font-size: 1.05rem;
+        color: #23272a;
+        margin-bottom: 8px;
+      }
+      .additional-section {
+        margin: 36px 0 0 0;
+        padding: 0;
+      }
+      .additional-title {
+        font-size: 1.12rem;
+        font-weight: 700;
+        color: var(--lynx-yellow);
+        margin-bottom: 8px;
+        font-family: "Poppins", Arial, sans-serif;
+      }
+      .additional-desc {
+        font-size: 1.02rem;
+        color: #23272a;
+      }
+      @media (max-width: 700px) {
+        .instructions-container {
+          padding: 16px 4vw 12px 4vw;
+        }
+        .checkout-title {
+          font-size: 1.3rem;
+        }
+        .mailbox-imgs img {
+          width: 98vw;
+          max-width: 98vw;
+        }
+      }
+      body.dark-mode {
+        background: #23272a;
+        color: #f3f3f3;
+      }
+      body.dark-mode .header,
+      body.dark-mode .instructions-container {
+        background: #23272a;
+        color: #f3f3f3;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      }
+      body.dark-mode .checkout-title,
+      body.dark-mode .mailbox-title,
+      body.dark-mode .additional-title {
+        color: #ffe066;
+      }
+      body.dark-mode .step-title {
+        color: #ffe066;
+      }
+      body.dark-mode .mailbox-desc,
+      body.dark-mode .parking-desc,
+      body.dark-mode .additional-desc {
+        color: #ffe066;
+      }
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--nav-height);
+        background: var(--nav-bg);
+        color: var(--nav-text);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        z-index: 1000;
+        box-shadow: var(--nav-shadow);
+        padding: 0 24px;
+        backdrop-filter: blur(8px);
+      }
+      .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+      .nav-logo {
+        height: 38px;
+        width: auto;
+        margin-right: 8px;
+      }
+      .nav-home {
+        background: none;
+        border: none;
+        color: var(--nav-accent);
+        font-size: 1.1rem;
+        font-weight: 700;
+        font-family: "Poppins", Arial, sans-serif;
+        cursor: pointer;
+        padding: 6px 16px;
+        border-radius: 8px;
+        transition: background 0.18s, color 0.18s;
+      }
+      .nav-home:hover,
+      .nav-home:focus {
+        background: var(--nav-accent);
+        color: #23272a;
+        outline: none;
+      }
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .theme-toggle {
+        background: #23272a;
+        color: #ffe066;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.5rem;
+        padding: 6px 10px;
+        cursor: pointer;
+        transition: background 0.18s, color 0.18s;
+      }
+      .theme-toggle:hover,
+      .theme-toggle:focus {
+        background: #ffe066;
+        color: #23272a;
+        outline: none;
+      }
+      @media (max-width: 600px) {
+        .navbar {
+          padding: 0 8px;
+          height: 54px;
+        }
+        .nav-logo {
+          height: 28px;
+        }
+        .nav-home {
+          font-size: 1rem;
+          padding: 4px 10px;
+        }
+        .theme-toggle {
+          font-size: 1.2rem;
+          padding: 4px 8px;
+        }
+      }
+      body.dark-mode {
+        background: #23272a;
+        color: #ffe066;
+      }
+      body.dark-mode .navbar {
+        background: rgba(35, 39, 42, 0.98);
+        color: #ffe066;
+      }
+      body.dark-mode .nav-home {
+        color: #ffe066;
+      }
+      body.dark-mode .nav-home:hover,
+      body.dark-mode .nav-home:focus {
+        background: #ffe066;
+        color: #23272a;
+      }
+      body.dark-mode .theme-toggle {
+        background: #ffe066;
+        color: #23272a;
+      }
+      body.dark-mode .theme-toggle:hover,
+      body.dark-mode .theme-toggle:focus {
+        background: #23272a;
+        color: #ffe066;
+      }
+      .modern-mailbox-desc {
+        font-size: 1.08rem;
+        color: #23272a;
+        margin-bottom: 12px;
+        padding: 8px 0 8px 0;
+      }
+      .mailbox-list {
+        margin: 0 0 0 0;
+        padding: 0 0 0 1.2em;
+        list-style: none;
+      }
+      .mailbox-list > li {
+        font-size: 1.13rem;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+      .mailbox-steps {
+        margin: 0 0 0 1.2em;
+        padding: 0;
+        list-style: disc;
+        font-size: 1.05rem;
+        color: #b0b0b0;
+      }
+      .mailbox-highlight {
+        background: #ffe066;
+        color: #23272a;
+        border-radius: 6px;
+        padding: 1px 7px;
+        font-weight: 700;
+        font-size: 1.08em;
+        margin: 0 2px;
+      }
+      .mailbox-thumb {
+        cursor: pointer;
+        transition: box-shadow 0.18s,
+          transform 0.18s;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        background: #eee;
+        outline: none;
+      }
+      .mailbox-thumb:focus,
+      .mailbox-thumb:hover {
+        box-shadow: 0 4px 24px 2px #ffe066cc;
+        transform: scale(1.03);
+      }
+      .mailbox-modal {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        z-index: 2000;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(30, 32, 34, 0.92);
+        transition: opacity 0.18s;
+      }
+      .modal-content {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 98vw;
+        max-width: 700px;
+        height: 80vh;
+        max-height: 98vh;
+        margin: 0 auto;
+      }
+      .mailbox-modal img {
+        max-width: 98vw;
+        max-height: 80vh;
+        border-radius: 16px;
+        box-shadow: 0 4px 32px rgba(0, 0, 0, 0.25);
+        background: #fff;
+        margin: 0 auto;
+        display: block;
+      }
+      .modal-close {
+        position: absolute;
+        top: 24px;
+        right: 40px;
+        color: #ffe066;
+        font-size: 2.5rem;
+        font-weight: 700;
+        cursor: pointer;
+        z-index: 2100;
+        background: none;
+        border: none;
+        transition: color 0.18s;
+      }
+      .modal-close:hover,
+      .modal-close:focus {
+        color: #fff;
+        outline: none;
+      }
+      .modal-arrow {
+        color: #ffe066;
+        font-size: 2.5rem;
+        font-weight: 700;
+        cursor: pointer;
+        background: none;
+        border: none;
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2100;
+        user-select: none;
+        padding: 0 12px;
+        transition: color 0.18s;
+        outline: none;
+      }
+      .modal-arrow-left {
+        left: 0;
+      }
+      .modal-arrow-right {
+        right: 0;
+      }
+      .modal-arrow:hover,
+      .modal-arrow:focus {
+        color: #fff;
+        outline: none;
+      }
+      @media (max-width: 700px) {
+        .modal-content {
+          width: 100vw;
+          height: 60vh;
+        }
+        .mailbox-modal img {
+          max-width: 100vw;
+          max-height: 60vh;
+        }
+        .modal-close {
+          top: 10px;
+          right: 18px;
+          font-size: 2rem;
+        }
+        .modal-arrow {
+          font-size: 2rem;
+          padding: 0 4px;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+        .modal-arrow-left {
+          left: 0;
+        }
+        .modal-arrow-right {
+          right: 0;
+        }
+      }
+      .hero-section {
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .hero-bg-full {
+        width: 100vw;
+        height: 390px;
+        margin: 0;
+        background: url("ttps://inlhine4.in/wp-content/uploads/2022/01/Checkout-banner.jpg")
+          center center/cover no-repeat;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .hero-overlay-full {
+        width: 100vw;
+        height: 390px;
+        background: rgba(27, 29, 29, 0.45);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        position: relative;
+        z-index: 2;
+        padding: 0 16px;
+      }
+      .hero-logo-full {
+        width: 100px;
+        margin-bottom: 18px;
+        filter: drop-shadow(
+          0 2px 8px rgba(0, 0, 0, 0.25)
+        );
+      }
+      .hero-title {
+        color: #ffe066;
+        font-size: 2.5rem;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 12px;
+        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.6),
+          0 2px 6px rgba(0, 0, 0, 0.4);
+      }
+      .hero-subtitle {
+        color: #f3f3f3;
+        font-size: 1.15rem;
+        text-align: center;
+        font-weight: 500;
+        text-shadow: 0 1px 6px rgba(0, 0, 0, 0.18);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .lynx-name-emphasized {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--lynx-yellow);
+        margin-top: 4px;
+        letter-spacing: 0.5px;
+        text-align: center;
+        text-shadow: 0 9px 9px rgba(0, 0, 0, 1.7),
+          0 2px 1px rgba(0, 0, 0, 0.5);
+      }
+      @media (max-width: 1200px) {
+        .hero-bg-full,
+        .hero-overlay-full {
+          width: 103vw;
+        }
+      }
+      @media (max-width: 600px) {
+        .hero-bg-full,
+        .hero-overlay-full {
+          height: 260px;
+        }
+        .hero-overlay-full {
+          padding: 0 8px;
+        }
+        .hero-logo-full {
+          width: 60px;
+          margin-bottom: 10px;
+        }
+        .hero-title {
+          font-size: 1.3rem;
+        }
+        .hero-subtitle {
+          font-size: 0.98rem;
+        }
+        .lynx-name-emphasized {
+          font-size: 1.05rem;
+        }
+      }
+      body.dark-mode .hero-title,
+      body.dark-mode .lynx-name-emphasized {
+        color: #ffe066;
+      }
+      body.dark-mode .hero-subtitle {
+        color: #ffe066;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-left">
+        <!-- <img src="logo-lynx.png" alt="Lynx Logo" class="nav-logo" /> -->
+        <button
+          class="nav-home"
+          onclick="location.href='home.html'"
+        >
+          Home
+        </button>
+      </div>
+      <div class="nav-right">
+        <button
+          class="theme-toggle"
+          id="theme-toggle"
+          aria-label="Toggle dark mode"
+        >
+          🌙
+        </button>
+      </div>
+    </nav>
+    <section class="hero-section">
+      <div
+        class="hero-bg-full"
+        style="
+          background: url('https://www.devonshires.com/wp-content/uploads/2017/07/House-Key.jpg')
+            center center/cover no-repeat;
+        "
+      >
+        <div class="hero-overlay-full">
+          <img
+            src="logo-lynx-dark.png"
+            alt="Lynx Logo"
+            class="hero-logo-full"
+            id="hero-logo"
+          />
+          <h1 class="hero-title">
+            Checkout Instructions
+          </h1>
+          <p class="hero-subtitle">
+            Smooth, easy, and secure self
+            check-out at
+          </p>
+          <p class="lynx-name-emphasized">
+            Lynx Apartment
+          </p>
+        </div>
+      </div>
+    </section>
+    <div class="instructions-container">
+      <div class="checkout-title">
+        Checkout instructions
+      </div>
+      <div class="step-row">
+        <span class="step-icon">🧺</span>
+        <div class="step-content">
+          <div class="step-title">
+            Gather used towels
+          </div>
+          <div class="step-desc">
+            Please place all used towels in the
+            bathroom or in the laundry basket
+            provided.
+          </div>
+        </div>
+        <span class="step-arrow"></span>
+      </div>
+      <div class="step-row">
+        <span class="step-icon">🗑️</span>
+        <div class="step-content">
+          <div class="step-title">
+            Throw trash away
+          </div>
+          <div class="step-desc">
+            Kindly dispose of trash in the bin
+            located on your apartment floor.
+          </div>
+        </div>
+        <span class="step-arrow"></span>
+      </div>
+      <div class="step-row">
+        <span class="step-icon">⏲️</span>
+        <div class="step-content">
+          <div class="step-title">
+            Turn things off
+          </div>
+          <div class="step-desc">
+            Before leaving, turn off lights, air
+            conditioning, heating, boiler, and any
+            used appliances.
+          </div>
+        </div>
+        <span class="step-arrow"></span>
+      </div>
+      <div class="step-row">
+        <span class="step-icon">🔒</span>
+        <div class="step-content">
+          <div class="step-title">Lock up</div>
+          <div class="step-desc">
+            Close all windows and lock the
+            apartment door securely before
+            checking out.
+          </div>
+        </div>
+        <span class="step-arrow"></span>
+      </div>
+      <div class="step-row">
+        <span class="step-icon">🔑</span>
+        <div class="step-content">
+          <div class="step-title">
+            Return keys
+          </div>
+          <div class="step-desc">
+            Return all keys and access tags
+            (elevator & car ramp) to the
+            designated spot. A €50 fee applies for
+            any lost or damaged items.
+          </div>
+        </div>
+        <span class="step-arrow"></span>
+      </div>
+      <div class="step-row">
+        <span class="step-icon">📝</span>
+        <div class="step-content">
+          <div class="step-title">
+            Additional requests
+          </div>
+          <div class="step-desc">
+            • Load any used dishes into the
+            dishwasher or wash them by hand.<br />•
+            Check out by 11:00 AM unless otherwise
+            agreed.<br />• Message us once you've
+            checked out. Safe travels!
+          </div>
+        </div>
+        <span class="step-arrow"></span>
+      </div>
+      <div class="mailbox-section">
+        <div class="mailbox-title">
+          🔑 Self Check-Out Instructions
+        </div>
+        <div
+          class="mailbox-desc modern-mailbox-desc"
+        >
+          <ul class="mailbox-list">
+            <li><b>Return the Key:</b></li>
+            <ul class="mailbox-steps">
+              <li>
+                Go to the <b>mailbox area</b> just
+                across from the reception desk in
+                the lobby.
+              </li>
+              <li>
+                Find
+                <b
+                  >Mailbox
+                  <span class="mailbox-highlight"
+                    >109</span
+                  ></b
+                >
+                — top row, 6th from the right,
+                directly in front as you enter the
+                mailbox room.
+              </li>
+              <li>
+                Drop the key through the slot —
+                <b>no code needed</b>.
+              </li>
+            </ul>
+          </ul>
+        </div>
+        <div class="mailbox-imgs">
+          <img
+            src="public/Loby.jpeg"
+            alt="Lobby Mailbox Area"
+            class="mailbox-thumb"
+            onclick="openModal(0)"
+            tabindex="0"
+          />
+          <img
+            src="public/Loby2.jpeg"
+            alt="Mailbox Room"
+            class="mailbox-thumb"
+            onclick="openModal(1)"
+            tabindex="0"
+          />
+        </div>
+        <!-- Modal Gallery -->
+        <div
+          id="mailboxModal"
+          class="mailbox-modal"
+          tabindex="-1"
+          aria-modal="true"
+          aria-label="Mailbox Images"
+          style="display: none"
+        >
+          <span
+            class="modal-close"
+            onclick="closeModal()"
+            tabindex="0"
+            aria-label="Close"
+            >&times;</span
+          >
+          <div class="modal-content">
+            <span
+              class="modal-arrow modal-arrow-left"
+              onclick="prevModalImg()"
+              tabindex="0"
+              aria-label="Previous image"
+              >&#10094;</span
+            >
+            <img
+              id="modalImg"
+              src=""
+              alt="Mailbox Full Size"
+            />
+            <span
+              class="modal-arrow modal-arrow-right"
+              onclick="nextModalImg()"
+              tabindex="0"
+              aria-label="Next image"
+              >&#10095;</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="parking-section">
+        <div class="parking-title">
+          🚗 IMPORTANT: Parking & Key Tag
+          Instructions
+        </div>
+        <div class="parking-desc">
+          If you used our free parking on Level
+          -2, please ensure you keep the keys with
+          the tag until you've exited the Cevahir
+          complex.<br /><br />
+          The same key tag is required to:<br />
+          • Access Level -2 via elevators
+        </div>
+      </div>
+    </div>
+    <script>
+      // Theme toggle logic
+      const themeToggle = document.getElementById(
+        "theme-toggle"
+      );
+      function setTheme(dark) {
+        if (dark) {
+          document.body.classList.add(
+            "dark-mode"
+          );
+          themeToggle.textContent = "☀️";
+          localStorage.setItem(
+            "lynx-theme",
+            "dark"
+          );
+        } else {
+          document.body.classList.remove(
+            "dark-mode"
+          );
+          themeToggle.textContent = "🌙";
+          localStorage.setItem(
+            "lynx-theme",
+            "light"
+          );
+        }
+      }
+      themeToggle.onclick = function () {
+        setTheme(
+          !document.body.classList.contains(
+            "dark-mode"
+          )
+        );
+      };
+      (function () {
+        const saved =
+          localStorage.getItem("lynx-theme");
+        setTheme(saved === "dark" || !saved);
+      })();
+
+      // Modal gallery logic
+      const mailboxImgs = [
+        {
+          src: "public/Loby.jpeg",
+          alt: "Lobby Mailbox Area",
+        },
+        {
+          src: "public/Loby2.jpeg",
+          alt: "Mailbox Room",
+        },
+      ];
+      let modalIdx = 0;
+      const modal = document.getElementById(
+        "mailboxModal"
+      );
+      const modalImg =
+        document.getElementById("modalImg");
+      function openModal(idx) {
+        modalIdx = idx;
+        modal.style.display = "flex";
+        showModalImg();
+        document.body.style.overflow = "hidden";
+        modal.focus();
+      }
+      function closeModal() {
+        modal.style.display = "none";
+        document.body.style.overflow = "";
+      }
+      function showModalImg() {
+        modalImg.src = mailboxImgs[modalIdx].src;
+        modalImg.alt = mailboxImgs[modalIdx].alt;
+      }
+      function prevModalImg() {
+        modalIdx =
+          (modalIdx + mailboxImgs.length - 1) %
+          mailboxImgs.length;
+        showModalImg();
+      }
+      function nextModalImg() {
+        modalIdx =
+          (modalIdx + 1) % mailboxImgs.length;
+        showModalImg();
+      }
+      // Keyboard and swipe support
+      modal &&
+        modal.addEventListener(
+          "keydown",
+          function (e) {
+            if (e.key === "Escape") closeModal();
+            if (e.key === "ArrowLeft")
+              prevModalImg();
+            if (e.key === "ArrowRight")
+              nextModalImg();
+          }
+        );
+      modal &&
+        modal.addEventListener(
+          "click",
+          function (e) {
+            if (e.target === modal) closeModal();
+          }
+        );
+      // Touch swipe for mobile
+      let startX = null;
+      modal &&
+        modal.addEventListener(
+          "touchstart",
+          function (e) {
+            startX = e.touches[0].clientX;
+          }
+        );
+      modal &&
+        modal.addEventListener(
+          "touchend",
+          function (e) {
+            if (startX === null) return;
+            let endX =
+              e.changedTouches[0].clientX;
+            if (endX - startX > 50)
+              prevModalImg();
+            if (startX - endX > 50)
+              nextModalImg();
+            startX = null;
+          }
+        );
+    </script>
+  </body>
+</html>
