@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lynx Apartments – Food Delivery</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --lynx-blue: #0078d7;
+        --lynx-yellow: #ffe066;
+        --lynx-bg: #f9f9f9;
+        --lynx-dark: #23272a;
+        --lynx-card: #fff;
+        --lynx-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+      body {
+        font-family: "Roboto", Arial, sans-serif;
+        background: var(--lynx-bg);
+        color: var(--lynx-dark);
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        box-sizing: border-box;
+      }
+      .hero-section {
+        width: 100%;
+        background: url("https://hungerbay.com/assets/images/b6.jpg") center center/cover no-repeat;
+        position: relative;
+        text-align: center;
+        padding: 48px 16px 40px;
+        color: white;
+      }
+      .hero-section::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 0;
+      }
+      .hero-section * {
+        position: relative;
+        z-index: 1;
+      }
+      .hero-logo-full {
+        width: 90px;
+        margin-bottom: 14px;
+      }
+      .hero-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--lynx-yellow);
+        margin-bottom: 10px;
+      }
+      .hero-subtitle {
+        font-size: 1rem;
+        color: #f0f0f0;
+        margin-bottom: 6px;
+      }
+      .lynx-name-emphasized {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--lynx-yellow);
+      }
+      @media (max-width: 600px) {
+        .hero-logo-full {
+          width: 60px;
+        }
+        .hero-title {
+          font-size: 1.4rem;
+        }
+        .hero-subtitle {
+          font-size: 0.9rem;
+        }
+        .lynx-name-emphasized {
+          font-size: 1.2rem;
+        }
+      }
+      .main-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 24px auto 0;
+        max-width: 700px;
+        padding: 0 16px;
+      }
+      .card {
+        background: var(--lynx-card);
+        border-radius: 16px;
+        box-shadow: var(--lynx-shadow);
+        padding: 24px;
+        width: 100%;
+        margin-bottom: 24px;
+      }
+      .card-title {
+        font-family: "Poppins", Arial, sans-serif;
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .footer {
+        background: var(--lynx-dark);
+        color: var(--lynx-yellow);
+        text-align: center;
+        padding: 40px 10px;
+        font-size: 1.08rem;
+        font-family: "Poppins", Arial, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <button
+      id="theme-toggle"
+      aria-label="Toggle dark mode"
+    >
+      🌙
+    </button>
+    <section class="hero-section">
+      <div class="hero-bg-full">
+        <div class="hero-overlay-full">
+          <img
+            src="logo-lynx-dark.png"
+            alt="Lynx Logo"
+            class="hero-logo-full"
+            id="hero-logo"
+          />
+          <h1 class="hero-title">
+            Food Delivery
+          </h1>
+          <p class="hero-subtitle">
+            Discover and order from trusted
+            delivery apps during your stay at
+          </p>
+          <p class="lynx-name-emphasized">
+            Lynx Apartment
+          </p>
+        </div>
+      </div>
+    </section>
+    <div class="main-content">
+      <div class="card address-card">
+        <div class="card-title">
+          <span class="icon">📍</span>Delivery
+          Address
+        </div>
+        <div
+          class="address-text"
+          id="delivery-address"
+        >
+          Boulevard Serbia 31<br />
+          Cevahir Sky City <br />
+          Tower C, Floor 11, Apartment 109
+        </div>
+        <button
+          class="copy-btn"
+          style="margin-top: 10px"
+          onclick="copyAddress()"
+        >
+          Copy Address
+        </button>
+        <div
+          class="desc"
+          style="
+            margin-top: 8px;
+            font-size: 0.98em;
+            color: #888;
+          "
+        >
+          <span style="color: inherit"
+            >Tip: You can copy the full address
+            above and paste it directly into Wolt,
+            Glovo, or any other delivery app for
+            accurate delivery.</span
+          >
+        </div>
+      </div>
+      <div class="card" id="food-card">
+        <div class="card-title">
+          <span class="icon">🍕</span>
+          <span id="food-title"
+            >Available Food Services</span
+          >
+        </div>
+        <ul class="list" id="food-list">
+          <li>
+            <a
+              href="https://wolt.com/en/discovery/restaurants"
+              target="_blank"
+              class="map-link"
+              style="
+                font-weight: 600;
+                font-size: 1.08em;
+              "
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Wolt-app-icon-2019.png"
+                alt="Wolt"
+                style="
+                  height: 22px;
+                  width: auto;
+                  vertical-align: middle;
+                  margin-right: 6px;
+                "
+              />Wolt</a
+            >
+            <span class="desc"
+              >– Online food delivery</span
+            >
+          </li>
+          <li>
+            <a
+              href="https://korpa.mk/"
+              target="_blank"
+              class="map-link"
+              style="
+                font-weight: 600;
+                font-size: 1.08em;
+              "
+            >
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGYtkCylNZTznicGPQ6O5BBQ1EWgH0Ib1_Rw&s"
+                alt="Korpa"
+                style="
+                  height: 22px;
+                  width: auto;
+                  vertical-align: middle;
+                  margin-right: 6px;
+                "
+              />Korpa</a
+            >
+            <span class="desc"
+              >– Online food delivery</span
+            >
+          </li>
+          <li>
+            <a
+              href="tel:+38923060200"
+              class="phone-link"
+            >
+              +38923060200</a
+            >
+            <button
+              class="copy-btn"
+              onclick="copyPhone('+38923060200')"
+            >
+              Copy
+            </button>
+            <span class="desc"
+              >–
+              <a
+                href="https://kliknijadi.mk"
+                target="_blank"
+                class="map-link"
+                >kliknijadi.mk</a
+              ></span
+            >
+          </li>
+          <li>
+            <a
+              href="tel:+38972575756"
+              class="phone-link"
+            >
+              +38972575756</a
+            >
+            <button
+              class="copy-btn"
+              onclick="copyPhone('+38972575756')"
+            >
+              Copy
+            </button>
+            <span class="desc"
+              >–
+              <a
+                href="https://lapizza.mk"
+                target="_blank"
+                class="map-link"
+                >La pizza</a
+              ></span
+            >
+          </li>
+          <li>
+            <a
+              href="tel:+38923125125"
+              class="phone-link"
+            >
+              +38923125125</a
+            >
+            <button
+              class="copy-btn"
+              onclick="copyPhone('+38923125125')"
+            >
+              Copy
+            </button>
+            <span class="desc"
+              >–
+              <a
+                href="https://dominos.mk"
+                target="_blank"
+                class="map-link"
+                >Dominos pizza</a
+              ></span
+            >
+          </li>
+          <li>
+            <a
+              href="tel:+38926090555"
+              class="phone-link"
+            >
+              +38926090555</a
+            >
+            <button
+              class="copy-btn"
+              onclick="copyPhone('+38926090555')"
+            >
+              Copy
+            </button>
+            <span class="desc"
+              >–
+              <a
+                href="https://equilibrium.mk"
+                target="_blank"
+                class="map-link"
+                >equilibrium.mk</a
+              ></span
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer" id="footer-contact">
+      <span id="footer-msg"
+        >Need help? Contact your Lynx host (Call,
+        SMS, Viber, WhatsApp):
+        <a
+          href="tel:+38978364545"
+          style="
+            color: #ffe066;
+            text-decoration: underline;
+          "
+          >+38978364545</a
+        ></span
+      >
+    </div>
+    <div class="toast" id="toast">
+      Address copied!
+    </div>
+    <script>
+      // Dark mode logic
+      const themeToggle = document.getElementById(
+        "theme-toggle"
+      );
+      const logoImg =
+        document.getElementById("lynx-logo");
+      function setTheme(dark) {
+        if (dark) {
+          document.body.classList.add(
+            "dark-mode"
+          );
+          themeToggle.textContent = "☀️";
+          logoImg.src = "logo-lynx-dark.png";
+          localStorage.setItem(
+            "lynx-theme",
+            "dark"
+          );
+        } else {
+          document.body.classList.remove(
+            "dark-mode"
+          );
+          themeToggle.textContent = "🌙";
+          logoImg.src = "logo-lynx.png";
+          localStorage.setItem(
+            "lynx-theme",
+            "light"
+          );
+        }
+        // Always use dark logo in hero
+        const heroLogo =
+          document.getElementById("hero-logo");
+        if (heroLogo)
+          heroLogo.src = "logo-lynx-dark.png";
+      }
+      themeToggle.onclick = function () {
+        setTheme(
+          !document.body.classList.contains(
+            "dark-mode"
+          )
+        );
+      };
+      // Default to dark mode
+      (function () {
+        const saved =
+          localStorage.getItem("lynx-theme");
+        setTheme(saved === "dark" || !saved);
+      })();
+
+      // Copy to clipboard
+      function copyPhone(phone) {
+        navigator.clipboard.writeText(phone);
+        const btns =
+          document.querySelectorAll(".copy-btn");
+        btns.forEach(btn => {
+          if (
+            btn.onclick &&
+            btn.onclick.toString().includes(phone)
+          ) {
+            btn.textContent = "Copied!";
+            setTimeout(() => {
+              btn.textContent = "Copy";
+            }, 1200);
+          }
+        });
+      }
+      function copyAddress() {
+        const address = `Boulevard Serbia 31, Cevahir Complex, Tower C, Floor 11, Apartment 109`;
+        navigator.clipboard.writeText(address);
+        showToast("Address copied!");
+      }
+      function showToast(message) {
+        const toast =
+          document.createElement("div");
+        toast.className = "toast";
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+          toast.classList.add("show");
+        }, 100);
+        setTimeout(() => {
+          toast.classList.remove("show");
+          setTimeout(() => {
+            toast.remove();
+          }, 500);
+        }, 1000);
+      }
+    </script>
+  </body>
+</html>

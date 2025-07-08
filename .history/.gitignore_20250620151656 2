@@ -1,0 +1,9 @@
+/.history
+/.vscode
+.github
+.gitignore
+.DS_Store
+.history
+.vscode
+.idea
+/node_modules

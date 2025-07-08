@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lynx Apartments – Taxi Services</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --lynx-blue: #0078d7;
+        --lynx-yellow: #ffe066;
+        --lynx-bg: #f9f9f9;
+        --lynx-dark: #23272a;
+        --lynx-card: #fff;
+        --lynx-shadow: 0 2px 8px
+          rgba(0, 0, 0, 0.08);
+      }
+      body {
+        font-family: "Roboto", Arial, sans-serif;
+        background: var(--lynx-bg);
+        color: var(--lynx-dark);
+        margin: 0;
+        padding: 0 0 80px 0;
+        min-height: 100vh;
+        box-sizing: border-box;
+      }
+      .header {
+        background: var(--lynx-card);
+        box-shadow: var(--lynx-shadow);
+        padding: 24px 0 12px 0;
+        text-align: center;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+      .lynx-logo {
+        width: 90px;
+        margin-bottom: 8px;
+      }
+      .guidebooks-title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--lynx-yellow);
+        margin-top: 12px;
+        margin-bottom: 8px;
+      }
+      .welcome {
+        font-family: "Poppins", Arial, sans-serif;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: var(--lynx-blue);
+      }
+      .main-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 32px auto 0 auto;
+        max-width: 900px;
+        padding: 0 12px;
+      }
+      .card {
+        background: var(--lynx-card);
+        border-radius: 16px;
+        box-shadow: var(--lynx-shadow);
+        padding: 28px 24px 20px 24px;
+        min-width: 320px;
+        max-width: 400px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        position: relative;
+      }
+      .card-title {
+        font-family: "Poppins", Arial, sans-serif;
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .list {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+      .list li {
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.08rem;
+      }
+      .icon {
+        font-size: 1.3em;
+        margin-right: 2px;
+      }
+      .phone-link {
+        color: var(--lynx-blue);
+        font-weight: bold;
+        text-decoration: none;
+        font-family: monospace;
+        margin-right: 6px;
+        transition: color 0.2s;
+      }
+      .phone-link:hover {
+        color: var(--lynx-yellow);
+      }
+      .copy-btn {
+        background: var(--lynx-blue);
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 2px 8px;
+        font-size: 0.95em;
+        margin-left: 2px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .copy-btn:hover {
+        background: var(--lynx-yellow);
+        color: var(--lynx-dark);
+      }
+      .desc {
+        color: var(--lynx-dark);
+        margin-left: 2px;
+      }
+      .map-link {
+        color: #2e7d32;
+        font-size: 1.1em;
+        margin-left: 6px;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .map-link:hover {
+        color: var(--lynx-blue);
+      }
+      .footer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--lynx-dark);
+        color: var(--lynx-yellow);
+        text-align: center;
+        padding: 14px 10px 10px 10px;
+        font-size: 1.08rem;
+        font-family: "Poppins", Arial, sans-serif;
+        z-index: 100;
+        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
+        letter-spacing: 0.5px;
+      }
+      @media (max-width: 700px) {
+        .main-content {
+          padding: 0 2vw;
+        }
+        .card {
+          min-width: 0;
+          width: 100%;
+          max-width: 100vw;
+        }
+      }
+      body.dark-mode {
+        background: #23272a;
+        color: #f3f3f3;
+      }
+      body.dark-mode .header,
+      body.dark-mode .card {
+        background: #23272a;
+        color: #f3f3f3;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      }
+      body.dark-mode .footer {
+        background: #23272a;
+        color: #ffe066;
+      }
+      body.dark-mode .desc,
+      body.dark-mode .card-title,
+      body.dark-mode .welcome {
+        color: #ffe066;
+      }
+      body.dark-mode .phone-link,
+      body.dark-mode .copy-btn {
+        color: #ffe066;
+      }
+      body.dark-mode .copy-btn {
+        background: #23272a;
+        border: 1px solid #ffe066;
+      }
+      body.dark-mode .copy-btn:hover {
+        background: #ffe066;
+        color: #23272a;
+      }
+      body.dark-mode .map-link {
+        color: #ffe066;
+      }
+      #theme-toggle {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        font-size: 1.5rem;
+        background: #f0f0f0;
+        color: #222;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 6px 10px;
+        cursor: pointer;
+        z-index: 1000;
+        transition: background 0.2s, color 0.2s;
+      }
+      body.dark-mode #theme-toggle {
+        background: #23272a;
+        color: #ffe066;
+        border-color: #23272a;
+      }
+      #theme-toggle:hover {
+        background: transparent;
+      }
+      @media (max-width: 600px) {
+        #theme-toggle {
+          top: 12px;
+          right: 12px;
+        }
+      }
+      .address-card {
+        margin-bottom: 24px;
+        background: var(--lynx-card);
+        border-radius: 16px;
+        box-shadow: var(--lynx-shadow);
+        padding: 20px 20px 16px 20px;
+        font-size: 1.08rem;
+        color: var(--lynx-dark);
+      }
+      body.dark-mode .address-card {
+        background: #23272a;
+        color: #ffe066;
+      }
+      .address-text {
+        margin-top: 6px;
+        line-height: 1.5;
+      }
+    </style>
+  </head>
+  <body>
+    <button
+      id="theme-toggle"
+      aria-label="Toggle dark mode"
+    >
+      🌙
+    </button>
+    <div class="header">
+      <img
+        src="logo-lynx.png"
+        alt="Lynx Logo"
+        class="lynx-logo"
+        id="lynx-logo"
+      />
+      <div
+        class="guidebooks-title text-4xl font-bold text-yellow-400 text-center"
+        style="
+          margin-top: 12px;
+          margin-bottom: 8px;
+        "
+      >
+        Taxi Services
+      </div>
+      <div
+        class="welcome text-lg text-yellow-300 text-center"
+        id="welcome-msg"
+        style="margin-bottom: 6px"
+      >
+        Welcome to Lynx Apartment – Your comfort
+        is our priority!
+      </div>
+    </div>
+    <div class="main-content">
+      <div class="card address-card">
+        <div class="card-title">
+          <span class="icon">📍</span>Pickup
+          Address
+        </div>
+        <div class="address-text">
+          Boulevard Serbia 31<br />
+          Cevahir Complex, Tower C<br />
+          Floor 11, Apartment 109
+        </div>
+      </div>
+      <div class="card" id="taxi-card">
+        <div class="card-title">
+          <span class="icon">🚖</span>
+          <span id="taxi-title"
+            >Taxi Services</span
+          >
+        </div>
+        <ul class="list" id="taxi-list">
+          <li>
+            <span class="desc" id="taxi-app">
+              Wizi ex Cammeo – 
+              <a
+                href="https://apps.apple.com/mt/app/wizi/id1078895979"
+                target="_blank"
+                style="
+                  display: inline-block;
+                  vertical-align: middle;
+                  margin-left: 6px;
+                "
+              >
+                <img
+                  src="https://cdn.iphone-news.org/wp-content/uploads/2014/08/app_store_badge.png"
+                  alt="Apple App Store"
+                  style="
+                    height: 22px;
+                    width: auto;
+                    display: inline;
+                    vertical-align: middle;
+                  "
+                />
+              </a>
+              <a
+                href="https://play.google.com/store/apps/details?id=com.binom.cammeo&hl=en"
+                target="_blank"
+                style="
+                  display: inline-block;
+                  vertical-align: middle;
+                  margin-left: 6px;
+                "
+              >
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+                  alt="Google Play Store"
+                  style="
+                    height: 22px;
+                    width: auto;
+                    display: inline;
+                    vertical-align: middle;
+                  "
+                />
+              </a>
+            </span>
+          </li>
+          <li>
+            <a
+              href="tel:+38971215196"
+              class="phone-link"
+              >+38971215196</a
+            >
+            <button
+              class="copy-btn"
+              onclick="copyPhone('+38971215196')"
+            >
+              Copy
+            </button>
+            <span class="desc">– Express</span>
+          </li>
+          <li>
+            <a
+              href="tel:+38975215161"
+              class="phone-link"
+              >+38975215161</a
+            >
+            <button
+              class="copy-btn"
+              onclick="copyPhone('+38975215161')"
+            >
+              Copy
+            </button>
+            <span class="desc">– Riva</span>
+          </li>
+          <li>
+            <a
+              href="tel:+38972315181"
+              class="phone-link"
+              >+38972315181</a
+            >
+            <button
+              class="copy-btn"
+              onclick="copyPhone('+38972315181')"
+            >
+              Copy
+            </button>
+            <span class="desc">– City</span>
+          </li>
+          <li>
+            <a
+              href="tel:+38921592"
+              class="phone-link"
+              >+38921592</a
+            >
+            <button
+              class="copy-btn"
+              onclick="copyPhone('+38921592')"
+            >
+              Copy
+            </button>
+            <span class="desc"
+              >– Blue Lagoon</span
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer" id="footer-contact">
+      <span id="footer-msg"
+        >Need help? Contact your Lynx host (Call,
+        SMS, Viber, WhatsApp):
+        <a
+          href="tel:+38978364545"
+          style="
+            color: #ffe066;
+            text-decoration: underline;
+          "
+          >+38978364545</a
+        ></span
+      >
+    </div>
+    <script>
+      // Dark mode logic
+      const themeToggle = document.getElementById(
+        "theme-toggle"
+      );
+      const logoImg =
+        document.getElementById("lynx-logo");
+      function setTheme(dark) {
+        if (dark) {
+          document.body.classList.add(
+            "dark-mode"
+          );
+          themeToggle.textContent = "☀️";
+          logoImg.src = "logo-lynx-dark.png";
+          localStorage.setItem(
+            "lynx-theme",
+            "dark"
+          );
+        } else {
+          document.body.classList.remove(
+            "dark-mode"
+          );
+          themeToggle.textContent = "🌙";
+          logoImg.src = "logo-lynx.png";
+          localStorage.setItem(
+            "lynx-theme",
+            "light"
+          );
+        }
+      }
+      themeToggle.onclick = function () {
+        setTheme(
+          !document.body.classList.contains(
+            "dark-mode"
+          )
+        );
+      };
+      // Default to dark mode
+      (function () {
+        const saved =
+          localStorage.getItem("lynx-theme");
+        setTheme(saved === "dark" || !saved);
+      })();
+
+      // Copy to clipboard
+      function copyPhone(phone) {
+        navigator.clipboard.writeText(phone);
+        const btns =
+          document.querySelectorAll(".copy-btn");
+        btns.forEach(btn => {
+          if (
+            btn.onclick &&
+            btn.onclick.toString().includes(phone)
+          ) {
+            btn.textContent = "Copied!";
+            setTimeout(() => {
+              btn.textContent = "Copy";
+            }, 1200);
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

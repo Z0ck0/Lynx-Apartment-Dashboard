@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lynx Apartments – Home</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <meta
+      name="description"
+      content="Lynx Apartment Dashboard - Your stylish stay in Skopje's iconic Cevahir Sky City"
+    />
+
+    <!-- Preload fonts for performance -->
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript
+      ><link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+        rel="stylesheet"
+    /></noscript>
+
+    <style>
+      :root {
+        --lynx-blue: #0078d7;
+        --lynx-yellow: #ffe066;
+        --lynx-bg: #f9f9f9;
+        --lynx-dark: #23272a;
+        --lynx-card: #ffffff;
+        --lynx-shadow: 0 2px 8px
+          rgba(0, 0, 0, 0.08);
+        --lynx-shadow-hover: 0 8px 32px
+          rgba(0, 120, 215, 0.15);
+        --lynx-border-radius: 16px;
+        --lynx-transition: all 0.3s
+          cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Poppins", -apple-system,
+          BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        background: var(--lynx-bg);
+        color: var(--lynx-dark);
+        line-height: 1.6;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* Sticky Header */
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: var(--lynx-card);
+        box-shadow: var(--lynx-shadow);
+        padding: clamp(12px, 2vw, 24px)
+          clamp(16px, 4vw, 32px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid
+          rgba(0, 0, 0, 0.05);
+      }
+
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: clamp(12px, 2vw, 20px);
+      }
+
+      .lynx-logo {
+        width: clamp(60px, 8vw, 90px);
+        height: auto;
+        transition: var(--lynx-transition);
+      }
+
+      .header-content {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .dashboard-title {
+        font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+        font-weight: 700;
+        color: var(--lynx-dark);
+        letter-spacing: -0.02em;
+      }
+
+      .dashboard-subtitle {
+        font-size: clamp(0.8rem, 1.8vw, 0.95rem);
+        color: #ffd43b;
+        font-weight: 400;
+        max-width: 400px;
+      }
+
+      /* Theme Toggle Button */
+      #theme-toggle {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        background: var(--lynx-card);
+        color: var(--lynx-dark);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        transition: var(--lynx-transition);
+        box-shadow: var(--lynx-shadow);
+      }
+
+      #theme-toggle:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--lynx-shadow-hover);
+        border-color: var(--lynx-blue);
+      }
+
+      #theme-toggle:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px
+          rgba(0, 120, 215, 0.2);
+      }
+
+      #theme-toggle:active {
+        transform: translateY(0);
+      }
+
+      /* Main Content */
+      .main-content {
+        padding: clamp(24px, 4vw, 48px)
+          clamp(16px, 4vw, 32px);
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(
+          auto-fit,
+          minmax(300px, 1fr)
+        );
+        gap: clamp(16px, 3vw, 24px);
+        min-height: calc(100vh - 120px);
+      }
+
+      /* Section Cards */
+      .section-card {
+        background: var(--lynx-card);
+        border-radius: var(--lynx-border-radius);
+        box-shadow: var(--lynx-shadow);
+        height: clamp(200px, 30vh, 280px);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        text-decoration: none;
+        transition: var(--lynx-transition);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      .section-card:hover,
+      .section-card:focus {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: var(--lynx-shadow-hover);
+        border-color: var(--lynx-blue);
+      }
+
+      .section-card:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px
+            rgba(0, 120, 215, 0.2),
+          var(--lynx-shadow-hover);
+      }
+
+      .section-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+        filter: brightness(0.85) saturate(1.1);
+        transition: var(--lynx-transition);
+      }
+
+      .section-card:hover .section-bg {
+        filter: brightness(0.95) saturate(1.2);
+        transform: scale(1.05);
+      }
+
+      .section-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to bottom,
+          transparent 0%,
+          transparent 40%,
+          rgba(35, 39, 42, 0.8) 100%
+        );
+        z-index: 2;
+      }
+
+      .section-label {
+        position: relative;
+        z-index: 3;
+        padding: clamp(16px, 3vw, 24px);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: auto;
+        min-height: 60px;
+      }
+
+      .section-icon {
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+        filter: brightness(0) invert(1);
+        opacity: 0.9;
+      }
+
+      .section-text {
+        color: #ffffff;
+        font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Dark Mode Styles */
+      body.dark-mode {
+        --lynx-bg: #1a1a1a;
+        --lynx-dark: #ffffff;
+        --lynx-card: #2d2d2d;
+        --lynx-shadow: 0 2px 8px
+          rgba(0, 0, 0, 0.3);
+        --lynx-shadow-hover: 0 8px 32px
+          rgba(255, 224, 102, 0.15);
+      }
+
+      body.dark-mode .header {
+        background: var(--lynx-card);
+        border-bottom-color: rgba(
+          255,
+          255,
+          255,
+          0.1
+        );
+      }
+
+      body.dark-mode .dashboard-subtitle {
+        color: #ffd43b;
+      }
+
+      body.dark-mode #theme-toggle {
+        background: var(--lynx-card);
+        color: var(--lynx-yellow);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+
+      body.dark-mode .section-card {
+        background: var(--lynx-card);
+        border-color: rgba(255, 255, 255, 0.1);
+      }
+
+      body.dark-mode .section-overlay {
+        background: linear-gradient(
+          to bottom,
+          transparent 0%,
+          transparent 40%,
+          rgba(0, 0, 0, 0.85) 100%
+        );
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .header {
+          flex-direction: column;
+          gap: 16px;
+          text-align: center;
+          padding: 16px;
+        }
+
+        .header-left {
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .main-content {
+          grid-template-columns: 1fr;
+          gap: 16px;
+          padding: 16px;
+        }
+
+        .section-card {
+          height: clamp(140px, 25vh, 200px);
+        }
+
+        .section-label {
+          padding: 16px;
+          min-height: 48px;
+        }
+
+        .section-icon {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .main-content {
+          padding: 12px;
+          gap: 12px;
+        }
+
+        .section-card {
+          height: clamp(120px, 22vh, 160px);
+        }
+
+        .section-label {
+          padding: 12px;
+          gap: 8px;
+        }
+
+        .section-icon {
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+      /* Loading Animation */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .section-card {
+        animation: fadeInUp 0.6s ease-out;
+      }
+
+      .section-card:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .section-card:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .section-card:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      .section-card:nth-child(4) {
+        animation-delay: 0.4s;
+      }
+      .section-card:nth-child(5) {
+        animation-delay: 0.5s;
+      }
+      .section-card:nth-child(6) {
+        animation-delay: 0.6s;
+      }
+
+      /* Focus Visible for better accessibility */
+      .section-card:focus-visible {
+        outline: 3px solid var(--lynx-blue);
+        outline-offset: 2px;
+      }
+
+      /* Reduced motion support */
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sticky Header -->
+    <header class="header">
+      <div class="header-left">
+        <img
+          src="logo-lynx.png"
+          alt="Lynx Apartments Logo"
+          class="lynx-logo"
+          id="lynx-logo"
+        />
+        <div class="header-content">
+          <h1 class="dashboard-title">
+            Lynx Apartment
+          </h1>
+          <p class="dashboard-subtitle">
+            Welcome to Lynx Apartment – a stylish
+            stay in Skopje's iconic Cevahir Sky
+            City
+          </p>
+        </div>
+      </div>
+      <button
+        id="theme-toggle"
+        aria-label="Toggle dark mode"
+      >
+        🌙
+      </button>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="main-content">
+      <!-- Food Delivery -->
+      <a
+        class="section-card"
+        href="food.html"
+        aria-label="Go to Food Delivery Services"
+      >
+        <img
+          class="section-bg"
+          src="https://hungerbay.com/assets/images/b6.jpg"
+          alt="Food Delivery Background"
+          loading="lazy"
+        />
+        <div class="section-overlay"></div>
+        <div class="section-label">
+          <svg
+            class="section-icon"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path
+              d="M8.1 13.34l2.83-2.83L3.91 3.5c-1.56 1.56-1.56 4.09 0 5.66l4.19 4.18zm6.78-1.81c1.53.71 3.68.21 5.27-1.38 1.91-1.91 2.28-4.65.81-6.12-1.46-1.46-4.2-1.1-6.12.81-1.59 1.59-2.09 3.74-1.38 5.27L3.7 19.87l1.41 1.41L12 14.41l6.88 6.88 1.41-1.41L13.41 13l1.47-1.47z"
+            />
+          </svg>
+          <span class="section-text"
+            >Food Delivery</span
+          >
+        </div>
+      </a>
+
+      <!-- Taxi Services -->
+      <a
+        class="section-card"
+        href="taxi.html"
+        aria-label="Go to Taxi Services"
+      >
+        <img
+          class="section-bg"
+          src="public/taxi-banner.png"
+          alt="Taxi Services Background"
+          loading="lazy"
+        />
+        <div class="section-overlay"></div>
+        <div class="section-label">
+          <svg
+            class="section-icon"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path
+              d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5H15V3H9v2H6.5c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"
+            />
+          </svg>
+          <span class="section-text"
+            >Taxi Services</span
+          >
+        </div>
+      </a>
+
+      <!-- Apartment How-to Guide -->
+      <a
+        class="section-card"
+        href="Instructions.html"
+        aria-label="Go to Instructions & How-To Guide"
+      >
+        <img
+          class="section-bg"
+          src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1000&q=80"
+          alt="Instructions & How-To Background"
+          loading="lazy"
+        />
+        <div class="section-overlay"></div>
+        <div class="section-label">
+          <svg
+            class="section-icon"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+            />
+          </svg>
+          <span class="section-text"
+            >Instructions & How-To</span
+          >
+        </div>
+      </a>
+
+      <!-- What to Do Around -->
+      <a
+        class="section-card"
+        href="guidebooks.html"
+        aria-label="Go to Airbnb Guidebooks"
+      >
+        <img
+          class="section-bg"
+          src="public/Book-Banner.jpg"
+          alt="Airbnb Guidebooks Background"
+          loading="lazy"
+        />
+        <div class="section-overlay"></div>
+        <div class="section-label">
+          <svg
+            class="section-icon"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path
+              d="M21 5c-1.11-.35-2.33-.5-3.5-.5s-2.39.15-3.5.5c-1.72.49-2.84 2.04-2.84 3.78V20c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V8.78c0-1.74-1.12-3.29-2.84-3.78zM15 20H9V8.78c0-.42.27-.79.68-.93C10.56 7.5 11.5 7.4 12.5 7.4s1.94.1 2.82.45c.41.14.68.51.68.93V20z"
+            />
+            <path
+              d="M7 5c-1.11-.35-2.33-.5-3.5-.5S1.39 4.65.28 5c-1.72.49-2.84 2.04-2.84 3.78V20c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V8.78c0-1.74-1.12-3.29-2.84-3.78zM1 20V8.78c0-.42.27-.79.68-.93C2.56 7.5 3.5 7.4 4.5 7.4s1.94.1 2.82.45c.41.14.68.51.68.93V20H1z"
+            />
+          </svg>
+          <span class="section-text"
+            >What to Do Around</span
+          >
+        </div>
+      </a>
+
+      <!-- Checkout Instructions -->
+      <a
+        class="section-card"
+        href="check-out.html"
+        aria-label="Go to Checkout Instructions Information"
+      >
+        <img
+          class="section-bg"
+          src="https://www.devonshires.com/wp-content/uploads/2017/07/House-Key.jpg"
+          alt="Checkout Instructions Background"
+          loading="lazy"
+        />
+        <div class="section-overlay"></div>
+        <div class="section-label">
+          <svg
+            class="section-icon"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path
+              d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"
+            />
+          </svg>
+          <span class="section-text">
+            Checkout Instructions</span
+          >
+        </div>
+      </a>
+
+      <!-- House Rules -->
+      <a
+        class="section-card"
+        href="house-rules.html"
+        aria-label="Go to House Rules"
+      >
+        <img
+          class="section-bg"
+          src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+          alt="House Rules Background"
+          loading="lazy"
+        />
+        <div class="section-overlay"></div>
+        <div class="section-label">
+          <svg
+            class="section-icon"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path
+              d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"
+            />
+          </svg>
+          <span class="section-text"
+            >House Rules</span
+          >
+        </div>
+      </a>
+    </main>
+    <div
+      class="footer"
+      style="padding: 44px"
+    ></div>
+
+    <script>
+      // Enhanced Dark Mode Logic with Local Storage
+      const themeToggle = document.getElementById(
+        "theme-toggle"
+      );
+      const logoImg =
+        document.getElementById("lynx-logo");
+      const prefersDarkScheme = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      );
+
+      function setTheme(isDark) {
+        document.body.classList.toggle(
+          "dark-mode",
+          isDark
+        );
+        themeToggle.textContent = isDark
+          ? "☀️"
+          : "🌙";
+        logoImg.src = isDark
+          ? "logo-lynx-dark.png"
+          : "logo-lynx.png";
+        localStorage.setItem(
+          "lynx-theme",
+          isDark ? "dark" : "light"
+        );
+
+        // Update theme toggle aria-label
+        themeToggle.setAttribute(
+          "aria-label",
+          isDark
+            ? "Switch to light mode"
+            : "Switch to dark mode"
+        );
+      }
+
+      function toggleTheme() {
+        const isCurrentlyDark =
+          document.body.classList.contains(
+            "dark-mode"
+          );
+        setTheme(!isCurrentlyDark);
+      }
+
+      // Initialize theme
+      function initializeTheme() {
+        const savedTheme =
+          localStorage.getItem("lynx-theme");
+
+        if (savedTheme) {
+          setTheme(savedTheme === "dark");
+        } else {
+          // Default to system preference
+          setTheme(prefersDarkScheme.matches);
+        }
+      }
+
+      // Event Listeners
+      themeToggle.addEventListener(
+        "click",
+        toggleTheme
+      );
+      themeToggle.addEventListener(
+        "keydown",
+        e => {
+          if (
+            e.key === "Enter" ||
+            e.key === " "
+          ) {
+            e.preventDefault();
+            toggleTheme();
+          }
+        }
+      );
+
+      // Listen for system theme changes
+      prefersDarkScheme.addEventListener(
+        "change",
+        e => {
+          if (
+            !localStorage.getItem("lynx-theme")
+          ) {
+            setTheme(e.matches);
+          }
+        }
+      );
+
+      // Initialize on load
+      document.addEventListener(
+        "DOMContentLoaded",
+        initializeTheme
+      );
+
+      // Add keyboard navigation support
+      document.addEventListener("keydown", e => {
+        if (e.key === "Tab") {
+          document.body.classList.add(
+            "keyboard-navigation"
+          );
+        }
+      });
+
+      document.addEventListener(
+        "mousedown",
+        () => {
+          document.body.classList.remove(
+            "keyboard-navigation"
+          );
+        }
+      );
+
+      // Add loading state management
+      window.addEventListener("load", () => {
+        document.body.classList.add("loaded");
+      });
+
+      // Add intersection observer for performance
+      if ("IntersectionObserver" in window) {
+        const imageObserver =
+          new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                const img = entry.target;
+                img.style.opacity = "1";
+                imageObserver.unobserve(img);
+              }
+            });
+          });
+
+        document
+          .querySelectorAll(".section-bg")
+          .forEach(img => {
+            img.style.opacity = "0";
+            img.style.transition =
+              "opacity 0.3s ease-in-out";
+            imageObserver.observe(img);
+          });
+      }
+    </script>
+  </body>
+</html>

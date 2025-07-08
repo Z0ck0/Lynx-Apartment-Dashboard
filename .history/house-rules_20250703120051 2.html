@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lynx Apartments – House Rules</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --lynx-blue: #0078d7;
+        --lynx-yellow: #ffe066;
+        --lynx-bg: #f9f9f9;
+        --lynx-dark: #23272a;
+        --lynx-card: #fff;
+        --lynx-shadow: 0 2px 8px
+          rgba(0, 0, 0, 0.08);
+        --lynx-shadow-hover: 0 4px 16px
+          rgba(0, 0, 0, 0.12);
+        --nav-bg: rgba(30, 32, 34, 0.92);
+        --nav-text: #fff;
+        --nav-accent: #ffe066;
+        --nav-shadow: 0 2px 8px
+          rgba(0, 0, 0, 0.12);
+        --nav-height: 62px;
+        --nav-radius: 16px;
+        --border-radius: 12px;
+        --transition: all 0.2s ease;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Roboto", Arial, sans-serif;
+        background: var(--lynx-bg);
+        color: var(--lynx-dark);
+        line-height: 1.6;
+        padding-top: var(--nav-height);
+        min-height: 100vh;
+      }
+
+      /* Navigation */
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--nav-height);
+        background: var(--nav-bg);
+        color: var(--nav-text);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        z-index: 1000;
+        box-shadow: var(--nav-shadow);
+        padding: 0 24px;
+        backdrop-filter: blur(8px);
+      }
+
+      .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+
+      .nav-home {
+        background: none;
+        border: none;
+        color: var(--nav-accent);
+        font-size: 1.1rem;
+        font-weight: 700;
+        font-family: "Poppins", Arial, sans-serif;
+        cursor: pointer;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: var(--transition);
+      }
+
+      .nav-home:hover,
+      .nav-home:focus {
+        background: var(--nav-accent);
+        color: var(--lynx-dark);
+        outline: none;
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+      }
+
+      .theme-toggle {
+        background: none;
+        border: none;
+        color: var(--nav-accent);
+        font-size: 1.25rem;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 8px;
+        transition: var(--transition);
+      }
+
+      .theme-toggle:hover,
+      .theme-toggle:focus {
+        background: var(--nav-accent);
+        color: var(--lynx-dark);
+        outline: none;
+      }
+
+      /* Main Container */
+      .main-container {
+        max-width: 480px;
+        margin: 0 auto;
+        padding: 24px 16px;
+      }
+
+      /* Header */
+      .header {
+        text-align: center;
+        margin-bottom: 32px;
+      }
+
+      .house-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--lynx-yellow);
+        font-family: "Poppins", Arial, sans-serif;
+        margin-bottom: 8px;
+        letter-spacing: 0.5px;
+      }
+
+      .subtitle {
+        color: #a29d9d;
+        font-size: 1rem;
+        font-weight: 400;
+      }
+
+      /* Rules Container */
+      .rules-container {
+        background: var(--lynx-card);
+        border-radius: var(--border-radius);
+        box-shadow: var(--lynx-shadow);
+        padding: 214px;
+        margin-bottom: 24px;
+      }
+
+      /* Rule Sections */
+      .rule-section {
+        margin-bottom: 24px;
+      }
+
+      .rule-section:last-child {
+        margin-bottom: 0;
+      }
+
+      .rule-item {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: 16px 0;
+        border-bottom: 1px solid #e0e0e0;
+        transition: var(--transition);
+      }
+
+      .rule-item:last-child {
+        border-bottom: none;
+      }
+
+      .rule-item:hover {
+        background: rgba(0, 120, 215, 0.02);
+        border-radius: 8px;
+        padding-left: 8px;
+        padding-right: 8px;
+        margin-left: -8px;
+        margin-right: -8px;
+      }
+
+      .rule-content {
+        flex: 1;
+        margin-right: 16px;
+      }
+
+      .rule-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 4px;
+      }
+
+      .rule-icon {
+        font-size: 1.2rem;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .rule-label {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--lynx-dark);
+        font-family: "Poppins", Arial, sans-serif;
+        flex-grow: 1;
+        margin: 0;
+      }
+
+      .rule-desc {
+        font-size: 0.95rem;
+        color: #a29d9d;
+        margin-left: 32px;
+        line-height: 1.5;
+      }
+
+      .rule-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .status-chip {
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        font-family: "Poppins", Arial, sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 8px;
+      }
+
+      .status-chip.allowed {
+        background: #e8f5e8;
+        color: #2e7d32;
+        border: 1px solid #4caf50;
+      }
+
+      .status-chip.not-allowed {
+        background: #ffebee;
+        color: #c62828;
+        border: 1px solid #f44336;
+      }
+
+      /* Time Settings */
+      .time-settings {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 16px;
+        margin-top: 8px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .time-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 8px;
+      }
+
+      .time-row:last-child {
+        margin-bottom: 0;
+      }
+
+      .time-label {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--lynx-dark);
+        min-width: 80px;
+        flex: 1;
+        margin-right: 16px;
+      }
+
+      .time-input {
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 8px 12px;
+        font-size: 0.95rem;
+        background: white;
+        color: var(--lynx-dark);
+        transition: var(--transition);
+        flex: 1;
+        min-width: 0;
+      }
+
+      .time-input:focus {
+        outline: none;
+        border-color: var(--lynx-blue);
+        box-shadow: 0 0 0 2px
+          rgba(0, 120, 215, 0.2);
+      }
+
+      /* Guest Settings */
+      .guest-settings {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 16px;
+        margin-top: 8px;
+      }
+
+      .guest-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .guest-label {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--lynx-dark);
+      }
+
+      .guest-input {
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 8px 12px;
+        font-size: 0.95rem;
+        background: white;
+        color: var(--lynx-dark);
+        width: 80px;
+        text-align: center;
+        transition: var(--transition);
+      }
+
+      .guest-input:focus {
+        outline: none;
+        border-color: var(--lynx-blue);
+        box-shadow: 0 0 0 2px
+          rgba(0, 120, 215, 0.2);
+      }
+
+      /* Check-in/Check-out */
+      .check-settings {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 16px;
+        margin-top: 8px;
+      }
+
+      .check-times {
+        font-size: 0.95rem;
+        color: #a29d9d;
+        line-height: 1.5;
+      }
+
+      /* Additional Rules */
+      .additional-rules {
+        background: #fff3cd;
+        border: 1px solid #ffeaa7;
+        border-radius: var(--border-radius);
+        padding: 20px;
+        margin-top: 24px;
+      }
+
+      .additional-rules summary {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--lynx-dark);
+        font-family: "Poppins", Arial, sans-serif;
+        cursor: pointer;
+        padding: 8px 0;
+        transition: var(--transition);
+      }
+
+      .additional-rules summary:hover {
+        color: var(--lynx-blue);
+      }
+
+      .additional-rules summary::marker {
+        color: var(--lynx-blue);
+      }
+
+      .additional-rules ul {
+        margin-top: 16px;
+        padding-left: 20px;
+      }
+
+      .additional-rules li {
+        font-size: 0.95rem;
+        color: #a29d9d;
+        margin-bottom: 8px;
+        line-height: 1.5;
+      }
+
+      .additional-rules li:last-child {
+        margin-bottom: 0;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 480px) {
+        .main-container {
+          padding: 16px 12px;
+        }
+
+        .rules-container {
+          padding: 20px 16px;
+        }
+
+        .house-title {
+          font-size: 1.8rem;
+        }
+
+        .rule-item {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+        }
+
+        .rule-content {
+          margin-right: 0;
+        }
+
+        .rule-status {
+          align-self: flex-end;
+        }
+
+        .time-row,
+        .guest-row {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+        }
+
+        .time-label,
+        .guest-label {
+          min-width: auto;
+        }
+      }
+
+      /* Dark Mode */
+      body.dark-mode {
+        background: var(--lynx-dark);
+        color: #f3f3f3;
+      }
+
+      body.dark-mode .navbar {
+        background: rgba(35, 39, 42, 0.98);
+        color: var(--lynx-yellow);
+      }
+
+      body.dark-mode .nav-home:hover,
+      body.dark-mode .nav-home:focus {
+        background: var(--lynx-yellow);
+        color: var(--lynx-dark);
+      }
+
+      body.dark-mode .theme-toggle:hover,
+      body.dark-mode .theme-toggle:focus {
+        background: var(--lynx-yellow);
+        color: var(--lynx-dark);
+      }
+
+      body.dark-mode .house-title {
+        color: var(--lynx-yellow);
+      }
+
+      body.dark-mode .rules-container {
+        background: #2c2f33;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      body.dark-mode .rule-item {
+        border-bottom-color: #404040;
+      }
+
+      body.dark-mode .rule-item:hover {
+        background: rgba(255, 224, 102, 0.05);
+      }
+
+      body.dark-mode .rule-label {
+        color: var(--lynx-yellow);
+      }
+
+      body.dark-mode .rule-desc {
+        color: #b0b0b0;
+      }
+
+      body.dark-mode .time-settings,
+      body.dark-mode .guest-settings,
+      body.dark-mode .check-settings {
+        background: #404040;
+      }
+
+      body.dark-mode .time-label,
+      body.dark-mode .guest-label {
+        color: var(--lynx-yellow);
+      }
+
+      body.dark-mode .time-input,
+      body.dark-mode .guest-input {
+        background: #2c2f33;
+        border-color: #555;
+        color: #f3f3f3;
+      }
+
+      body.dark-mode .time-input:focus,
+      body.dark-mode .guest-input:focus {
+        border-color: var(--lynx-yellow);
+        box-shadow: 0 0 0 2px
+          rgba(255, 224, 102, 0.2);
+      }
+
+      body.dark-mode .check-times {
+        color: #b0b0b0;
+      }
+
+      body.dark-mode .additional-rules {
+        background: #2c2f33;
+        border-color: var(--lynx-yellow);
+      }
+
+      body.dark-mode .additional-rules summary {
+        color: var(--lynx-yellow);
+      }
+
+      body.dark-mode
+        .additional-rules
+        summary:hover {
+        color: #ffd43b;
+      }
+
+      body.dark-mode .additional-rules li {
+        color: #b0b0b0;
+      }
+
+      /* Accessibility */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      /* Focus styles */
+      button:focus,
+      input:focus,
+      summary:focus {
+        outline: 2px solid var(--lynx-blue);
+        outline-offset: 2px;
+      }
+
+      body.dark-mode button:focus,
+      body.dark-mode input:focus,
+      body.dark-mode summary:focus {
+        outline-color: var(--lynx-yellow);
+      }
+    </style>
+  </head>
+  <body>
+    <nav
+      class="navbar"
+      role="navigation"
+      aria-label="Main navigation"
+    >
+      <div class="nav-left">
+        <button
+          class="nav-home"
+          onclick="location.href='home.html'"
+          aria-label="Go to home page"
+        >
+          Home
+        </button>
+      </div>
+      <div class="nav-right">
+        <button
+          class="theme-toggle"
+          id="theme-toggle"
+          aria-label="Toggle dark mode"
+        >
+          🌙
+        </button>
+      </div>
+    </nav>
+
+    <main class="main-container">
+      <header class="header">
+        <h1 class="house-title">House Rules</h1>
+        <p class="subtitle">
+          Guests are expected to follow Lynx
+          Apartment rules and may be removed from
+          Airbnb if they don't.
+        </p>
+      </header>
+
+      <section class="rules-container">
+        <article class="rule-section">
+          <div class="rule-item">
+            <div class="rule-content">
+              <div class="rule-header">
+                <span
+                  class="rule-icon"
+                  aria-hidden="true"
+                  >🐶</span
+                >
+                <span class="rule-label"
+                  >Pets Allowed</span
+                >
+                <span
+                  class="status-chip not-allowed"
+                  >No</span
+                >
+              </div>
+              <p class="rule-desc">
+                Strictly no pets allowed inside
+                the apartment.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="rule-section">
+          <div class="rule-item">
+            <div class="rule-content">
+              <div class="rule-header">
+                <span
+                  class="rule-icon"
+                  aria-hidden="true"
+                  >🎉</span
+                >
+                <span class="rule-label"
+                  >Events Allowed</span
+                >
+                <span
+                  class="status-chip not-allowed"
+                  >No</span
+                >
+              </div>
+              <p class="rule-desc">
+                No parties, loud gatherings, or
+                unregistered guests allowed.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="rule-section">
+          <div class="rule-item">
+            <div class="rule-content">
+              <div class="rule-header">
+                <span
+                  class="rule-icon"
+                  aria-hidden="true"
+                  >🚭</span
+                >
+                <span class="rule-label"
+                  >Smoking, Vaping,
+                  E-cigarettes</span
+                >
+                <span
+                  class="status-chip not-allowed"
+                  >No</span
+                >
+              </div>
+              <p class="rule-desc">
+                Strictly no smoking inside the
+                unit or on the balcony.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="rule-section">
+          <div class="rule-item">
+            <div class="rule-content">
+              <div class="rule-header">
+                <span
+                  class="rule-icon"
+                  aria-hidden="true"
+                  >🔇</span
+                >
+                <span class="rule-label"
+                  >Quiet Hours</span
+                >
+                <span class="status-chip allowed"
+                  >Yes</span
+                >
+              </div>
+              <div class="time-settings">
+                <div class="time-row">
+                  <label
+                    for="start-time"
+                    class="time-label"
+                    >Start time:</label
+                  >
+                  <input
+                    type="time"
+                    id="start-time"
+                    class="time-input"
+                    value="22:00"
+                    aria-label="Quiet hours start time"
+                  />
+                </div>
+                <div class="time-row">
+                  <label
+                    for="end-time"
+                    class="time-label"
+                    >End time:</label
+                  >
+                  <input
+                    type="time"
+                    id="end-time"
+                    class="time-input"
+                    value="07:00"
+                    aria-label="Quiet hours end time"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="rule-section">
+          <div class="rule-item">
+            <div class="rule-content">
+              <div class="rule-header">
+                <span
+                  class="rule-icon"
+                  aria-hidden="true"
+                  >📸</span
+                >
+                <span class="rule-label"
+                  >Commercial Photography &
+                  Filming</span
+                >
+                <span
+                  class="status-chip not-allowed"
+                  >No</span
+                >
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="rule-section">
+          <div class="rule-item">
+            <div class="rule-content">
+              <div class="rule-header">
+                <span
+                  class="rule-icon"
+                  aria-hidden="true"
+                  >👥</span
+                >
+                <span class="rule-label"
+                  >Maximum Guests</span
+                >
+                <span class="status-chip allowed"
+                  >3</span
+                >
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="rule-section">
+          <div class="rule-item">
+            <div class="rule-content">
+              <div class="rule-header">
+                <span
+                  class="rule-icon"
+                  aria-hidden="true"
+                  >🕒</span
+                >
+                <h2 class="rule-label">
+                  Check-in & Check-out Times
+                </h2>
+              </div>
+              <div class="check-settings">
+                <p class="check-times">
+                  Arrive between 3:00 PM -
+                  Flexible<br />
+                  Leave before 11:00 AM
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <details class="additional-rules">
+          <summary>Additional Rules</summary>
+          <ul>
+            <li>
+              Please treat the apartment and
+              furnishings with care.
+            </li>
+            <li>
+              Keep common areas clean and avoid
+              blocking hallways.
+            </li>
+            <li>
+              Dispose of trash responsibly using
+              the bins located on each apartment
+              floor.
+            </li>
+            <li>
+              Report any damages immediately.
+            </li>
+            <li>
+              Lost keys or tags (elevator & ramp)
+              will incur a €50 replacement fee.
+            </li>
+          </ul>
+        </details>
+      </section>
+    </main>
+
+    <script>
+      // Theme toggle functionality
+      const themeToggle = document.getElementById(
+        "theme-toggle"
+      );
+
+      function setTheme(dark) {
+        if (dark) {
+          document.body.classList.add(
+            "dark-mode"
+          );
+          themeToggle.textContent = "☀️";
+          localStorage.setItem(
+            "lynx-theme",
+            "dark"
+          );
+        } else {
+          document.body.classList.remove(
+            "dark-mode"
+          );
+          themeToggle.textContent = "🌙";
+          localStorage.setItem(
+            "lynx-theme",
+            "light"
+          );
+        }
+      }
+
+      themeToggle.addEventListener(
+        "click",
+        () => {
+          setTheme(
+            !document.body.classList.contains(
+              "dark-mode"
+            )
+          );
+        }
+      );
+
+      // Initialize theme
+      (function () {
+        const saved =
+          localStorage.getItem("lynx-theme");
+        setTheme(saved === "dark" || !saved);
+      })();
+
+      // Form handling for time and guest inputs
+      document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+          const timeInputs =
+            document.querySelectorAll(
+              ".time-input"
+            );
+          const guestInput =
+            document.getElementById(
+              "guest-count"
+            );
+
+          // Save time changes
+          timeInputs.forEach(input => {
+            input.addEventListener(
+              "change",
+              function () {
+                localStorage.setItem(
+                  `house-rules-${this.id}`,
+                  this.value
+                );
+              }
+            );
+          });
+
+          // Save guest count changes
+          guestInput.addEventListener(
+            "change",
+            function () {
+              localStorage.setItem(
+                "house-rules-guest-count",
+                this.value
+              );
+            }
+          );
+
+          // Load saved values
+          timeInputs.forEach(input => {
+            const saved = localStorage.getItem(
+              `house-rules-${input.id}`
+            );
+            if (saved) input.value = saved;
+          });
+
+          const savedGuestCount =
+            localStorage.getItem(
+              "house-rules-guest-count"
+            );
+          if (savedGuestCount)
+            guestInput.value = savedGuestCount;
+        }
+      );
+    </script>
+  </body>
+</html>
