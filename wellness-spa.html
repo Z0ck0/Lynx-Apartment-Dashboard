@@ -19,11 +19,11 @@
       :root {
         --lynx-blue: #0078d7;
         --lynx-yellow: #ffe066;
-        --lynx-bg: #f5f5f5;
+        --lynx-bg: #f9f9f9;
         --lynx-dark: #23272a;
-        --lynx-card: #ffffff;
-        --lynx-shadow: 0 4px 12px
-          rgba(0, 0, 0, 0.12);
+        --lynx-card: #fff;
+        --lynx-shadow: 0 2px 8px
+          rgba(0, 0, 0, 0.08);
         --nav-bg: rgba(30, 32, 34, 0.92);
         --nav-text: #fff;
         --nav-accent: #ffe066;
@@ -31,124 +31,47 @@
           rgba(0, 0, 0, 0.12);
         --nav-height: 62px;
         --nav-radius: 16px;
-        --lynx-transition: all 0.3s
-          cubic-bezier(0.4, 0, 0.2, 1);
       }
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        overflow-x: hidden;
-        box-sizing: border-box;
-      }
-      * {
-        box-sizing: border-box;
-      }
+      
       body {
         font-family: "Roboto", Arial, sans-serif;
         background: var(--lynx-bg);
         color: var(--lynx-dark);
+        margin: 0;
+        padding: 0;
         min-height: 100vh;
         box-sizing: border-box;
         padding-top: 52px;
+        overflow-x: hidden;
       }
       .header {
         background: var(--lynx-card);
         box-shadow: var(--lynx-shadow);
         padding: 24px 0 12px 0;
         text-align: center;
+        position: relative;
       }
       .lynx-logo {
         width: 90px;
         margin-bottom: 8px;
       }
-      .guidebooks-title {
-        font-size: 2rem;
-        font-weight: bold;
-        color: var(--lynx-yellow);
-        margin-top: 12px;
-        margin-bottom: 8px;
-      }
-      .main-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 32px auto 0 auto;
-        max-width: 900px;
-        padding: 0 12px;
-      }
-      .card {
+      #theme-toggle {
+        position: absolute;
+        top: 4px;
+        right: 15px;
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        border: 2px solid rgba(0, 0, 0, 0.1);
         background: var(--lynx-card);
-        border-radius: 16px;
-        box-shadow: var(--lynx-shadow);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        padding: 28px 24px 20px 24px;
-        width: 100%;
-        max-width: 780px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        position: relative;
-        margin-bottom: 48px;
-      }
-      .card-title {
-        font-family: "Poppins", Arial, sans-serif;
-        font-size: 1.2rem;
-        font-weight: 600;
-        margin-bottom: 18px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .placeholder-carousel {
-        width: 100%;
-        height: 240px;
-        background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
-        border-radius: 14px;
+        color: var(--lynx-dark);
+        cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 24px;
-        border: 2px dashed #ccc;
-      }
-      .placeholder-text {
-        color: #888;
-        font-size: 1.1rem;
-        text-align: center;
-        font-style: italic;
-      }
-      .content-section {
-        width: 100%;
-        line-height: 1.6;
-        font-size: 1rem;
-      }
-      .content-section h2 {
-        font-family: "Poppins", Arial, sans-serif;
-        font-size: 1.8rem;
-        font-weight: 600;
-        color: var(--lynx-dark);
-        margin-bottom: 16px;
-        margin-top: 0;
-      }
-      .content-section p {
-        margin-bottom: 16px;
-        color: #444;
-      }
-      .content-section h3 {
-        font-family: "Poppins", Arial, sans-serif;
-        font-size: 1.3rem;
-        font-weight: 600;
-        color: var(--lynx-dark);
-        margin-top: 28px;
-        margin-bottom: 12px;
-      }
-      .content-section ul {
-        margin-bottom: 16px;
-        padding-left: 20px;
-      }
-      .content-section li {
-        margin-bottom: 8px;
-        color: #444;
+        font-size: 1.25rem;
+        transition: var(--lynx-transition);
+        box-shadow: var(--lynx-shadow);
       }
       .footer {
         background: var(--lynx-dark);
@@ -161,52 +84,207 @@
         box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
         letter-spacing: 0.5px;
       }
+      body.dark-mode #theme-toggle {
+        background: #23272a;
+        color: #ffe066;
+        border-color: #23272a;
+      }
+      .checkout-title {
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: var(--lynx-yellow);
+        margin-top: 18px;
+        margin-bottom: 8px;
+        font-family: "Poppins", Arial, sans-serif;
+        letter-spacing: 0.5px;
+      }
+      .home-btn-row {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+        max-width: 1750px;
+        margin: 0 auto 18px auto;
+      }
+      #home-btn {
+        position: static;
+        float: right;
+        background: var(--lynx-yellow);
+        color: var(--lynx-dark);
+        border: none;
+        border-radius: 8px;
+        font-family: "Poppins", Arial, sans-serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+        padding: 6px 18px;
+        cursor: pointer;
+        z-index: 1001;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        transition: background 0.2s, color 0.2s;
+        margin: 0 0 18px 0;
+      }
+      #home-btn:hover {
+        background: #ffd43b;
+        color: #23272a;
+      }
+      .instructions-container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: var(--lynx-card);
+        border-radius: 18px;
+        box-shadow: var(--lynx-shadow);
+        padding: 32px 32px 24px 32px;
+        margin-bottom: 40px;
+      }
+      .step-row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        border-bottom: 1px solid #e0e0e0;
+        padding: 22px 0 12px 0;
+        gap: 18px;
+      }
+      .step-row:last-child {
+        border-bottom: none;
+      }
+      .step-icon {
+        font-size: 2rem;
+        margin-right: 18px;
+        flex-shrink: 0;
+        width: 38px;
+        text-align: center;
+      }
+      .step-content {
+        flex: 1 1 auto;
+      }
+      .step-title {
+        font-size: 1.18rem;
+        font-weight: 600;
+        color: var(--lynx-dark);
+        font-family: "Poppins", Arial, sans-serif;
+        margin-bottom: 2px;
+      }
+      .step-desc {
+        font-size: 1.02rem;
+        color: #b0b0b0;
+      }
+      .step-arrow {
+        font-size: 1.3rem;
+        color: #bbb;
+        margin-left: 12px;
+        align-self: center;
+      }
+      .mailbox-section {
+        margin: 36px 0 0 0;
+        padding: 0;
+      }
+      .mailbox-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--lynx-yellow);
+        margin-bottom: 8px;
+        font-family: "Poppins", Arial, sans-serif;
+      }
+      .mailbox-desc {
+        font-size: 1.05rem;
+        color: #23272a;
+        margin-bottom: 12px;
+      }
+      .mailbox-imgs {
+        display: flex;
+        gap: 18px;
+        margin: 18px 0 0 0;
+        flex-wrap: wrap;
+      }
+      .mailbox-imgs img {
+        width: 320px;
+        max-width: 90vw;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        background: #eee;
+      }
+      .parking-section {
+        margin: 36px 0 0 0;
+        padding: 0;
+      }
+      .parking-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #e74c3c;
+        margin-bottom: 8px;
+        font-family: "Poppins", Arial, sans-serif;
+      }
+      .parking-desc {
+        font-size: 1.05rem;
+        color: #23272a;
+        margin-bottom: 8px;
+      }
+      .additional-section {
+        margin: 36px 0 0 0;
+        padding: 0;
+      }
+      .additional-title {
+        font-size: 1.12rem;
+        font-weight: 700;
+        color: var(--lynx-yellow);
+        margin-bottom: 8px;
+        font-family: "Poppins", Arial, sans-serif;
+      }
+      .additional-desc {
+        font-size: 1.02rem;
+        color: #23272a;
+      }
+      .placeholder-carousel {
+        width: 100%;
+        height: 240px;
+        background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 18px 0 0 0;
+        border: 2px dashed #ccc;
+      }
+      .placeholder-text {
+        color: #888;
+        font-size: 1.1rem;
+        text-align: center;
+        font-style: italic;
+      }
       @media (max-width: 700px) {
-        .main-content {
-          max-width: 100%;
-          width: 100%;
-          box-sizing: border-box;
+        .instructions-container {
+          padding: 16px 4vw 12px 4vw;
         }
-        .card {
-          max-width: 100%;
-          width: 100%;
+        .checkout-title {
+          font-size: 1.3rem;
         }
-        .address-card,
-        #main-content,
-        .disclaimer-section {
-          max-width: 100%;
+        .mailbox-imgs img {
           width: 100%;
-          margin-left: 0;
-          margin-right: 0;
-          box-sizing: border-box;
+          max-width: calc(100vw - 8vw);
         }
       }
       body.dark-mode {
         background: #23272a;
         color: #f3f3f3;
       }
-      body.dark-mode .card {
-        background: #2a2d30;
-        color: #f3f3f3;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-      body.dark-mode .footer {
+      body.dark-mode .header,
+      body.dark-mode .instructions-container {
         background: #23272a;
+        color: #f3f3f3;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      }
+      body.dark-mode .checkout-title,
+      body.dark-mode .mailbox-title,
+      body.dark-mode .additional-title {
         color: #ffe066;
       }
-      body.dark-mode .card-title {
+      body.dark-mode .step-title {
         color: #ffe066;
       }
-      body.dark-mode .content-section h2 {
+      body.dark-mode .mailbox-desc,
+      body.dark-mode .parking-desc,
+      body.dark-mode .additional-desc {
         color: #ffe066;
-      }
-      body.dark-mode .content-section h3 {
-        color: #ffe066;
-      }
-      body.dark-mode .content-section p,
-      body.dark-mode .content-section li {
-        color: #ddd;
       }
       body.dark-mode .placeholder-carousel {
         background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
@@ -214,11 +292,6 @@
       }
       body.dark-mode .placeholder-text {
         color: #bbb;
-      }
-      body.dark-mode #theme-toggle {
-        background: var(--nav-bg);
-        color: var(--lynx-yellow);
-        border-color: rgba(255, 255, 255, 0.2);
       }
       .navbar {
         position: fixed;
@@ -240,6 +313,11 @@
         display: flex;
         align-items: center;
         gap: 18px;
+      }
+      .nav-logo {
+        height: 38px;
+        width: auto;
+        margin-right: 8px;
       }
       .nav-home {
         background: none;
@@ -264,57 +342,63 @@
         align-items: center;
         gap: 12px;
       }
-      /* Theme Toggle Button */
-      #theme-toggle {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
-        border: 2px solid rgba(0, 0, 0, 0.1);
-        background: var(--lynx-card);
-        color: var(--lynx-dark);
+      .theme-toggle {
+        background: #23272a;
+        color: #ffe066;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.5rem;
+        padding: 6px 10px;
         cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.25rem;
-        transition: var(--lynx-transition);
-        box-shadow: var(--lynx-shadow);
+        transition: background 0.18s, color 0.18s;
       }
-
-      #theme-toggle:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--lynx-shadow-hover);
-        border-color: var(--lynx-blue);
-      }
-
-      #theme-toggle:focus {
+      .theme-toggle:hover,
+      .theme-toggle:focus {
+        background: #ffe066;
+        color: #23272a;
         outline: none;
-        box-shadow: 0 0 0 3px
-          rgba(0, 120, 215, 0.2);
       }
-
-      #theme-toggle:active {
-        transform: translateY(0);
-      }
-
       @media (max-width: 600px) {
         .navbar {
           padding: 0 8px;
           height: 54px;
         }
+        .nav-logo {
+          height: 28px;
+        }
         .nav-home {
           font-size: 1rem;
           padding: 4px 10px;
         }
-        #theme-toggle {
+        .theme-toggle {
           font-size: 1.2rem;
-          top: 8px;
-          width: 40px;
-          height: 40px;
+          padding: 4px 8px;
         }
+      }
+      body.dark-mode {
+        background: #23272a;
+        color: #ffe066;
+      }
+      body.dark-mode .navbar {
+        background: rgba(35, 39, 42, 0.98);
+        color: #ffe066;
+      }
+      body.dark-mode .nav-home {
+        color: #ffe066;
+      }
+      body.dark-mode .nav-home:hover,
+      body.dark-mode .nav-home:focus {
+        background: #ffe066;
+        color: #23272a;
+      }
+      body.dark-mode .theme-toggle {
+        background: #ffe066;
+        color: #23272a;
+      }
+      body.dark-mode .theme-toggle:hover,
+      body.dark-mode .theme-toggle:focus {
+        background: #23272a;
+        color: #ffe066;
       }
       .hero-section {
         width: 100%;
@@ -336,7 +420,7 @@
       .hero-overlay-full {
         width: 100%;
         height: 390px;
-        background: rgba(24, 26, 27, 0.45);
+        background: rgba(27, 29, 29, 0.45);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -359,7 +443,8 @@
         font-weight: bold;
         text-align: center;
         margin-bottom: 12px;
-        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.6),
+          0 2px 6px rgba(0, 0, 0, 0.4);
       }
       .hero-subtitle {
         color: #f3f3f3;
@@ -370,10 +455,20 @@
         max-width: 600px;
         margin: 0 auto;
       }
+      .lynx-name-emphasized {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--lynx-yellow);
+        margin-top: 4px;
+        letter-spacing: 0.5px;
+        text-align: center;
+        text-shadow: 0 9px 9px rgba(0, 0, 0, 1.7),
+          0 2px 1px rgba(0, 0, 0, 0.5);
+      }
       @media (max-width: 1200px) {
         .hero-bg-full,
         .hero-overlay-full {
-          width: 100vw;
+          width: 100%;
         }
       }
       @media (max-width: 600px) {
@@ -394,61 +489,16 @@
         .hero-subtitle {
           font-size: 0.98rem;
         }
-      }
-      .lynx-name-emphasized {
-        font-size: 1.2rem;
-        font-weight: 700;
-        color: var(--lynx-yellow);
-        margin-top: 4px;
-        letter-spacing: 0.5px;
-        text-align: center;
-      }
-      @media (max-width: 600px) {
         .lynx-name-emphasized {
           font-size: 1.05rem;
         }
       }
-      .address-card,
-      #main-content,
-      .disclaimer-section {
-        max-width: 900px;
-        margin: 24px auto;
-        padding-left: 12px;
-        padding-right: 12px;
-        box-sizing: border-box;
-      }
-      .disclaimer-section {
-        padding: 20px 24px;
-        background: var(--lynx-card);
-        border-radius: 16px;
-        box-shadow: var(--lynx-shadow);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        margin-bottom: 40px;
-      }
-      .disclaimer-content {
-        text-align: center;
-      }
-      .disclaimer-content h4 {
-        font-family: "Poppins", Arial, sans-serif;
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: var(--lynx-dark);
-        margin-bottom: 12px;
-      }
-      .disclaimer-content p {
-        color: #666;
-        line-height: 1.6;
-        font-size: 0.95rem;
-      }
-      body.dark-mode .disclaimer-section {
-        background: #2a2d30;
-        border-color: rgba(255, 255, 255, 0.1);
-      }
-      body.dark-mode .disclaimer-content h4 {
+      body.dark-mode .hero-title,
+      body.dark-mode .lynx-name-emphasized {
         color: #ffe066;
       }
-      body.dark-mode .disclaimer-content p {
-        color: #ccc;
+      body.dark-mode .hero-subtitle {
+        color: #ffe066;
       }
     </style>
   </head>
@@ -464,6 +514,7 @@
       </div>
       <div class="nav-right">
         <button
+          class="theme-toggle"
           id="theme-toggle"
           aria-label="Toggle dark mode"
         >
@@ -492,48 +543,49 @@
         </div>
       </div>
     </section>
-    <div class="main-content">
-      <div class="card">
-        <div class="card-title">
-          🏊‍♀️ Wellness & Spa in Cevahir Complex
+    <div class="instructions-container">
+      <div class="checkout-title">
+        Wellness & Spa in Cevahir Complex
+      </div>
+      <div class="step-row">
+        <div class="step-desc">
+          Guests at Lynx Apartment have access to premium wellness facilities inside the same complex. 
+          These services are not included in the apartment price and are paid separately at the spa reception.
         </div>
-        
-        <!-- Placeholder for photo carousel -->
+      </div>
+      <div class="mailbox-section">
+        <div class="mailbox-title">
+          📸 Wellness & Spa Facilities
+        </div>
+        <div class="mailbox-desc">
+          Explore the available wellness and spa facilities at Cevahir Complex.
+        </div>
         <div class="placeholder-carousel">
           <div class="placeholder-text">
             Photo Carousel Placeholder
           </div>
         </div>
-        
-        <div class="content-section">
-          <h2>Wellness & Spa in Cevahir Complex</h2>
-          <p>Guests at Lynx Apartment have access to premium wellness facilities inside the same complex. These services are not included in the apartment price and are paid separately at the spa reception.</p>
-          
-          <h3>💳 Pricing</h3>
-          <ul>
-            <li><strong>Gym</strong> – 300 MKD (~5 EUR) per day or 1,500 MKD (~25 EUR) per week</li>
-            <li><strong>Pool, Spa & Sauna</strong> – 900 MKD (~15 EUR) per day or 2,500 MKD (~40 EUR) per week</li>
-            <li><strong>Combined Gym + Spa Weekly Package</strong> – 3,000 MKD (~49 EUR)</li>
-          </ul>
-          
-          <h3>🏊 Important Notes</h3>
-          <ul>
-            <li>Swimming cap is required for the pool (available on-site for 300 MKD)</li>
-            <li>Availability and access are managed by the building's spa reception</li>
-          </ul>
+      </div>
+      <div class="parking-section">
+        <div class="parking-title">
+          💳 Pricing
+        </div>
+        <div class="parking-desc">
+          All services must be paid directly at the spa reception:<br /><br />
+          • <strong>Gym</strong> – 300 MKD (~5 EUR) per day or 1,500 MKD (~25 EUR) per week<br />
+          • <strong>Pool, Spa & Sauna</strong> – 900 MKD (~15 EUR) per day or 2,500 MKD (~40 EUR) per week<br />
+          • <strong>Combined Gym + Spa Weekly Package</strong> – 3,000 MKD (~49 EUR)
         </div>
       </div>
-    </div>
-    
-    <div class="disclaimer-section">
-      <div class="disclaimer-content">
-        <h4>Important Notice</h4>
-        <p>
-          The wellness and spa facilities are operated independently by the Cevahir Complex. 
-          Lynx Apartment and your host are not responsible for facility availability, 
-          pricing changes, or service quality. Please contact the spa reception directly 
-          for current rates and availability.
-        </p>
+      <div class="additional-section">
+        <div class="additional-title">
+          🏊 Important Notes
+        </div>
+        <div class="additional-desc">
+          • Swimming cap is required for the pool (available on-site for 300 MKD)<br />
+          • Availability and access are managed by the building's spa reception<br />
+          • Contact the spa reception directly for current rates and availability
+        </div>
       </div>
     </div>
     
@@ -552,7 +604,7 @@
         >
       </span>
     </div>
-
+    
     <script>
       // Theme toggle logic
       const themeToggle = document.getElementById(
