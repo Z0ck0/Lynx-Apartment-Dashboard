@@ -149,17 +149,34 @@
         max-width: 100%;
         height: 200px;
         object-fit: cover;
+        object-position: var(--img-focus-mobile, center);
         border-radius: 8px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         margin-bottom: 8px;
         cursor: pointer;
         transition: transform 0.2s ease,
-          box-shadow 0.2s ease;
+          box-shadow 0.2s ease, object-position 0.3s ease;
       }
       .gallery-image:hover {
         transform: scale(1.02);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       }
+      
+      /* Enhanced focus positioning classes */
+      .gallery-image.focus-top { --img-focus-mobile: center top; }
+      .gallery-image.focus-bottom { --img-focus-mobile: center bottom; }
+      .gallery-image.focus-left { --img-focus-mobile: left center; }
+      .gallery-image.focus-right { --img-focus-mobile: right center; }
+      .gallery-image.focus-top-left { --img-focus-mobile: left top; }
+      .gallery-image.focus-top-right { --img-focus-mobile: right top; }
+      .gallery-image.focus-bottom-left { --img-focus-mobile: left bottom; }
+      .gallery-image.focus-bottom-right { --img-focus-mobile: right bottom; }
+      
+      /* Custom focus positions for specific images */
+      .gallery-image.focus-hallway { --img-focus-mobile: center 30%; }
+      .gallery-image.focus-elevator { --img-focus-mobile: center 40%; }
+      .gallery-image.focus-door { --img-focus-mobile: center 35%; }
+      .gallery-image.focus-bin { --img-focus-mobile: center 45%; }
       .gallery-caption {
         font-size: 0.9rem;
         color: #666;
@@ -190,7 +207,24 @@
         .gallery-image {
           height: 160px;
           object-fit: cover;
+          object-position: var(--img-focus-desktop, center);
         }
+        
+        /* Desktop shows more context - less aggressive focusing */
+        .gallery-image.focus-top { --img-focus-desktop: center 20%; }
+        .gallery-image.focus-bottom { --img-focus-desktop: center 80%; }
+        .gallery-image.focus-left { --img-focus-desktop: 20% center; }
+        .gallery-image.focus-right { --img-focus-desktop: 80% center; }
+        .gallery-image.focus-top-left { --img-focus-desktop: 20% 20%; }
+        .gallery-image.focus-top-right { --img-focus-desktop: 80% 20%; }
+        .gallery-image.focus-bottom-left { --img-focus-desktop: 20% 80%; }
+        .gallery-image.focus-bottom-right { --img-focus-desktop: 80% 80%; }
+        
+        /* Custom desktop focus positions */
+        .gallery-image.focus-hallway { --img-focus-desktop: center 25%; }
+        .gallery-image.focus-elevator { --img-focus-desktop: center 35%; }
+        .gallery-image.focus-door { --img-focus-desktop: center 30%; }
+        .gallery-image.focus-bin { --img-focus-desktop: center 40%; }
       }
 
       /* Modal styles */
@@ -851,7 +885,9 @@
               <img
                 src="public/trash-1.jpg"
                 alt="Exit apartment 109 and turn right into hallway"
-                class="gallery-image"
+                class="gallery-image focus-hallway"
+                data-focus-mobile="center 30%"
+                data-focus-desktop="center 25%"
               />
               <div class="gallery-caption">
                 Step 1: Exit apartment 109 and
@@ -862,7 +898,9 @@
               <img
                 src="public/trash-2.jpg"
                 alt="Walk straight past elevators toward emergency exit"
-                class="gallery-image"
+                class="gallery-image focus-elevator"
+                data-focus-mobile="center 40%"
+                data-focus-desktop="center 35%"
               />
               <div class="gallery-caption">
                 Step 2: Walk straight past
@@ -873,7 +911,9 @@
               <img
                 src="public/trash-3.jpg"
                 alt="Enter emergency exit door with green EXIT sign"
-                class="gallery-image"
+                class="gallery-image focus-door"
+                data-focus-mobile="center 35%"
+                data-focus-desktop="center 30%"
               />
               <div class="gallery-caption">
                 Step 3: Enter emergency exit door
@@ -884,7 +924,9 @@
               <img
                 src="public/trash-4.jpg"
                 alt="Walk through emergency stairwell door"
-                class="gallery-image"
+                class="gallery-image focus-door"
+                data-focus-mobile="center 35%"
+                data-focus-desktop="center 30%"
               />
               <div class="gallery-caption">
                 Step 4: Walk through emergency
@@ -895,7 +937,9 @@
               <img
                 src="public/trash-5.jpg"
                 alt="Turn right in stairwell area"
-                class="gallery-image"
+                class="gallery-image focus-right"
+                data-focus-mobile="right center"
+                data-focus-desktop="80% center"
               />
               <div class="gallery-caption">
                 Step 5: Turn right in stairwell
@@ -906,7 +950,9 @@
               <img
                 src="public/trash-6.jpg"
                 alt="Locate utility room door"
-                class="gallery-image"
+                class="gallery-image focus-door"
+                data-focus-mobile="center 35%"
+                data-focus-desktop="center 30%"
               />
               <div class="gallery-caption">
                 Step 6: Locate utility room door
@@ -916,7 +962,9 @@
               <img
                 src="public/trash-7.jpg"
                 alt="Final destination - utility room with green wheeled bin"
-                class="gallery-image"
+                class="gallery-image focus-bin"
+                data-focus-mobile="center 45%"
+                data-focus-desktop="center 40%"
               />
               <div class="gallery-caption">
                 Step 7: Final destination -
