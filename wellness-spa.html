@@ -717,6 +717,93 @@
           font-size: 0.95rem;
         }
       }
+      .pricing-table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        margin-bottom: 24px;
+      }
+      .pricing-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--lynx-card);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--lynx-shadow);
+      }
+      .pricing-table th,
+      .pricing-table td {
+        padding: 14px 18px;
+        text-align: left;
+        font-size: 1rem;
+      }
+      .pricing-table th {
+        background: var(--lynx-yellow);
+        color: #23272a;
+        font-weight: 700;
+        font-family: "Poppins", Arial, sans-serif;
+      }
+      .pricing-table tr:not(:last-child) {
+        border-bottom: 1px solid #eee;
+      }
+      .pricing-table td {
+        color: #444;
+        font-family: "Roboto", Arial, sans-serif;
+      }
+      body.dark-mode .pricing-table {
+        background: #2a2d30;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+      }
+      body.dark-mode .pricing-table th {
+        background: #ffe066;
+        color: #23272a;
+      }
+      body.dark-mode .pricing-table td {
+        color: #eee;
+      }
+      @media (max-width: 600px) {
+        .pricing-table,
+        .pricing-table thead,
+        .pricing-table tbody,
+        .pricing-table tr {
+          display: block;
+          width: 100%;
+        }
+        .pricing-table thead {
+          display: none;
+        }
+        .pricing-table tr {
+          margin-bottom: 18px;
+          border-radius: 10px;
+          box-shadow: 0 2px 8px
+            rgba(0, 0, 0, 0.08);
+          background: var(--lynx-card);
+          border: 1px solid #2222;
+          padding: 0 0 8px 0;
+        }
+        .pricing-table td {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          padding: 10px 14px;
+          border: none;
+          font-size: 1rem;
+          position: relative;
+        }
+        .pricing-table td::before {
+          content: attr(data-label);
+          font-weight: 700;
+          font-family: "Poppins", Arial,
+            sans-serif;
+          color: var(--lynx-yellow);
+          min-width: 110px;
+          display: inline-block;
+          margin-right: 10px;
+        }
+      }
+      body.dark-mode .pricing-table tr {
+        background: #23272a;
+        border-color: #444;
+      }
     </style>
   </head>
   <body>
@@ -808,25 +895,55 @@
           </p>
 
           <h3>💳 Pricing</h3>
-          <ul>
-            <li>
-              <strong>Gym</strong> – 300 MKD (~5
-              EUR) per day or 1,500 MKD (~25 EUR)
-              per week
-            </li>
-            <li>
-              <strong>Pool, Spa & Sauna</strong> –
-              900 MKD (~15 EUR) per day or 2,500
-              MKD (~40 EUR) per week
-            </li>
-            <li>
-              <strong
-                >Combined Gym + Spa Weekly
-                Package</strong
-              >
-              – 3,000 MKD (~49 EUR)
-            </li>
-          </ul>
+          <div class="pricing-table-wrapper">
+            <table class="pricing-table">
+              <thead>
+                <tr>
+                  <th>Package</th>
+                  <th>Per Day</th>
+                  <th>Per Week</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="Package">
+                    <strong>Gym</strong>
+                  </td>
+                  <td data-label="Per Day">
+                    300 MKD<br />(~5 EUR)
+                  </td>
+                  <td data-label="Per Week">
+                    1,500 MKD<br />(~25 EUR)
+                  </td>
+                </tr>
+                <tr>
+                  <td data-label="Package">
+                    <strong
+                      >Pool, Spa & Sauna</strong
+                    >
+                  </td>
+                  <td data-label="Per Day">
+                    900 MKD<br />(~15 EUR)
+                  </td>
+                  <td data-label="Per Week">
+                    2,500 MKD<br />(~40 EUR)
+                  </td>
+                </tr>
+                <tr>
+                  <td data-label="Package">
+                    <strong
+                      >Combined Gym + Spa Weekly
+                      Package</strong
+                    >
+                  </td>
+                  <td data-label="Per Day">–</td>
+                  <td data-label="Per Week">
+                    3,000 MKD<br />(~49 EUR)
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
           <div class="sky-wellness-section">
             <h3 class="sky-wellness-title">
