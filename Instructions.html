@@ -149,34 +149,62 @@
         max-width: 100%;
         height: 200px;
         object-fit: cover;
-        object-position: var(--img-focus-mobile, center);
+        object-position: var(
+          --img-focus-mobile,
+          center
+        );
         border-radius: 8px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         margin-bottom: 8px;
         cursor: pointer;
         transition: transform 0.2s ease,
-          box-shadow 0.2s ease, object-position 0.3s ease;
+          box-shadow 0.2s ease,
+          object-position 0.3s ease;
       }
       .gallery-image:hover {
         transform: scale(1.02);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       }
-      
+
       /* Enhanced focus positioning classes */
-      .gallery-image.focus-top { --img-focus-mobile: center top; }
-      .gallery-image.focus-bottom { --img-focus-mobile: center bottom; }
-      .gallery-image.focus-left { --img-focus-mobile: left center; }
-      .gallery-image.focus-right { --img-focus-mobile: right center; }
-      .gallery-image.focus-top-left { --img-focus-mobile: left top; }
-      .gallery-image.focus-top-right { --img-focus-mobile: right top; }
-      .gallery-image.focus-bottom-left { --img-focus-mobile: left bottom; }
-      .gallery-image.focus-bottom-right { --img-focus-mobile: right bottom; }
-      
+      .gallery-image.focus-top {
+        --img-focus-mobile: center top;
+      }
+      .gallery-image.focus-bottom {
+        --img-focus-mobile: center bottom;
+      }
+      .gallery-image.focus-left {
+        --img-focus-mobile: left center;
+      }
+      .gallery-image.focus-right {
+        --img-focus-mobile: right center;
+      }
+      .gallery-image.focus-top-left {
+        --img-focus-mobile: left top;
+      }
+      .gallery-image.focus-top-right {
+        --img-focus-mobile: right top;
+      }
+      .gallery-image.focus-bottom-left {
+        --img-focus-mobile: left bottom;
+      }
+      .gallery-image.focus-bottom-right {
+        --img-focus-mobile: right bottom;
+      }
+
       /* Custom focus positions for specific images */
-      .gallery-image.focus-hallway { --img-focus-mobile: center 30%; }
-      .gallery-image.focus-elevator { --img-focus-mobile: center 40%; }
-      .gallery-image.focus-door { --img-focus-mobile: center 35%; }
-      .gallery-image.focus-bin { --img-focus-mobile: center 45%; }
+      .gallery-image.focus-hallway {
+        --img-focus-mobile: center 30%;
+      }
+      .gallery-image.focus-elevator {
+        --img-focus-mobile: center 40%;
+      }
+      .gallery-image.focus-door {
+        --img-focus-mobile: center 35%;
+      }
+      .gallery-image.focus-bin {
+        --img-focus-mobile: center 45%;
+      }
       .gallery-caption {
         font-size: 0.9rem;
         color: #666;
@@ -207,24 +235,51 @@
         .gallery-image {
           height: 160px;
           object-fit: cover;
-          object-position: var(--img-focus-desktop, center);
+          object-position: var(
+            --img-focus-desktop,
+            center
+          );
         }
-        
+
         /* Desktop shows more context - less aggressive focusing */
-        .gallery-image.focus-top { --img-focus-desktop: center 20%; }
-        .gallery-image.focus-bottom { --img-focus-desktop: center 80%; }
-        .gallery-image.focus-left { --img-focus-desktop: 20% center; }
-        .gallery-image.focus-right { --img-focus-desktop: 80% center; }
-        .gallery-image.focus-top-left { --img-focus-desktop: 20% 20%; }
-        .gallery-image.focus-top-right { --img-focus-desktop: 80% 20%; }
-        .gallery-image.focus-bottom-left { --img-focus-desktop: 20% 80%; }
-        .gallery-image.focus-bottom-right { --img-focus-desktop: 80% 80%; }
-        
+        .gallery-image.focus-top {
+          --img-focus-desktop: center 20%;
+        }
+        .gallery-image.focus-bottom {
+          --img-focus-desktop: center 80%;
+        }
+        .gallery-image.focus-left {
+          --img-focus-desktop: 20% center;
+        }
+        .gallery-image.focus-right {
+          --img-focus-desktop: 80% center;
+        }
+        .gallery-image.focus-top-left {
+          --img-focus-desktop: 20% 20%;
+        }
+        .gallery-image.focus-top-right {
+          --img-focus-desktop: 80% 20%;
+        }
+        .gallery-image.focus-bottom-left {
+          --img-focus-desktop: 20% 80%;
+        }
+        .gallery-image.focus-bottom-right {
+          --img-focus-desktop: 80% 80%;
+        }
+
         /* Custom desktop focus positions */
-        .gallery-image.focus-hallway { --img-focus-desktop: center 25%; }
-        .gallery-image.focus-elevator { --img-focus-desktop: center 35%; }
-        .gallery-image.focus-door { --img-focus-desktop: center 30%; }
-        .gallery-image.focus-bin { --img-focus-desktop: center 40%; }
+        .gallery-image.focus-hallway {
+          --img-focus-desktop: center 25%;
+        }
+        .gallery-image.focus-elevator {
+          --img-focus-desktop: center 35%;
+        }
+        .gallery-image.focus-door {
+          --img-focus-desktop: center 30%;
+        }
+        .gallery-image.focus-bin {
+          --img-focus-desktop: center 40%;
+        }
       }
 
       /* Modal styles */
@@ -748,6 +803,12 @@
         padding: 16px;
         padding-top: 20px;
       }
+      @media (max-width: 700px) {
+        .dropdown-content.active {
+          max-height: 1800px;
+          overflow-y: auto;
+        }
+      }
 
       .dropdown-content div {
         line-height: 1.6;
@@ -841,13 +902,7 @@
     <div class="main-content">
       <div class="card">
         <div class="card-title">
-          🛏️ Sofa Bed Assembly
-        </div>
-        <div class="carousel">
-          <div class="carousel-placeholder">
-            [Sofa bed assembly pictures/videos
-            carousel here]
-          </div>
+          🚗 Garage Access & Parking Info
         </div>
         <div class="dropdown-container">
           <button
@@ -855,7 +910,7 @@
             onclick="toggleDropdown(this)"
           >
             <span class="dropdown-text"
-              >📄 More detailed instructions</span
+              >More detailed instructions</span
             >
             <span class="dropdown-arrow">▼</span>
           </button>
@@ -866,10 +921,16 @@
                 font-size: 1rem;
               "
             >
+              <div class="carousel">
+                <div class="carousel-placeholder">
+                  [Garage access & parking
+                  pictures/videos carousel here]
+                </div>
+              </div>
               <p>
-                Step-by-step instructions for
-                assembling the sofa bed will be
-                shown here.
+                Detailed instructions for
+                accessing the garage and parking
+                facilities will be shown here.
               </p>
             </div>
           </div>
@@ -886,7 +947,7 @@
             onclick="toggleDropdown(this)"
           >
             <span class="dropdown-text"
-              >📄 More detailed instructions</span
+              >More detailed instructions</span
             >
             <span class="dropdown-arrow">▼</span>
           </button>
@@ -897,7 +958,10 @@
                 font-size: 1rem;
               "
             >
-              <div class="carousel" style="margin-bottom: 20px;">
+              <div
+                class="carousel"
+                style="margin-bottom: 20px"
+              >
                 <div class="checkin-gallery">
                   <div class="gallery-item">
                     <img
@@ -908,8 +972,8 @@
                       data-focus-desktop="center 25%"
                     />
                     <div class="gallery-caption">
-                      Step 1: Exit apartment 109 and
-                      turn right into hallway
+                      Step 1: Exit apartment 109
+                      and turn right into hallway
                     </div>
                   </div>
                   <div class="gallery-item">
@@ -922,7 +986,8 @@
                     />
                     <div class="gallery-caption">
                       Step 2: Walk straight past
-                      elevators toward emergency exit
+                      elevators toward emergency
+                      exit
                     </div>
                   </div>
                   <div class="gallery-item">
@@ -934,8 +999,8 @@
                       data-focus-desktop="center 30%"
                     />
                     <div class="gallery-caption">
-                      Step 3: Enter emergency exit door
-                      with green EXIT sign
+                      Step 3: Enter emergency exit
+                      door with green EXIT sign
                     </div>
                   </div>
                   <div class="gallery-item">
@@ -947,8 +1012,8 @@
                       data-focus-desktop="center 30%"
                     />
                     <div class="gallery-caption">
-                      Step 4: Walk through emergency
-                      stairwell door
+                      Step 4: Walk through
+                      emergency stairwell door
                     </div>
                   </div>
                   <div class="gallery-item">
@@ -960,8 +1025,8 @@
                       data-focus-desktop="80% center"
                     />
                     <div class="gallery-caption">
-                      Step 5: Turn right in stairwell
-                      area
+                      Step 5: Turn right in
+                      stairwell area
                     </div>
                   </div>
                   <div class="gallery-item">
@@ -973,7 +1038,8 @@
                       data-focus-desktop="center 30%"
                     />
                     <div class="gallery-caption">
-                      Step 6: Locate utility room door
+                      Step 6: Locate utility room
+                      door
                     </div>
                   </div>
                   <div class="gallery-item">
@@ -986,8 +1052,8 @@
                     />
                     <div class="gallery-caption">
                       Step 7: Final destination -
-                      utility room with green wheeled
-                      bin
+                      utility room with green
+                      wheeled bin
                     </div>
                   </div>
                 </div>
@@ -1169,13 +1235,7 @@
 
       <div class="card">
         <div class="card-title">
-          💧 Turning On/Off the Apartment Boiler
-        </div>
-        <div class="carousel">
-          <div class="carousel-placeholder">
-            [Boiler operation pictures/videos
-            carousel here]
-          </div>
+          📺 TV & Mini-Bar Mood Lighting
         </div>
         <div class="dropdown-container">
           <button
@@ -1183,7 +1243,7 @@
             onclick="toggleDropdown(this)"
           >
             <span class="dropdown-text"
-              >📄 More detailed instructions</span
+              >More detailed instructions</span
             >
             <span class="dropdown-arrow">▼</span>
           </button>
@@ -1194,9 +1254,52 @@
                 font-size: 1rem;
               "
             >
+              <div class="carousel">
+                <div class="carousel-placeholder">
+                  [TV & mini-bar mood lighting
+                  pictures/videos carousel here]
+                </div>
+              </div>
               <p>
-                Instructions for safely turning
-                the boiler on and off will be
+                Instructions for operating the TV
+                and mini-bar mood lighting system
+                will be shown here.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          🛏️ Sofa Bed Assembly
+        </div>
+        <div class="dropdown-container">
+          <button
+            class="dropdown-button"
+            onclick="toggleDropdown(this)"
+          >
+            <span class="dropdown-text"
+              >More detailed instructions</span
+            >
+            <span class="dropdown-arrow">▼</span>
+          </button>
+          <div class="dropdown-content">
+            <div
+              style="
+                line-height: 1.6;
+                font-size: 1rem;
+              "
+            >
+              <div class="carousel">
+                <div class="carousel-placeholder">
+                  [Sofa bed assembly
+                  pictures/videos carousel here]
+                </div>
+              </div>
+              <p>
+                Step-by-step instructions for
+                assembling the sofa bed will be
                 shown here.
               </p>
             </div>
@@ -1206,7 +1309,7 @@
 
       <div class="card">
         <div class="card-title">
-          � Garage Access & Parking Info
+          💧 Turning On/Off the Apartment Boiler
         </div>
         <div class="dropdown-container">
           <button
@@ -1214,7 +1317,7 @@
             onclick="toggleDropdown(this)"
           >
             <span class="dropdown-text"
-              >📄 More detailed instructions</span
+              >More detailed instructions</span
             >
             <span class="dropdown-arrow">▼</span>
           </button>
@@ -1225,37 +1328,16 @@
                 font-size: 1rem;
               "
             >
+              <div class="carousel">
+                <div class="carousel-placeholder">
+                  [Boiler operation
+                  pictures/videos carousel here]
+                </div>
+              </div>
               <p>
-                Detailed instructions for accessing the garage and parking facilities will be shown here.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">
-          📺 TV & Mini-Bar Mood Lighting
-        </div>
-        <div class="dropdown-container">
-          <button
-            class="dropdown-button"
-            onclick="toggleDropdown(this)"
-          >
-            <span class="dropdown-text"
-              >📄 More detailed instructions</span
-            >
-            <span class="dropdown-arrow">▼</span>
-          </button>
-          <div class="dropdown-content">
-            <div
-              style="
-                line-height: 1.6;
-                font-size: 1rem;
-              "
-            >
-              <p>
-                Instructions for operating the TV and mini-bar mood lighting system will be shown here.
+                Instructions for safely turning
+                the boiler on and off will be
+                shown here.
               </p>
             </div>
           </div>
@@ -1641,8 +1723,10 @@
 
       // Open video modal from preview image
       function openVideoModalFromPreview() {
-        const videoSrc = "public/video/trash-disposal-guide.mp4";
-        modalVideo.querySelector("source").src = videoSrc;
+        const videoSrc =
+          "public/video/trash-disposal-guide.mp4";
+        modalVideo.querySelector("source").src =
+          videoSrc;
         modalVideo.load(); // Reload the video with new source
         videoModal.style.display = "block";
         document.body.style.overflow = "hidden"; // Prevent background scrolling
