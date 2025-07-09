@@ -608,7 +608,8 @@
         font-size: 1.2em;
       }
       /* Add pizza emoji for Pizzerias & Restaurants section only */
-      .restaurants-section .section-title::before {
+      .restaurants-section
+        .section-title::before {
         content: "\1F355"; /* 🍕 */
       }
 
@@ -1469,7 +1470,10 @@
         color: #23272a;
       }
       #modal-confirm-btn:disabled {
+        background: #bdbdbd;
+        color: #757575;
         cursor: not-allowed;
+        opacity: 1;
       }
 
       /* Responsive */
