@@ -1884,65 +1884,69 @@
         ".modal-next"
       );
 
-      // Get all gallery images
-      const galleryImages =
-        document.querySelectorAll(
-          ".gallery-image"
-        );
+      // Add a global variable to track the current carousel images in the modal
+      let modalImages = [];
+      let modalCaptions = [];
       let currentImageIndex = 0;
 
-      // Convert gallery images to array for easier manipulation
-      const imagesArray = Array.from(
-        galleryImages
-      );
-
-      // Open modal when clicking on an image
-      galleryImages.forEach((img, index) => {
-        img.addEventListener(
-          "click",
-          function () {
-            currentImageIndex = index;
-            showModal(this);
-          }
+      // Update modal open logic to use the correct set of images
+      function openModalFromCarousel(
+        carouselName,
+        startIdx = 0
+      ) {
+        // Find the correct carousel-slider
+        const carousel = document.querySelector(
+          `.carousel-slider[data-carousel='${carouselName}']`
         );
-      });
-
-      function showModal(clickedImage) {
+        if (!carousel) return;
+        const slides = Array.from(
+          carousel.querySelectorAll(
+            ".carousel-slide"
+          )
+        );
+        modalImages = slides.map(
+          slide => slide.querySelector("img").src
+        );
+        modalCaptions = slides.map(
+          slide =>
+            slide.querySelector(
+              ".gallery-caption"
+            ).textContent
+        );
+        currentImageIndex = startIdx;
+        showModalImage();
         modal.style.display = "block";
-        modalImage.src = clickedImage.src;
-        modalImage.alt = clickedImage.alt;
+        document.body.style.overflow = "hidden";
+      }
+
+      function showModalImage() {
+        modalImage.src =
+          modalImages[currentImageIndex];
+        modalImage.alt =
+          modalCaptions[currentImageIndex];
         modalCaption.textContent =
-          clickedImage.alt;
-        document.body.style.overflow = "hidden"; // Prevent background scrolling
+          modalCaptions[currentImageIndex];
       }
 
       function closeModal() {
         modal.style.display = "none";
-        document.body.style.overflow = "auto"; // Restore background scrolling
+        document.body.style.overflow = "auto";
       }
 
       function showPrevImage() {
         currentImageIndex =
           (currentImageIndex -
             1 +
-            imagesArray.length) %
-          imagesArray.length;
-        const prevImage =
-          imagesArray[currentImageIndex];
-        modalImage.src = prevImage.src;
-        modalImage.alt = prevImage.alt;
-        modalCaption.textContent = prevImage.alt;
+            modalImages.length) %
+          modalImages.length;
+        showModalImage();
       }
 
       function showNextImage() {
         currentImageIndex =
           (currentImageIndex + 1) %
-          imagesArray.length;
-        const nextImage =
-          imagesArray[currentImageIndex];
-        modalImage.src = nextImage.src;
-        modalImage.alt = nextImage.alt;
-        modalCaption.textContent = nextImage.alt;
+          modalImages.length;
+        showModalImage();
       }
 
       // Event listeners for modal controls
@@ -1957,16 +1961,6 @@
       nextBtn.addEventListener(
         "click",
         showNextImage
-      );
-
-      // Close modal when clicking outside the image
-      modal.addEventListener(
-        "click",
-        function (e) {
-          if (e.target === modal) {
-            closeModal();
-          }
-        }
       );
 
       // Keyboard navigation
@@ -2234,6 +2228,27 @@
       document
         .querySelectorAll(".carousel-slider")
         .forEach(root => new Carousel(root));
+
+      // Update click event for images in carousels to open modal with correct set
+      document
+        .querySelectorAll(".carousel-slider")
+        .forEach(carousel => {
+          const carouselName =
+            carousel.getAttribute(
+              "data-carousel"
+            );
+          carousel
+            .querySelectorAll(".gallery-image")
+            .forEach((img, idx) => {
+              img.style.cursor = "pointer";
+              img.addEventListener("click", () =>
+                openModalFromCarousel(
+                  carouselName,
+                  idx
+                )
+              );
+            });
+        });
     </script>
   </body>
 </html>
