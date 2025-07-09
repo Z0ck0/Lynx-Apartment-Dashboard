@@ -1549,9 +1549,6 @@
       }
 
       // Overlay play icon logic for trash video
-      const trashVideo = document.getElementById(
-        "trash-disposal-video"
-      );
       const playOverlay = document.getElementById(
         "video-play-overlay"
       );
@@ -1566,32 +1563,13 @@
       // Show overlay initially
       showPlayOverlay();
 
-      // Hide overlay when playing, show when paused or ended
-      trashVideo.addEventListener(
-        "play",
-        hidePlayOverlay
-      );
-      trashVideo.addEventListener(
-        "pause",
-        showPlayOverlay
-      );
-      trashVideo.addEventListener(
-        "ended",
-        showPlayOverlay
-      );
-      // Hide overlay if user clicks to open modal (optional, in case modal auto-plays)
-      trashVideo.addEventListener(
-        "click",
-        hidePlayOverlay
-      );
-
       // Open video modal from preview image
       function openVideoModalFromPreview() {
-        openVideoModal(
-          document.getElementById(
-            "trash-disposal-video"
-          )
-        );
+        const videoSrc = "public/video/trash-disposal-guide.mp4";
+        modalVideo.querySelector("source").src = videoSrc;
+        modalVideo.load(); // Reload the video with new source
+        videoModal.style.display = "block";
+        document.body.style.overflow = "hidden"; // Prevent background scrolling
       }
     </script>
   </body>
