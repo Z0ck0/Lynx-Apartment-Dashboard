@@ -536,6 +536,144 @@
       body.dark-mode .disclaimer-content p {
         color: #ccc;
       }
+      
+      /* Sky Wellness Button Styles */
+      .sky-wellness-section {
+        margin: 32px 0;
+        padding: 24px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 16px;
+        border: 1px solid rgba(0, 120, 215, 0.1);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .sky-wellness-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--lynx-blue) 0%, var(--lynx-yellow) 100%);
+      }
+      
+      .sky-wellness-title {
+        font-family: "Poppins", Arial, sans-serif;
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--lynx-dark);
+        margin-bottom: 8px;
+        margin-top: 0;
+      }
+      
+      .sky-wellness-subtitle {
+        color: #666;
+        font-size: 1rem;
+        margin-bottom: 20px;
+        line-height: 1.5;
+      }
+      
+      .sky-wellness-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, var(--lynx-blue) 0%, #005a9e 100%);
+        color: white;
+        text-decoration: none;
+        padding: 14px 28px;
+        border-radius: 12px;
+        font-family: "Poppins", Arial, sans-serif;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 12px rgba(0, 120, 215, 0.3);
+        border: none;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .sky-wellness-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+      }
+      
+      .sky-wellness-btn:hover::before {
+        left: 100%;
+      }
+      
+      .sky-wellness-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 120, 215, 0.4);
+        background: linear-gradient(135deg, #0066cc 0%, #004080 100%);
+      }
+      
+      .sky-wellness-btn:active {
+        transform: translateY(0);
+        box-shadow: 0 4px 12px rgba(0, 120, 215, 0.3);
+      }
+      
+      .sky-wellness-btn-icon {
+        font-size: 1.1rem;
+        transition: transform 0.3s ease;
+      }
+      
+      .sky-wellness-btn:hover .sky-wellness-btn-icon {
+        transform: scale(1.1);
+      }
+      
+      /* Dark mode styles for Sky Wellness section */
+      body.dark-mode .sky-wellness-section {
+        background: linear-gradient(135deg, #2a2d30 0%, #1e2124 100%);
+        border-color: rgba(255, 224, 102, 0.2);
+      }
+      
+      body.dark-mode .sky-wellness-title {
+        color: var(--lynx-yellow);
+      }
+      
+      body.dark-mode .sky-wellness-subtitle {
+        color: #ccc;
+      }
+      
+      body.dark-mode .sky-wellness-btn {
+        background: linear-gradient(135deg, var(--lynx-yellow) 0%, #e6cc5a 100%);
+        color: var(--lynx-dark);
+        box-shadow: 0 4px 12px rgba(255, 224, 102, 0.3);
+      }
+      
+      body.dark-mode .sky-wellness-btn:hover {
+        background: linear-gradient(135deg, #ffeb80 0%, #e6cc5a 100%);
+        box-shadow: 0 8px 20px rgba(255, 224, 102, 0.4);
+      }
+      
+      @media (max-width: 600px) {
+        .sky-wellness-section {
+          margin: 24px 0;
+          padding: 20px 16px;
+        }
+        
+        .sky-wellness-title {
+          font-size: 1.2rem;
+        }
+        
+        .sky-wellness-subtitle {
+          font-size: 0.95rem;
+        }
+        
+        .sky-wellness-btn {
+          padding: 12px 24px;
+          font-size: 0.95rem;
+        }
+      }
     </style>
   </head>
   <body>
@@ -654,6 +792,20 @@
             <li><strong>Pool, Spa & Sauna</strong> – 900 MKD (~15 EUR) per day or 2,500 MKD (~40 EUR) per week</li>
             <li><strong>Combined Gym + Spa Weekly Package</strong> – 3,000 MKD (~49 EUR)</li>
           </ul>
+          
+          <div class="sky-wellness-section">
+            <h3 class="sky-wellness-title">Discover Sky Wellness</h3>
+            <p class="sky-wellness-subtitle">
+              Explore our comprehensive wellness services, detailed facilities, and current offerings
+            </p>
+            <a href="https://www.skywellness.com.mk" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="sky-wellness-btn">
+              <span class="sky-wellness-btn-icon">🌟</span>
+              Visit Sky Wellness Website
+            </a>
+          </div>
           
           <h3>🏊 Important Notes</h3>
           <ul>
