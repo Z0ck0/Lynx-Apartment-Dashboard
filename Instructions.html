@@ -177,6 +177,33 @@
       .gallery-image.focus-elevator { --img-focus-mobile: center 40%; }
       .gallery-image.focus-door { --img-focus-mobile: center 35%; }
       .gallery-image.focus-bin { --img-focus-mobile: center 45%; }
+      
+      /* Additional utility classes for common scenarios */
+      .gallery-image.focus-upper-third { --img-focus-mobile: center 33%; }
+      .gallery-image.focus-lower-third { --img-focus-mobile: center 67%; }
+      .gallery-image.focus-left-third { --img-focus-mobile: 33% center; }
+      .gallery-image.focus-right-third { --img-focus-mobile: 67% center; }
+      
+      /* Dynamic focus override (highest priority) */
+      .gallery-image[style*="--img-focus-mobile"] {
+        object-position: var(--img-focus-mobile) !important;
+      }
+      
+      /*
+      Usage Examples:
+      
+      1. Basic positioning:
+      <img class="gallery-image focus-top" src="..." />
+      
+      2. Custom positioning with data attributes:
+      <img class="gallery-image" data-focus-mobile="center 25%" data-focus-desktop="center 30%" src="..." />
+      
+      3. JavaScript control:
+      setImageFocus(imageElement, 'center 40%', 'center 35%');
+      
+      4. Reset to center:
+      resetImageFocus(imageElement);
+      */
       .gallery-caption {
         font-size: 0.9rem;
         color: #666;
@@ -1346,6 +1373,43 @@
           localStorage.getItem("lynx-theme");
         setTheme(saved === "dark" || !saved);
       })();
+
+      // Enhanced Image Focus System
+      function initializeImageFocus() {
+        const images = document.querySelectorAll('.gallery-image[data-focus-mobile]');
+        
+        images.forEach(img => {
+          const mobilePosition = img.getAttribute('data-focus-mobile');
+          const desktopPosition = img.getAttribute('data-focus-desktop');
+          
+          // Set CSS custom properties for fine-tuned control
+          if (mobilePosition) {
+            img.style.setProperty('--img-focus-mobile', mobilePosition);
+          }
+          if (desktopPosition) {
+            img.style.setProperty('--img-focus-desktop', desktopPosition);
+          }
+        });
+      }
+      
+      // Optional: Dynamic focus adjustment based on image content
+      function setImageFocus(imageElement, mobilePosition, desktopPosition) {
+        if (mobilePosition) {
+          imageElement.style.setProperty('--img-focus-mobile', mobilePosition);
+        }
+        if (desktopPosition) {
+          imageElement.style.setProperty('--img-focus-desktop', desktopPosition);
+        }
+      }
+      
+      // Optional: Reset image focus to center
+      function resetImageFocus(imageElement) {
+        imageElement.style.setProperty('--img-focus-mobile', 'center');
+        imageElement.style.setProperty('--img-focus-desktop', 'center');
+      }
+      
+      // Initialize focus system when page loads
+      document.addEventListener('DOMContentLoaded', initializeImageFocus);
 
       // Image modal functionality
       const modal =
