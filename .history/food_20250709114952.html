@@ -604,12 +604,8 @@
       }
 
       .section-title::before {
-        content: "\1F695"; /* 🛵 for all section titles by default */
+        content: "🛵";
         font-size: 1.2em;
-      }
-      /* Add pizza emoji for Pizzerias & Restaurants section only */
-      .restaurants-section .section-title::before {
-        content: "\1F355"; /* 🍕 */
       }
 
       .food-service-item:hover,
@@ -798,13 +794,20 @@
           font-size: 0.9rem;
         }
 
-        .disclaimer-section {
-          margin: 32px 12px 24px 12px;
-          max-width: calc(100vw - 24px);
-          padding-left: 8px;
-          padding-right: 8px;
-          box-sizing: border-box;
-        }
+        /* .disclaimer-section {
+          margin-top: 32px;
+        } */
+               }
+      html, body {
+        overflow-x: hidden;
+        box-sizing: border-box;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 480px;
+        min-width removed for responsiveness
+      
       }
       .restaurants-section .food-service-item {
         background: #f8fff9;
@@ -815,13 +818,6 @@
         .food-service-item {
         background: #2d4a2d;
         border-left-color: #4ade80;
-      }
-      @media (min-width: 701px) {
-        .disclaimer-section {
-          margin-left: auto;
-          margin-right: auto;
-          display: block;
-        }
       }
     </style>
   </head>
