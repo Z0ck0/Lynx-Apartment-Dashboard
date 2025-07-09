@@ -100,22 +100,92 @@
         align-items: center;
         gap: 10px;
       }
-      .placeholder-carousel {
+      .wellness-carousel {
         width: 100%;
-        height: 240px;
-        background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+        height: 300px;
         border-radius: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         margin-bottom: 24px;
-        border: 2px dashed #ccc;
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--lynx-shadow);
       }
-      .placeholder-text {
-        color: #888;
-        font-size: 1.1rem;
-        text-align: center;
-        font-style: italic;
+      .carousel-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+      .carousel-slide {
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+      .carousel-slide.active {
+        display: block;
+      }
+      .carousel-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 14px;
+      }
+      .carousel-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 12px 16px;
+        font-size: 1rem;
+        font-weight: 500;
+        border-radius: 0 0 14px 14px;
+      }
+      .carousel-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 12px 16px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        border-radius: 50%;
+        transition: background 0.3s;
+        z-index: 10;
+      }
+      .carousel-btn:hover {
+        background: rgba(0, 0, 0, 0.8);
+      }
+      .carousel-btn.prev {
+        left: 16px;
+      }
+      .carousel-btn.next {
+        right: 16px;
+      }
+      .carousel-indicators {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px;
+        z-index: 10;
+      }
+      .indicator {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .indicator.active {
+        background: var(--lynx-yellow);
+      }
+      .indicator:hover {
+        background: rgba(255, 255, 255, 0.8);
       }
       .content-section {
         width: 100%;
@@ -208,12 +278,28 @@
       body.dark-mode .content-section li {
         color: #ddd;
       }
-      body.dark-mode .placeholder-carousel {
-        background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
-        border-color: #555;
+      body.dark-mode .wellness-carousel {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
       }
-      body.dark-mode .placeholder-text {
-        color: #bbb;
+      body.dark-mode .carousel-caption {
+        background: rgba(0, 0, 0, 0.8);
+        color: #f3f3f3;
+      }
+      body.dark-mode .carousel-btn {
+        background: rgba(255, 255, 255, 0.1);
+        color: #f3f3f3;
+      }
+      body.dark-mode .carousel-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+      body.dark-mode .indicator {
+        background: rgba(255, 255, 255, 0.3);
+      }
+      body.dark-mode .indicator.active {
+        background: var(--lynx-yellow);
+      }
+      body.dark-mode .indicator:hover {
+        background: rgba(255, 255, 255, 0.5);
       }
       body.dark-mode #theme-toggle {
         background: var(--nav-bg);
@@ -498,10 +584,63 @@
           🏊‍♀️ Wellness & Spa in Cevahir Complex
         </div>
         
-        <!-- Placeholder for photo carousel -->
-        <div class="placeholder-carousel">
-          <div class="placeholder-text">
-            Photo Carousel Placeholder
+        <!-- Wellness & Spa Photo Carousel -->
+        <div class="wellness-carousel">
+          <div class="carousel-container">
+            <div class="carousel-slide active">
+              <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1000&q=80" alt="Modern Fitness Center" />
+              <div class="carousel-caption">Modern Fitness Center</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1000&q=80" alt="Indoor Swimming Pool" />
+              <div class="carousel-caption">Indoor Swimming Pool</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=1000&q=80" alt="Sauna Relaxation" />
+              <div class="carousel-caption">Sauna Relaxation</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?auto=format&fit=crop&w=1000&q=80" alt="Spa Treatment Room" />
+              <div class="carousel-caption">Spa Treatment Room</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1000&q=80" alt="Turkish Bath" />
+              <div class="carousel-caption">Turkish Bath & Steam Room</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1000&q=80" alt="Massage Therapy" />
+              <div class="carousel-caption">Massage Therapy</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1000&q=80" alt="Wellness Center" />
+              <div class="carousel-caption">Sky Wellness Center</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=1000&q=80" alt="Pool Area" />
+              <div class="carousel-caption">Pool & Relaxation Area</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?auto=format&fit=crop&w=1000&q=80" alt="Relaxation Lounge" />
+              <div class="carousel-caption">Relaxation Lounge</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1000&q=80" alt="Fitness Equipment" />
+              <div class="carousel-caption">Premium Fitness Equipment</div>
+            </div>
+          </div>
+          <button class="carousel-btn prev" onclick="changeSlide(-1)">❮</button>
+          <button class="carousel-btn next" onclick="changeSlide(1)">❯</button>
+          <div class="carousel-indicators">
+            <span class="indicator active" onclick="currentSlide(1)"></span>
+            <span class="indicator" onclick="currentSlide(2)"></span>
+            <span class="indicator" onclick="currentSlide(3)"></span>
+            <span class="indicator" onclick="currentSlide(4)"></span>
+            <span class="indicator" onclick="currentSlide(5)"></span>
+            <span class="indicator" onclick="currentSlide(6)"></span>
+            <span class="indicator" onclick="currentSlide(7)"></span>
+            <span class="indicator" onclick="currentSlide(8)"></span>
+            <span class="indicator" onclick="currentSlide(9)"></span>
+            <span class="indicator" onclick="currentSlide(10)"></span>
           </div>
         </div>
         
@@ -591,6 +730,47 @@
           localStorage.getItem("lynx-theme");
         setTheme(saved === "dark" || !saved);
       })();
+
+      // Carousel functionality
+      let currentSlideIndex = 0;
+      const slides = document.querySelectorAll('.carousel-slide');
+      const indicators = document.querySelectorAll('.indicator');
+      const totalSlides = slides.length;
+
+      function showSlide(index) {
+        // Hide all slides
+        slides.forEach(slide => slide.classList.remove('active'));
+        indicators.forEach(indicator => indicator.classList.remove('active'));
+        
+        // Show current slide
+        slides[index].classList.add('active');
+        indicators[index].classList.add('active');
+      }
+
+      function changeSlide(direction) {
+        currentSlideIndex += direction;
+        
+        if (currentSlideIndex >= totalSlides) {
+          currentSlideIndex = 0;
+        } else if (currentSlideIndex < 0) {
+          currentSlideIndex = totalSlides - 1;
+        }
+        
+        showSlide(currentSlideIndex);
+      }
+
+      function currentSlide(index) {
+        currentSlideIndex = index - 1;
+        showSlide(currentSlideIndex);
+      }
+
+      // Auto-advance carousel every 5 seconds
+      setInterval(function() {
+        changeSlide(1);
+      }, 5000);
+
+      // Initialize carousel
+      showSlide(currentSlideIndex);
     </script>
   </body>
 </html>
