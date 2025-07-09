@@ -108,7 +108,8 @@
         overflow-y: hidden;
         gap: 16px;
         padding: 8px 0;
-        box-shadow: 0 4px 16px rgba(232, 5, 5, 0.1);
+        box-shadow: 0 4px 16px
+          rgba(232, 5, 5, 0.1);
       }
       .carousel-slide {
         position: relative;
@@ -117,7 +118,8 @@
         aspect-ratio: 16/9;
         border-radius: 14px;
         overflow: hidden;
-        box-shadow: 0 2px 12px rgba(239, 132, 132, 0.13);
+        box-shadow: 0 2px 12px
+          rgba(239, 132, 132, 0.13);
         margin: 0 8px;
         background: #23272a; /* matches list background exactly */
         display: flex;
@@ -185,7 +187,8 @@
         justify-content: center;
         font-size: 1.5rem;
         color: #23272a;
-        box-shadow: 0 2px 8px rgba(69, 67, 55, 0.85);
+        box-shadow: 0 2px 8px
+          rgba(69, 67, 55, 0.85);
         cursor: pointer;
         z-index: 10;
         opacity: 0;
@@ -1062,16 +1065,194 @@
               "
             >
               <div class="carousel">
-                <div class="carousel-placeholder">
-                  [Garage access & parking
-                  pictures/videos carousel here]
+                <div class="checkin-gallery">
+                  <div class="gallery-item">
+                    <img
+                      src="public/garage-spot.jpg"
+                      alt="Parking Spot C109 in the underground garage"
+                      class="gallery-image"
+                    />
+                    <div class="gallery-caption">
+                      Parking Spot C109 in the
+                      underground garage
+                    </div>
+                  </div>
+                  <!-- Add more gallery-item divs here for additional images if needed -->
                 </div>
               </div>
-              <p>
-                Detailed instructions for
-                accessing the garage and parking
-                facilities will be shown here.
-              </p>
+              <ol
+                style="
+                  margin-top: 10px;
+                  margin-bottom: 18px;
+                  padding-left: 22px;
+                "
+              >
+                <li>
+                  <b>Enter the Cevahir Complex</b
+                  ><br />
+                  <ul
+                    style="
+                      margin: 4px 0 10px 18px;
+                    "
+                  >
+                    <li>
+                      Use the provided
+                      <b>TAG</b> to open the main
+                      ramp gate and drive into the
+                      Cevahir complex. You will
+                      see four tall towers ahead
+                      of you.
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <b
+                    >Access the Underground
+                    Garage</b
+                  ><br />
+                  <ul
+                    style="
+                      margin: 4px 0 10px 18px;
+                    "
+                  >
+                    <li>
+                      Slightly to your left, you
+                      will see the entrance to the
+                      underground garage. Drive
+                      toward this entrance.
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <b>Go to Level -2</b><br />
+                  <ul
+                    style="
+                      margin: 4px 0 10px 18px;
+                    "
+                  >
+                    <li>
+                      Enter the garage and proceed
+                      to the first underground
+                      level.
+                    </li>
+                    <li>
+                      Continue straight for a few
+                      meters, then descend to
+                      <b>Level -2</b>.
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <b
+                    >Navigate to Parking Spot
+                    C109</b
+                  ><br />
+                  <ul
+                    style="
+                      margin: 4px 0 10px 18px;
+                    "
+                  >
+                    <li>
+                      On Level -2, after passing
+                      the first pillar on your
+                      right, turn right.
+                    </li>
+                    <li>
+                      Drive to the end of this
+                      lane, then turn right again.
+                    </li>
+                    <li>
+                      Immediately after, take the
+                      first left.
+                    </li>
+                    <li>
+                      After about 10–15 meters,
+                      look for the parking spot
+                      directly opposite a glass
+                      door.
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <b>Parking Spot C109</b><br />
+                  <ul
+                    style="
+                      margin: 4px 0 10px 18px;
+                    "
+                  >
+                    <li>
+                      The parking spot is clearly
+                      marked for
+                      <b>Apartment C109</b>,
+                      located directly in front of
+                      the glass door.
+                    </li>
+                  </ul>
+                </li>
+              </ol>
+              <h4
+                style="
+                  color: var(--lynx-yellow);
+                  margin-top: 20px;
+                  margin-bottom: 10px;
+                "
+              >
+                🎥 Video Guide:
+              </h4>
+              <div
+                style="
+                  position: relative;
+                  width: 100%;
+                  max-width: 420px;
+                  margin: 0 auto 18px auto;
+                "
+              >
+                <img
+                  src="public/garage-spot.jpg"
+                  alt="Garage access and parking video preview"
+                  id="garage-video-preview"
+                  style="
+                    width: 100%;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 8px #454337;
+                    cursor: pointer;
+                    display: block;
+                  "
+                  onclick="openGarageVideoModalFromPreview()"
+                />
+                <div
+                  id="garage-video-play-overlay"
+                  style="
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(
+                      -50%,
+                      -50%
+                    );
+                    background: rgba(
+                      0,
+                      0,
+                      0,
+                      0.55
+                    );
+                    color: #ffe066;
+                    padding: 18px 22px;
+                    border-radius: 50%;
+                    font-size: 2.8rem;
+                    pointer-events: none;
+                    opacity: 0.95;
+                    z-index: 2;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    box-shadow: 0 2px 8px
+                      rgba(0, 0, 0, 0.18);
+                  "
+                >
+                  ▶️
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1870,6 +2051,33 @@
         modalVideo.load(); // Reload the video with new source
         videoModal.style.display = "block";
         document.body.style.overflow = "hidden"; // Prevent background scrolling
+      }
+
+      // Overlay play icon logic for garage video
+      const garagePlayOverlay =
+        document.getElementById(
+          "garage-video-play-overlay"
+        );
+
+      function showGaragePlayOverlay() {
+        garagePlayOverlay.style.display = "flex";
+      }
+      function hideGaragePlayOverlay() {
+        garagePlayOverlay.style.display = "none";
+      }
+
+      // Show overlay initially
+      showGaragePlayOverlay();
+
+      // Open video modal from preview image
+      function openGarageVideoModalFromPreview() {
+        const videoSrc =
+          "public/video/garage-access-parking-Info.mp4";
+        modalVideo.querySelector("source").src =
+          videoSrc;
+        modalVideo.load();
+        videoModal.style.display = "block";
+        document.body.style.overflow = "hidden";
       }
     </script>
   </body>
