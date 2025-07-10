@@ -864,6 +864,8 @@
               autoplay
               muted
               loop
+              playsinline
+              preload="auto"
               style="
                 object-fit: contain;
                 border-radius: 14px;
@@ -1074,22 +1076,47 @@
       const wellnessVideo =
         document.getElementById("wellness-video");
 
-      // Ensure video autoplays when page loads
+      // Enhanced video autoplay for mobile devices
+      function attemptVideoPlay() {
+        if (wellnessVideo) {
+          wellnessVideo
+            .play()
+            .then(function() {
+              console.log("Video autoplay successful");
+            })
+            .catch(function (error) {
+              console.log(
+                "Video autoplay failed, trying user interaction:",
+                error
+              );
+              // For mobile devices, try to play on user interaction
+              document.addEventListener("touchstart", function() {
+                wellnessVideo.play().catch(function(err) {
+                  console.log("Touch play failed:", err);
+                });
+              }, { once: true });
+              
+              document.addEventListener("click", function() {
+                wellnessVideo.play().catch(function(err) {
+                  console.log("Click play failed:", err);
+                });
+              }, { once: true });
+            });
+        }
+      }
+
+      // Try autoplay when DOM is loaded
       document.addEventListener(
         "DOMContentLoaded",
-        function () {
-          if (wellnessVideo) {
-            wellnessVideo
-              .play()
-              .catch(function (error) {
-                console.log(
-                  "Video autoplay failed:",
-                  error
-                );
-              });
-          }
-        }
+        attemptVideoPlay
       );
+
+      // Also try when page is fully loaded (including video metadata)
+      window.addEventListener("load", function() {
+        if (wellnessVideo && wellnessVideo.paused) {
+          attemptVideoPlay();
+        }
+      });
     </script>
   </body>
 </html>
