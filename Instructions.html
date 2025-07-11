@@ -15,6 +15,22 @@
       href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap"
       rel="stylesheet"
     />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self';"
+    />
+    <meta
+      http-equiv="X-Content-Type-Options"
+      content="nosniff"
+    />
+    <meta
+      http-equiv="X-Frame-Options"
+      content="DENY"
+    />
+    <meta
+      http-equiv="X-XSS-Protection"
+      content="1; mode=block"
+    />
     <style>
       :root {
         --lynx-blue: #0078d7;
@@ -1126,7 +1142,7 @@
       <div class="nav-left">
         <button
           class="nav-home"
-          onclick="location.href='home.html'"
+          data-action="home"
         >
           Home
         </button>
@@ -1172,7 +1188,8 @@
           <div class="instruction-title">
             <span
               class="instruction-emoji"
-              onclick="copyInstructionLink('garage-access')"
+              data-action="copy-instruction"
+              data-instruction-id="garage-access"
               title="Copy link to this section"
               >🚗</span
             >
@@ -1184,7 +1201,7 @@
         <div class="dropdown-container">
           <button
             class="dropdown-button"
-            onclick="toggleDropdown(this)"
+            data-action="toggle-dropdown"
           >
             <span class="dropdown-text"
               >Instructions</span
@@ -1423,7 +1440,8 @@
                     display: block;
                     box-sizing: border-box;
                   "
-                  onclick="openGarageVideoModalFromPreview()"
+                  data-action="open-video-modal"
+                  data-video-type="garage"
                 />
                 <div
                   id="garage-video-play-overlay"
@@ -1471,7 +1489,8 @@
           <div class="instruction-title">
             <span
               class="instruction-emoji"
-              onclick="copyInstructionLink('trash-disposal')"
+              data-action="copy-instruction"
+              data-instruction-id="trash-disposal"
               title="Copy link to this section"
               >🗑️</span
             >
@@ -1483,7 +1502,7 @@
         <div class="dropdown-container">
           <button
             class="dropdown-button"
-            onclick="toggleDropdown(this)"
+            data-action="toggle-dropdown"
           >
             <span class="dropdown-text"
               >Instructions</span
@@ -1852,7 +1871,8 @@
           <div class="instruction-title">
             <span
               class="instruction-emoji"
-              onclick="copyInstructionLink('sofa-bed')"
+              data-action="copy-instruction"
+              data-instruction-id="sofa-bed"
               title="Copy link to this section"
               >🛏️</span
             >
@@ -1902,7 +1922,8 @@
           <div class="instruction-title">
             <span
               class="instruction-emoji"
-              onclick="copyInstructionLink('boiler-operation')"
+              data-action="copy-instruction"
+              data-instruction-id="boiler-operation"
               title="Copy link to this section"
               >💧</span
             >
@@ -2019,6 +2040,12 @@
         </video>
       </div>
     </div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+      integrity="sha384-6arE5Wdl66iRS0LlwM651c01qmPvvrLpzjAU6YewsG32IOzBSSMSmc5QwDFi1C5k"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/event-handlers.js"></script>
     <script>
       // Theme toggle logic
       const themeToggle = document.getElementById(
