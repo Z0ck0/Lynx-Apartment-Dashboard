@@ -1060,11 +1060,11 @@
 
       .instruction-title {
         font-family: "Poppins", Arial, sans-serif;
-        font-size: 1.2rem;
-        font-weight: 600;
+        font-size: 1rem;
+        font-weight: 500;
         display: flex;
         align-items: center;
-        gap: 2px;
+        gap: 1px;
       }
 
       .instruction-title-text {
@@ -1082,9 +1082,18 @@
       }
 
       @keyframes highlight {
-        0% { box-shadow: 0 0 0 0 rgba(255, 224, 102, 0.4); }
-        50% { box-shadow: 0 0 20px 10px rgba(255, 224, 102, 0.4); }
-        100% { box-shadow: 0 0 0 0 rgba(255, 224, 102, 0.4); }
+        0% {
+          box-shadow: 0 0 0 0
+            rgba(255, 224, 102, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 20px 10px
+            rgba(255, 224, 102, 0.4);
+        }
+        100% {
+          box-shadow: 0 0 0 0
+            rgba(255, 224, 102, 0.4);
+        }
       }
       .carousel-slider {
         width: 100%;
@@ -1155,11 +1164,21 @@
       </div>
     </section>
     <div class="main-content">
-      <div class="card instruction-card" id="garage-access">
+      <div
+        class="card instruction-card"
+        id="garage-access"
+      >
         <div class="instruction-header">
           <div class="instruction-title">
-            <span class="instruction-emoji" onclick="copyInstructionLink('garage-access')" title="Copy link to this section">🚗</span>
-            <span class="instruction-title-text">Garage Access & Parking Info!</span>
+            <span
+              class="instruction-emoji"
+              onclick="copyInstructionLink('garage-access')"
+              title="Copy link to this section"
+              >🚗</span
+            >
+            <span class="instruction-title-text"
+              >Garage Access & Parking Info!</span
+            >
           </div>
         </div>
         <div class="dropdown-container">
@@ -1444,11 +1463,21 @@
         </div>
       </div>
 
-      <div class="card instruction-card" id="trash-disposal">
+      <div
+        class="card instruction-card"
+        id="trash-disposal"
+      >
         <div class="instruction-header">
           <div class="instruction-title">
-            <span class="instruction-emoji" onclick="copyInstructionLink('trash-disposal')" title="Copy link to this section">🗑️</span>
-            <span class="instruction-title-text">Where to Throw the Trash</span>
+            <span
+              class="instruction-emoji"
+              onclick="copyInstructionLink('trash-disposal')"
+              title="Copy link to this section"
+              >🗑️</span
+            >
+            <span class="instruction-title-text"
+              >Where to Throw the Trash</span
+            >
           </div>
         </div>
         <div class="dropdown-container">
@@ -1765,11 +1794,21 @@
         </div>
       </div>
 
-      <div class="card instruction-card" id="tv-minibar">
+      <div
+        class="card instruction-card"
+        id="tv-minibar"
+      >
         <div class="instruction-header">
           <div class="instruction-title">
-            <span class="instruction-emoji" onclick="copyInstructionLink('tv-minibar')" title="Copy link to this section">📺</span>
-            <span class="instruction-title-text">TV & Mini-Bar Mood Lighting</span>
+            <span
+              class="instruction-emoji"
+              onclick="copyInstructionLink('tv-minibar')"
+              title="Copy link to this section"
+              >📺</span
+            >
+            <span class="instruction-title-text"
+              >TV & Mini-Bar Mood Lighting</span
+            >
           </div>
         </div>
         <div class="dropdown-container">
@@ -1805,11 +1844,21 @@
         </div>
       </div>
 
-      <div class="card instruction-card" id="sofa-bed">
+      <div
+        class="card instruction-card"
+        id="sofa-bed"
+      >
         <div class="instruction-header">
           <div class="instruction-title">
-            <span class="instruction-emoji" onclick="copyInstructionLink('sofa-bed')" title="Copy link to this section">🛏️</span>
-            <span class="instruction-title-text">Sofa Bed Assembly</span>
+            <span
+              class="instruction-emoji"
+              onclick="copyInstructionLink('sofa-bed')"
+              title="Copy link to this section"
+              >🛏️</span
+            >
+            <span class="instruction-title-text"
+              >Sofa Bed Assembly</span
+            >
           </div>
         </div>
         <div class="dropdown-container">
@@ -1845,11 +1894,22 @@
         </div>
       </div>
 
-      <div class="card instruction-card" id="boiler-operation">
+      <div
+        class="card instruction-card"
+        id="boiler-operation"
+      >
         <div class="instruction-header">
           <div class="instruction-title">
-            <span class="instruction-emoji" onclick="copyInstructionLink('boiler-operation')" title="Copy link to this section">💧</span>
-            <span class="instruction-title-text">Turning On/Off the Apartment Boiler</span>
+            <span
+              class="instruction-emoji"
+              onclick="copyInstructionLink('boiler-operation')"
+              title="Copy link to this section"
+              >💧</span
+            >
+            <span class="instruction-title-text"
+              >Turning On/Off the Apartment
+              Boiler</span
+            >
           </div>
         </div>
         <div class="dropdown-container">
@@ -2243,22 +2303,24 @@
 
       // Toast notification functionality
       function showToast(message) {
-        const existingToast = document.querySelector('.toast');
+        const existingToast =
+          document.querySelector(".toast");
         if (existingToast) {
           existingToast.remove();
         }
-        
-        const toast = document.createElement('div');
-        toast.className = 'toast';
+
+        const toast =
+          document.createElement("div");
+        toast.className = "toast";
         toast.textContent = message;
         document.body.appendChild(toast);
-        
+
         setTimeout(() => {
-          toast.classList.add('show');
+          toast.classList.add("show");
         }, 100);
-        
+
         setTimeout(() => {
-          toast.classList.remove('show');
+          toast.classList.remove("show");
           setTimeout(() => {
             toast.remove();
           }, 300);
@@ -2266,63 +2328,104 @@
       }
 
       // Copy instruction link functionality
-      function copyInstructionLink(instructionId) {
-        const baseUrl = window.location.origin + window.location.pathname;
+      function copyInstructionLink(
+        instructionId
+      ) {
+        const baseUrl =
+          window.location.origin +
+          window.location.pathname;
         const shareableUrl = `${baseUrl}#${instructionId}`;
-        
+
         // Copy to clipboard
-        navigator.clipboard.writeText(shareableUrl).then(function() {
-          // Show success feedback
-          showToast('Link copied to clipboard!');
-        }).catch(function(err) {
-          // Fallback for older browsers
-          const textArea = document.createElement('textarea');
-          textArea.value = shareableUrl;
-          document.body.appendChild(textArea);
-          textArea.select();
-          document.execCommand('copy');
-          document.body.removeChild(textArea);
-          
-          // Show success feedback
-          showToast('Link copied to clipboard!');
-        });
+        navigator.clipboard
+          .writeText(shareableUrl)
+          .then(function () {
+            // Show success feedback
+            showToast(
+              "Link copied to clipboard!"
+            );
+          })
+          .catch(function (err) {
+            // Fallback for older browsers
+            const textArea =
+              document.createElement("textarea");
+            textArea.value = shareableUrl;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textArea);
+
+            // Show success feedback
+            showToast(
+              "Link copied to clipboard!"
+            );
+          });
       }
 
       // Handle URL fragment navigation
       function handleUrlFragment() {
-        const hash = window.location.hash.substring(1);
+        const hash =
+          window.location.hash.substring(1);
         if (hash) {
-          const targetCard = document.getElementById(hash);
+          const targetCard =
+            document.getElementById(hash);
           if (targetCard) {
             // Scroll to the target card
-            targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            
+            targetCard.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+
             // Add highlight animation
-            targetCard.classList.add('highlight');
+            targetCard.classList.add("highlight");
             setTimeout(() => {
-              targetCard.classList.remove('highlight');
+              targetCard.classList.remove(
+                "highlight"
+              );
             }, 2000);
-            
+
             // Auto-expand the dropdown if it's collapsed
-            const dropdownButton = targetCard.querySelector('.dropdown-button');
-            const dropdownContent = targetCard.querySelector('.dropdown-content');
-            if (dropdownButton && dropdownContent && !dropdownButton.classList.contains('active')) {
-              dropdownButton.classList.add('active');
-              dropdownContent.classList.add('active');
+            const dropdownButton =
+              targetCard.querySelector(
+                ".dropdown-button"
+              );
+            const dropdownContent =
+              targetCard.querySelector(
+                ".dropdown-content"
+              );
+            if (
+              dropdownButton &&
+              dropdownContent &&
+              !dropdownButton.classList.contains(
+                "active"
+              )
+            ) {
+              dropdownButton.classList.add(
+                "active"
+              );
+              dropdownContent.classList.add(
+                "active"
+              );
             }
           }
         }
       }
 
       // Initialize URL fragment handling
-      document.addEventListener('DOMContentLoaded', function() {
-        handleUrlFragment();
-      });
+      document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+          handleUrlFragment();
+        }
+      );
 
       // Handle browser back/forward navigation
-      window.addEventListener('hashchange', function() {
-        handleUrlFragment();
-      });
+      window.addEventListener(
+        "hashchange",
+        function () {
+          handleUrlFragment();
+        }
+      );
 
       // Overlay play icon logic for trash video
       const playOverlay = document.getElementById(
