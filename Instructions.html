@@ -1880,9 +1880,14 @@
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-title">
-          💧 Turning On/Off the Apartment Boiler
+      <div class="card instruction-card" id="boiler-operation">
+        <div class="instruction-header">
+          <div class="instruction-title">
+            💧 Turning On/Off the Apartment Boiler
+          </div>
+          <button class="copy-button" onclick="copyInstructionLink('boiler-operation')">
+            📋 Copy Link
+          </button>
         </div>
         <div class="dropdown-container">
           <button
@@ -2272,6 +2277,83 @@
           dropdownContent.classList.add("active");
         }
       }
+
+      // Copy instruction link functionality
+      function copyInstructionLink(instructionId) {
+        const baseUrl = window.location.origin + window.location.pathname;
+        const shareableUrl = `${baseUrl}#${instructionId}`;
+        
+        // Copy to clipboard
+        navigator.clipboard.writeText(shareableUrl).then(function() {
+          // Show success feedback
+          const button = document.querySelector(`#${instructionId} .copy-button`);
+          const originalText = button.innerHTML;
+          button.innerHTML = '✓ Copied!';
+          button.classList.add('copied');
+          
+          // Reset button after 2 seconds
+          setTimeout(function() {
+            button.innerHTML = originalText;
+            button.classList.remove('copied');
+          }, 2000);
+        }).catch(function(err) {
+          // Fallback for older browsers
+          const textArea = document.createElement('textarea');
+          textArea.value = shareableUrl;
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textArea);
+          
+          // Show success feedback
+          const button = document.querySelector(`#${instructionId} .copy-button`);
+          const originalText = button.innerHTML;
+          button.innerHTML = '✓ Copied!';
+          button.classList.add('copied');
+          
+          // Reset button after 2 seconds
+          setTimeout(function() {
+            button.innerHTML = originalText;
+            button.classList.remove('copied');
+          }, 2000);
+        });
+      }
+
+      // Handle URL fragment navigation
+      function handleUrlFragment() {
+        const hash = window.location.hash.substring(1);
+        if (hash) {
+          const targetCard = document.getElementById(hash);
+          if (targetCard) {
+            // Scroll to the target card
+            targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            // Add highlight animation
+            targetCard.classList.add('highlight');
+            setTimeout(() => {
+              targetCard.classList.remove('highlight');
+            }, 2000);
+            
+            // Auto-expand the dropdown if it's collapsed
+            const dropdownButton = targetCard.querySelector('.dropdown-button');
+            const dropdownContent = targetCard.querySelector('.dropdown-content');
+            if (dropdownButton && dropdownContent && !dropdownButton.classList.contains('active')) {
+              dropdownButton.classList.add('active');
+              dropdownContent.classList.add('active');
+            }
+          }
+        }
+      }
+
+      // Initialize URL fragment handling
+      document.addEventListener('DOMContentLoaded', function() {
+        handleUrlFragment();
+      });
+
+      // Handle browser back/forward navigation
+      window.addEventListener('hashchange', function() {
+        handleUrlFragment();
+      });
 
       // Overlay play icon logic for trash video
       const playOverlay = document.getElementById(
