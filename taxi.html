@@ -1580,6 +1580,23 @@
 (function() {
   if (sessionStorage.getItem('taxiNoticeConfirmed')) {
     document.getElementById('important-modal').style.display = 'none';
+    // Handle URL fragment navigation after modal is hidden
+    setTimeout(() => {
+      const hash = window.location.hash.substring(1);
+      if (hash) {
+        const targetCard = document.getElementById(hash);
+        if (targetCard) {
+          targetCard.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+          targetCard.classList.add("highlight");
+          setTimeout(() => {
+            targetCard.classList.remove("highlight");
+          }, 2000);
+        }
+      }
+    }, 100);
     return;
   }
   document.body.style.overflow = 'hidden';
@@ -1593,6 +1610,24 @@
     modal.style.display = 'none';
     sessionStorage.setItem('taxiNoticeConfirmed', '1');
     document.body.style.overflow = '';
+    
+    // Handle URL fragment navigation after modal is closed
+    setTimeout(() => {
+      const hash = window.location.hash.substring(1);
+      if (hash) {
+        const targetCard = document.getElementById(hash);
+        if (targetCard) {
+          targetCard.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+          targetCard.classList.add("highlight");
+          setTimeout(() => {
+            targetCard.classList.remove("highlight");
+          }, 2000);
+        }
+      }
+    }, 100);
   });
   modal.addEventListener('keydown', function(e) {
     if (e.key === 'Tab') {
