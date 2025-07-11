@@ -873,9 +873,50 @@
         color: var(--lynx-yellow);
       }
       
-      body.dark-mode .taxi-icon:hover {
+      body.dark-mode       .taxi-icon:hover {
         background: var(--lynx-yellow);
         color: var(--lynx-dark);
+      }
+      
+      /* Clickable emoji styles */
+      .clickable-emoji {
+        cursor: pointer;
+        transition: transform 0.2s ease, background-color 0.2s ease;
+        border-radius: 8px;
+        padding: 4px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .clickable-emoji:hover {
+        transform: scale(1.1);
+        background-color: rgba(255, 224, 102, 0.2);
+      }
+      
+      .clickable-emoji:active {
+        transform: scale(0.95);
+        background-color: rgba(255, 224, 102, 0.4);
+      }
+      
+      /* Highlight animation for URL fragment navigation */
+      .highlight {
+        animation: highlight-pulse 2s ease-in-out;
+      }
+      
+      @keyframes highlight-pulse {
+        0% {
+          background-color: rgba(255, 224, 102, 0.3);
+          transform: scale(1);
+        }
+        50% {
+          background-color: rgba(255, 224, 102, 0.6);
+          transform: scale(1.02);
+        }
+        100% {
+          background-color: transparent;
+          transform: scale(1);
+        }
       }
       
       body.dark-mode .disclaimer-section {
@@ -1048,7 +1089,7 @@
       </div>
       <div class="card" id="taxi-card">
         <div class="card-title">
-          <span class="icon">🚖</span>
+          <span class="icon clickable-emoji" onclick="copyInstructionLink('taxi-card')" title="Copy link to this section">🚖</span>
           <span id="taxi-title"
             >Available Taxi Providers</span
           >
@@ -1653,6 +1694,63 @@
           }, 500);
         }, 1000);
       }
+      
+      // Copy instruction link functionality
+      function copyInstructionLink(sectionId) {
+        const baseUrl = window.location.origin + window.location.pathname;
+        const shareableUrl = `${baseUrl}#${sectionId}`;
+        
+        // Copy to clipboard
+        navigator.clipboard
+          .writeText(shareableUrl)
+          .then(function () {
+            // Show success feedback
+            showToast("Link to Available Taxi Providers copied to clipboard!");
+          })
+          .catch(function (err) {
+            // Fallback for older browsers
+            const textArea = document.createElement("textarea");
+            textArea.value = shareableUrl;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textArea);
+            
+            // Show success feedback
+            showToast("Link to Available Taxi Providers copied to clipboard!");
+          });
+      }
+      
+      // Handle URL fragment navigation
+      function handleUrlFragment() {
+        const hash = window.location.hash.substring(1);
+        if (hash) {
+          const targetCard = document.getElementById(hash);
+          if (targetCard) {
+            // Scroll to the target card
+            targetCard.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+            
+            // Add highlight animation
+            targetCard.classList.add("highlight");
+            setTimeout(() => {
+              targetCard.classList.remove("highlight");
+            }, 2000);
+          }
+        }
+      }
+      
+      // Initialize URL fragment handling
+      document.addEventListener("DOMContentLoaded", function () {
+        handleUrlFragment();
+      });
+      
+      // Handle browser back/forward navigation
+      window.addEventListener("hashchange", function () {
+        handleUrlFragment();
+      });
     </script>
     <script src="js/event-handlers.js"></script>
   </body>
