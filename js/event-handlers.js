@@ -15,12 +15,44 @@ document.addEventListener(
       );
     });
 
-    // Copy address functionality
+    // Copy address functionality - use existing function if available
     const copyButtons = document.querySelectorAll(
       '[data-action="copy-address"]'
     );
     copyButtons.forEach(btn => {
-      btn.addEventListener("click", copyAddress);
+      btn.addEventListener("click", function () {
+        // Check if copyAddress function exists in the current page
+        if (typeof copyAddress === "function") {
+          copyAddress();
+        } else {
+          // Fallback implementation
+          const addressText =
+            document.getElementById(
+              "pickup-address"
+            )?.textContent ||
+            "Boulevard Serbia 31, Cevahir Sky City, Tower C, Floor 11, Apartment 109";
+          navigator.clipboard
+            .writeText(addressText)
+            .then(() => {
+              // Show success message
+              const originalText =
+                this.textContent;
+              this.textContent = "Copied!";
+              this.style.backgroundColor =
+                "#4CAF50";
+              setTimeout(() => {
+                this.textContent = originalText;
+                this.style.backgroundColor = "";
+              }, 2000);
+            })
+            .catch(err => {
+              console.error(
+                "Failed to copy: ",
+                err
+              );
+            });
+        }
+      });
     });
 
     // Copy instruction link functionality
@@ -33,7 +65,34 @@ document.addEventListener(
         const instructionId = this.getAttribute(
           "data-instruction-id"
         );
-        copyInstructionLink(instructionId);
+        if (
+          typeof copyInstructionLink ===
+          "function"
+        ) {
+          copyInstructionLink(instructionId);
+        } else {
+          // Fallback implementation
+          const url =
+            window.location.href.split("#")[0] +
+            "#" +
+            instructionId;
+          navigator.clipboard
+            .writeText(url)
+            .then(() => {
+              const originalText =
+                this.textContent;
+              this.textContent = "Link Copied!";
+              setTimeout(() => {
+                this.textContent = originalText;
+              }, 2000);
+            })
+            .catch(err => {
+              console.error(
+                "Failed to copy link: ",
+                err
+              );
+            });
+        }
       });
     });
 
@@ -44,7 +103,16 @@ document.addEventListener(
       );
     dropdownButtons.forEach(btn => {
       btn.addEventListener("click", function () {
-        toggleDropdown(this);
+        if (
+          typeof toggleDropdown === "function"
+        ) {
+          toggleDropdown(this);
+        } else {
+          // Fallback implementation
+          const content = this.nextElementSibling;
+          this.classList.toggle("active");
+          content.classList.toggle("active");
+        }
       });
     });
 
@@ -58,7 +126,13 @@ document.addEventListener(
         const modalIndex = this.getAttribute(
           "data-modal-index"
         );
-        openModal(parseInt(modalIndex));
+        if (typeof openModal === "function") {
+          openModal(parseInt(modalIndex));
+        } else {
+          console.log(
+            "openModal function not found"
+          );
+        }
       });
     });
 
@@ -67,7 +141,15 @@ document.addEventListener(
         '[data-action="close-modal"]'
       );
     modalCloseButtons.forEach(btn => {
-      btn.addEventListener("click", closeModal);
+      btn.addEventListener("click", function () {
+        if (typeof closeModal === "function") {
+          closeModal();
+        } else {
+          console.log(
+            "closeModal function not found"
+          );
+        }
+      });
     });
 
     const modalPrevButtons =
@@ -75,7 +157,15 @@ document.addEventListener(
         '[data-action="prev-modal"]'
       );
     modalPrevButtons.forEach(btn => {
-      btn.addEventListener("click", prevModalImg);
+      btn.addEventListener("click", function () {
+        if (typeof prevModalImg === "function") {
+          prevModalImg();
+        } else {
+          console.log(
+            "prevModalImg function not found"
+          );
+        }
+      });
     });
 
     const modalNextButtons =
@@ -83,7 +173,15 @@ document.addEventListener(
         '[data-action="next-modal"]'
       );
     modalNextButtons.forEach(btn => {
-      btn.addEventListener("click", nextModalImg);
+      btn.addEventListener("click", function () {
+        if (typeof nextModalImg === "function") {
+          nextModalImg();
+        } else {
+          console.log(
+            "nextModalImg function not found"
+          );
+        }
+      });
     });
 
     // Video modal functionality
@@ -96,10 +194,21 @@ document.addEventListener(
         const videoType = this.getAttribute(
           "data-video-type"
         );
-        if (videoType === "garage") {
+        if (
+          videoType === "garage" &&
+          typeof openGarageVideoModalFromPreview ===
+            "function"
+        ) {
           openGarageVideoModalFromPreview();
-        } else {
+        } else if (
+          typeof openVideoModalFromPreview ===
+          "function"
+        ) {
           openVideoModalFromPreview();
+        } else {
+          console.log(
+            "Video modal function not found"
+          );
         }
       });
     });
@@ -127,7 +236,13 @@ document.addEventListener(
         const status = this.getAttribute(
           "data-status"
         );
-        selectStatus(this, status);
+        if (typeof selectStatus === "function") {
+          selectStatus(this, status);
+        } else {
+          console.log(
+            "selectStatus function not found"
+          );
+        }
       });
     });
 
@@ -140,7 +255,15 @@ document.addEventListener(
         const status = this.getAttribute(
           "data-status"
         );
-        selectEditStatus(this, status);
+        if (
+          typeof selectEditStatus === "function"
+        ) {
+          selectEditStatus(this, status);
+        } else {
+          console.log(
+            "selectEditStatus function not found"
+          );
+        }
       });
     });
 
@@ -155,7 +278,13 @@ document.addEventListener(
         const pageType = this.getAttribute(
           "data-page-type"
         );
-        editEntry(parseInt(index), pageType);
+        if (typeof editEntry === "function") {
+          editEntry(parseInt(index), pageType);
+        } else {
+          console.log(
+            "editEntry function not found"
+          );
+        }
       });
     });
 
@@ -170,7 +299,13 @@ document.addEventListener(
         const pageType = this.getAttribute(
           "data-page-type"
         );
-        deleteEntry(parseInt(index), pageType);
+        if (typeof deleteEntry === "function") {
+          deleteEntry(parseInt(index), pageType);
+        } else {
+          console.log(
+            "deleteEntry function not found"
+          );
+        }
       });
     });
 
@@ -183,7 +318,15 @@ document.addEventListener(
       btn.addEventListener("click", function () {
         const item =
           this.getAttribute("data-item");
-        addToShoppingList(item);
+        if (
+          typeof addToShoppingList === "function"
+        ) {
+          addToShoppingList(item);
+        } else {
+          console.log(
+            "addToShoppingList function not found"
+          );
+        }
       });
     });
 
@@ -192,10 +335,17 @@ document.addEventListener(
         '[data-action="add-shopping-item"]'
       );
     addShoppingItemButtons.forEach(btn => {
-      btn.addEventListener(
-        "click",
-        addShoppingItem
-      );
+      btn.addEventListener("click", function () {
+        if (
+          typeof addShoppingItem === "function"
+        ) {
+          addShoppingItem();
+        } else {
+          console.log(
+            "addShoppingItem function not found"
+          );
+        }
+      });
     });
 
     const saveChecklistButtons =
@@ -203,10 +353,15 @@ document.addEventListener(
         '[data-action="save-checklist"]'
       );
     saveChecklistButtons.forEach(btn => {
-      btn.addEventListener(
-        "click",
-        saveChecklist
-      );
+      btn.addEventListener("click", function () {
+        if (typeof saveChecklist === "function") {
+          saveChecklist();
+        } else {
+          console.log(
+            "saveChecklist function not found"
+          );
+        }
+      });
     });
 
     const toggleAllButtons =
@@ -218,7 +373,15 @@ document.addEventListener(
         const expand =
           this.getAttribute("data-expand") ===
           "true";
-        toggleAllSections(expand);
+        if (
+          typeof toggleAllSections === "function"
+        ) {
+          toggleAllSections(expand);
+        } else {
+          console.log(
+            "toggleAllSections function not found"
+          );
+        }
       });
     });
 
@@ -230,25 +393,33 @@ document.addEventListener(
       themeToggle.addEventListener(
         "click",
         function () {
-          setTheme(
-            !document.body.classList.contains(
-              "dark-mode"
-            )
-          );
+          if (typeof setTheme === "function") {
+            setTheme(
+              !document.body.classList.contains(
+                "dark-mode"
+              )
+            );
+          } else {
+            console.log(
+              "setTheme function not found"
+            );
+          }
         }
       );
     }
 
-    // Initialize theme
-    (function () {
-      const saved =
-        localStorage.getItem("lynx-theme");
-      setTheme(saved === "dark" || !saved);
-    })();
+    // Initialize theme if setTheme function exists
+    if (typeof setTheme === "function") {
+      (function () {
+        const saved =
+          localStorage.getItem("lynx-theme");
+        setTheme(saved === "dark" || !saved);
+      })();
+    }
   }
 );
 
-// Theme management function
+// Theme management function (fallback)
 function setTheme(dark) {
   const themeToggle = document.getElementById(
     "theme-toggle"
@@ -266,30 +437,60 @@ function setTheme(dark) {
   }
 }
 
-// Copy address function
+// Copy address function (fallback)
 function copyAddress() {
-  const addressText = document.getElementById(
-    "pickup-address"
-  ).textContent;
+  const addressText =
+    document.getElementById("pickup-address")
+      ?.textContent ||
+    "Boulevard Serbia 31, Cevahir Sky City, Tower C, Floor 11, Apartment 109";
   navigator.clipboard
     .writeText(addressText)
     .then(() => {
-      // Show success message
-      const button = event.target;
-      const originalText = button.textContent;
-      button.textContent = "Copied!";
-      button.style.backgroundColor = "#4CAF50";
-      setTimeout(() => {
-        button.textContent = originalText;
-        button.style.backgroundColor = "";
-      }, 2000);
+      // Show success message using existing showToast if available
+      if (typeof showToast === "function") {
+        showToast("Address copied!");
+      } else {
+        // Fallback toast implementation
+        const toast =
+          document.createElement("div");
+        toast.className = "toast";
+        toast.textContent = "Address copied!";
+        toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #4CAF50;
+                color: white;
+                padding: 12px 24px;
+                border-radius: 4px;
+                z-index: 10000;
+                font-family: Arial, sans-serif;
+                font-size: 14px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+            `;
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+          toast.style.transform = "translateX(0)";
+        }, 100);
+
+        setTimeout(() => {
+          toast.style.transform =
+            "translateX(100%)";
+          setTimeout(() => {
+            toast.remove();
+          }, 300);
+        }, 2000);
+      }
     })
     .catch(err => {
       console.error("Failed to copy: ", err);
     });
 }
 
-// Copy instruction link function
+// Copy instruction link function (fallback)
 function copyInstructionLink(instructionId) {
   const url =
     window.location.href.split("#")[0] +
@@ -298,28 +499,25 @@ function copyInstructionLink(instructionId) {
   navigator.clipboard
     .writeText(url)
     .then(() => {
-      // Show success message
-      const button = event.target;
-      const originalText = button.textContent;
-      button.textContent = "Link Copied!";
-      setTimeout(() => {
-        button.textContent = originalText;
-      }, 2000);
+      if (typeof showToast === "function") {
+        showToast("Link copied!");
+      } else {
+        console.log("Link copied to clipboard");
+      }
     })
     .catch(err => {
       console.error("Failed to copy link: ", err);
     });
 }
 
-// Dropdown toggle function
+// Dropdown toggle function (fallback)
 function toggleDropdown(button) {
   const content = button.nextElementSibling;
   button.classList.toggle("active");
   content.classList.toggle("active");
 }
 
-// Modal functions (these should be defined in the specific HTML files that use them)
-// Placeholder functions - these will be overridden by the actual implementations
+// Modal functions (fallbacks)
 function openModal(index) {
   console.log(
     "openModal called with index:",
@@ -349,7 +547,7 @@ function openVideoModalFromPreview() {
   console.log("openVideoModalFromPreview called");
 }
 
-// Admin functions (placeholders)
+// Admin functions (fallbacks)
 function selectStatus(element, status) {
   console.log(
     "selectStatus called with:",
@@ -380,7 +578,7 @@ function deleteEntry(index, pageType) {
   );
 }
 
-// Shopping list functions (placeholders)
+// Shopping list functions (fallbacks)
 function addToShoppingList(item) {
   console.log(
     "addToShoppingList called with:",

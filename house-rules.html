@@ -15,6 +15,22 @@
       href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap"
       rel="stylesheet"
     />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self';"
+    />
+    <meta
+      http-equiv="X-Content-Type-Options"
+      content="nosniff"
+    />
+    <meta
+      http-equiv="X-Frame-Options"
+      content="DENY"
+    />
+    <meta
+      http-equiv="X-XSS-Protection"
+      content="1; mode=block"
+    />
     <style>
       :root {
         --lynx-blue: #0078d7;
@@ -749,7 +765,7 @@
       <div class="nav-left">
         <button
           class="nav-home"
-          onclick="location.href='home.html'"
+          data-action="home"
           aria-label="Go to home page"
         >
           Home
@@ -1111,5 +1127,6 @@
         }
       );
     </script>
+    <script src="js/event-handlers.js"></script>
   </body>
 </html>

@@ -15,6 +15,22 @@
       href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap"
       rel="stylesheet"
     />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self';"
+    />
+    <meta
+      http-equiv="X-Content-Type-Options"
+      content="nosniff"
+    />
+    <meta
+      http-equiv="X-Frame-Options"
+      content="DENY"
+    />
+    <meta
+      http-equiv="X-XSS-Protection"
+      content="1; mode=block"
+    />
     <style>
       :root {
         --lynx-blue: #0078d7;
@@ -304,23 +320,28 @@
       }
       .toast {
         position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: #28a745;
+        top: 20px;
+        right: 20px;
+        background: rgba(34, 197, 94, 0.95);
         color: white;
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-size: 14px;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.5s,
-          visibility 0.5s ease-in-out;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         z-index: 9999;
+        transform: translateX(100%);
+        opacity: 0;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
       }
       .toast.show {
+        transform: translateX(0);
         opacity: 1;
-        visibility: visible;
+      }
+      body.dark-mode .toast {
+        background: rgba(34, 197, 94, 0.9);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
       }
       .hero-section {
         width: 100%;
@@ -831,7 +852,7 @@
       <div class="nav-left">
         <button
           class="nav-home"
-          onclick="location.href='home.html'"
+          data-action="home"
         >
           Home
         </button>
@@ -886,7 +907,7 @@
         <button
           class="copy-btn"
           style="margin-top: 10px"
-          onclick="copyAddress()"
+          data-action="copy-address"
         >
           Copy Address
         </button>
@@ -924,7 +945,7 @@
             <div class="food-service-item">
               <div class="service-logo">
                 <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Wolt-app-icon-2019.png"
+                  src="public/wolt-app-icon.png"
                   alt="Wolt"
                 />
               </div>
@@ -944,7 +965,7 @@
             <div class="food-service-item">
               <div class="service-logo">
                 <img
-                  src="https://www.oglasizarabota.mk/files/pictures/Klikni_Jadi.png"
+                  src="public/klikni-jadi-logo.png"
                   alt="kliknijadi.mk"
                 />
               </div>
@@ -979,7 +1000,7 @@
             <div class="food-service-item">
               <div class="service-logo">
                 <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGYtkCylNZTznicGPQ6O5BBQ1EWgH0Ib1_Rw&s"
+                  src="public/korpa-logo.png"
                   alt="korpa.mk"
                 />
               </div>
@@ -1025,7 +1046,7 @@
             <div class="food-service-item">
               <div class="service-logo">
                 <img
-                  src="https://lapizza.mk/images/favicon-v2.png"
+                  src="public/la-pizza-logo.png"
                   alt="La pizza"
                 />
               </div>
@@ -1095,7 +1116,7 @@
             <div class="food-service-item">
               <div class="service-logo">
                 <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQRwhvlX6T_uPGoeiriJRoW7ZbWlDJAnRMmQ&s"
+                  src="public/costarica-logo.png"
                   alt="Costarika"
                 />
               </div>
@@ -2708,5 +2729,6 @@
         }
       })();
     </script>
+    <script src="js/event-handlers.js"></script>
   </body>
 </html>

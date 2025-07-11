@@ -17,6 +17,22 @@
       href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap"
       rel="stylesheet"
     />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self';"
+    />
+    <meta
+      http-equiv="X-Content-Type-Options"
+      content="nosniff"
+    />
+    <meta
+      http-equiv="X-Frame-Options"
+      content="DENY"
+    />
+    <meta
+      http-equiv="X-XSS-Protection"
+      content="1; mode=block"
+    />
     <style>
       :root {
         --lynx-blue: #0078d7;
@@ -34,7 +50,7 @@
         --nav-height: 62px;
         --nav-radius: 16px;
       }
-      
+
       /* Tab styles */
       .tabs {
         display: flex;
@@ -66,7 +82,8 @@
         font-weight: 600;
       }
       .tab-btn.active {
-        border-bottom: 3px solid var(--lynx-yellow);
+        border-bottom: 3px solid
+          var(--lynx-yellow);
         color: var(--lynx-yellow);
         font-weight: bold;
       }
@@ -76,7 +93,7 @@
       .tab-content.active {
         display: block;
       }
-      
+
       body.dark-mode .tab-btn.active {
         color: #ffe066;
         border-bottom: 3px solid #ffe066;
@@ -685,7 +702,7 @@
       body.dark-mode .hero-subtitle {
         color: #ffe066;
       }
-      
+
       /* Check-in content styles */
       .checkin-gallery {
         display: flex;
@@ -697,7 +714,8 @@
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: thin;
-        scrollbar-color: var(--lynx-yellow) transparent;
+        scrollbar-color: var(--lynx-yellow)
+          transparent;
       }
       .checkin-gallery::-webkit-scrollbar {
         height: 6px;
@@ -727,7 +745,8 @@
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         margin-bottom: 8px;
         cursor: pointer;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        transition: transform 0.2s ease,
+          box-shadow 0.2s ease;
       }
       .gallery-image:hover {
         transform: scale(1.02);
@@ -749,15 +768,19 @@
         color: #ccc;
         background: rgba(255, 224, 102, 0.15);
       }
-      
+
       /* Dropdown styles */
       .dropdown-container {
         margin-top: 16px;
         width: 100%;
       }
-      
+
       .dropdown-button {
-        background: linear-gradient(135deg, var(--lynx-yellow), #f5d752);
+        background: linear-gradient(
+          135deg,
+          var(--lynx-yellow),
+          #f5d752
+        );
         color: var(--lynx-dark);
         border: none;
         padding: 12px 16px;
@@ -775,40 +798,49 @@
         position: relative;
         overflow: hidden;
       }
-      
+
       .dropdown-button:hover {
-        background: linear-gradient(135deg, #f5d752, var(--lynx-yellow));
+        background: linear-gradient(
+          135deg,
+          #f5d752,
+          var(--lynx-yellow)
+        );
         transform: translateY(-1px);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
       }
-      
+
       .dropdown-button:active {
         transform: translateY(0);
       }
-      
+
       .dropdown-button::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+        background: linear-gradient(
+          45deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.1) 50%,
+          transparent 70%
+        );
         transform: translateX(-100%);
         transition: transform 0.6s ease;
       }
-      
+
       .dropdown-button:hover::before {
         transform: translateX(100%);
       }
-      
+
       .dropdown-text {
         font-size: 1rem;
         font-weight: 600;
         z-index: 1;
         position: relative;
       }
-      
+
       .dropdown-arrow {
         font-size: 1.2rem;
         font-weight: bold;
@@ -816,54 +848,64 @@
         z-index: 1;
         position: relative;
       }
-      
+
       .dropdown-button.active .dropdown-arrow {
         transform: rotate(180deg);
       }
-      
+
       .dropdown-content {
         max-height: 0;
         overflow: hidden;
-        transition: max-height 0.4s ease, padding 0.4s ease;
+        transition: max-height 0.4s ease,
+          padding 0.4s ease;
         background: rgba(255, 224, 102, 0.05);
         border-radius: 0 0 8px 8px;
         border: 1px solid rgba(255, 224, 102, 0.2);
         border-top: none;
       }
-      
+
       .dropdown-content.active {
         max-height: 1000px;
         padding: 16px;
         padding-top: 20px;
       }
-      
+
       .dropdown-content div {
         line-height: 1.6;
         font-size: 1rem;
         opacity: 0;
         transform: translateY(-10px);
-        transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+        transition: opacity 0.3s ease 0.1s,
+          transform 0.3s ease 0.1s;
       }
-      
+
       .dropdown-content.active div {
         opacity: 1;
         transform: translateY(0);
       }
-      
+
       body.dark-mode .dropdown-content {
         background: rgba(255, 224, 102, 0.1);
         border-color: rgba(255, 224, 102, 0.3);
       }
-      
+
       body.dark-mode .dropdown-button {
-        background: linear-gradient(135deg, var(--lynx-yellow), #f5d752);
+        background: linear-gradient(
+          135deg,
+          var(--lynx-yellow),
+          #f5d752
+        );
         color: var(--lynx-dark);
       }
-      
+
       body.dark-mode .dropdown-button:hover {
-        background: linear-gradient(135deg, #f5d752, var(--lynx-yellow));
+        background: linear-gradient(
+          135deg,
+          #f5d752,
+          var(--lynx-yellow)
+        );
       }
-      
+
       /* Modal styles for check-in images */
       .modal {
         display: none;
@@ -950,7 +992,7 @@
       .modal-next {
         right: 20px;
       }
-      
+
       .checkin-card {
         background: var(--lynx-card);
         border-radius: 16px;
@@ -959,7 +1001,7 @@
         padding: 28px 24px 20px 24px;
         margin-bottom: 24px;
       }
-      
+
       .checkin-card-title {
         font-family: "Poppins", Arial, sans-serif;
         font-size: 1.2rem;
@@ -970,14 +1012,14 @@
         gap: 10px;
         color: var(--lynx-dark);
       }
-      
+
       body.dark-mode .checkin-card {
         background: #2a2d30;
         color: #f3f3f3;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
         border: 1px solid rgba(255, 255, 255, 0.1);
       }
-      
+
       body.dark-mode .checkin-card-title {
         color: #ffe066;
       }
@@ -989,7 +1031,7 @@
         <!-- <img src="logo-lynx.png" alt="Lynx Logo" class="nav-logo" /> -->
         <button
           class="nav-home"
-          onclick="location.href='home.html'"
+          data-action="home"
         >
           Home
         </button>
@@ -1023,8 +1065,8 @@
             Check-in & Checkout Instructions
           </h1>
           <p class="hero-subtitle">
-            Smooth, easy, and secure self
-            check-in & check-out at
+            Smooth, easy, and secure self check-in
+            & check-out at
           </p>
           <p class="lynx-name-emphasized">
             Lynx Apartment
@@ -1074,7 +1116,9 @@
               Enter the mailbox room
             </div>
             <div class="step-desc">
-              Enter the mailbox room located across from the reception desk in the lobby.
+              Enter the mailbox room located
+              across from the reception desk in
+              the lobby.
             </div>
           </div>
           <span class="step-arrow"></span>
@@ -1086,7 +1130,10 @@
               Find mailbox 109
             </div>
             <div class="step-desc">
-              Locate mailbox 109 on the wall - it's on the top row, 6th mailbox from the right, directly in front as you enter.
+              Locate mailbox 109 on the wall -
+              it's on the top row, 6th mailbox
+              from the right, directly in front as
+              you enter.
             </div>
           </div>
           <span class="step-arrow"></span>
@@ -1098,7 +1145,10 @@
               Enter combination code
             </div>
             <div class="step-desc">
-              Set the numbers to 0-5-0 on the combination lock. Make sure the digits are perfectly aligned with the center line.
+              Set the numbers to 0-5-0 on the
+              combination lock. Make sure the
+              digits are perfectly aligned with
+              the center line.
             </div>
           </div>
           <span class="step-arrow"></span>
@@ -1110,7 +1160,10 @@
               Turn left to open
             </div>
             <div class="step-desc">
-              Once the correct combination is entered, gently turn the lock counterclockwise (to the left) to open the mailbox.
+              Once the correct combination is
+              entered, gently turn the lock
+              counterclockwise (to the left) to
+              open the mailbox.
             </div>
           </div>
           <span class="step-arrow"></span>
@@ -1122,7 +1175,9 @@
               Retrieve your key
             </div>
             <div class="step-desc">
-              Take your apartment key from inside the mailbox. If you have any issues, please contact your host.
+              Take your apartment key from inside
+              the mailbox. If you have any issues,
+              please contact your host.
             </div>
           </div>
           <span class="step-arrow"></span>
@@ -1138,26 +1193,29 @@
               <li><b>Mailbox Location:</b></li>
               <ul class="mailbox-steps">
                 <li>
-                  Go to the <b>mailbox area</b> just
-                  across from the reception desk in
-                  the lobby.
+                  Go to the
+                  <b>mailbox area</b> just across
+                  from the reception desk in the
+                  lobby.
                 </li>
                 <li>
                   Find
                   <b
                     >Mailbox
-                    <span class="mailbox-highlight"
+                    <span
+                      class="mailbox-highlight"
                       >109</span
                     ></b
                   >
                   — top row, 6th from the right,
-                  directly in front as you enter the
-                  mailbox room.
+                  directly in front as you enter
+                  the mailbox room.
                 </li>
                 <li>
                   Enter combination
                   <b
-                    ><span class="mailbox-highlight"
+                    ><span
+                      class="mailbox-highlight"
                       >050</span
                     ></b
                   >
@@ -1171,14 +1229,16 @@
               src="public/checkin-mailbox-room.jpg"
               alt="Mailbox Room"
               class="mailbox-thumb"
-              onclick="openModal(0)"
+              data-action="open-modal"
+              data-modal-index="0"
               tabindex="0"
             />
             <img
               src="public/checkin-mailbox-wall.jpg"
               alt="Mailbox Wall"
               class="mailbox-thumb"
-              onclick="openModal(1)"
+              data-action="open-modal"
+              data-modal-index="1"
               tabindex="0"
             />
           </div>
@@ -1193,7 +1253,7 @@
           >
             <span
               class="modal-close"
-              onclick="closeModal()"
+              data-action="close-modal"
               tabindex="0"
               aria-label="Close"
               >&times;</span
@@ -1201,7 +1261,7 @@
             <div class="modal-content">
               <span
                 class="modal-arrow modal-arrow-left"
-                onclick="prevModalImg()"
+                data-action="prev-modal"
                 tabindex="0"
                 aria-label="Previous image"
                 >&#10094;</span
@@ -1213,7 +1273,7 @@
               />
               <span
                 class="modal-arrow modal-arrow-right"
-                onclick="nextModalImg()"
+                data-action="next-modal"
                 tabindex="0"
                 aria-label="Next image"
                 >&#10095;</span
@@ -1268,8 +1328,8 @@
             </div>
             <div class="step-desc">
               Before leaving, turn off lights, air
-              conditioning, heating, boiler, and any
-              used appliances.
+              conditioning, heating, boiler, and
+              any used appliances.
             </div>
           </div>
           <span class="step-arrow"></span>
@@ -1295,8 +1355,8 @@
             <div class="step-desc">
               Return all keys and access tags
               (elevator & car ramp) to the
-              designated spot. A €50 fee applies for
-              any lost or damaged items.
+              designated spot. A €50 fee applies
+              for any lost or damaged items.
             </div>
           </div>
           <span class="step-arrow"></span>
@@ -1310,9 +1370,10 @@
             <div class="step-desc">
               • Load any used dishes into the
               dishwasher or wash them by hand.<br />•
-              Check out by 11:00 AM unless otherwise
-              agreed.<br />• Message us once you've
-              checked out. Safe travels!
+              Check out by 11:00 AM unless
+              otherwise agreed.<br />• Message us
+              once you've checked out. Safe
+              travels!
             </div>
           </div>
           <span class="step-arrow"></span>
@@ -1328,21 +1389,23 @@
               <li><b>Return the Key:</b></li>
               <ul class="mailbox-steps">
                 <li>
-                  Go to the <b>mailbox area</b> just
-                  across from the reception desk in
-                  the lobby.
+                  Go to the
+                  <b>mailbox area</b> just across
+                  from the reception desk in the
+                  lobby.
                 </li>
                 <li>
                   Find
                   <b
                     >Mailbox
-                    <span class="mailbox-highlight"
+                    <span
+                      class="mailbox-highlight"
                       >109</span
                     ></b
                   >
                   — top row, 6th from the right,
-                  directly in front as you enter the
-                  mailbox room.
+                  directly in front as you enter
+                  the mailbox room.
                 </li>
                 <li>
                   Drop the key through the slot —
@@ -1356,14 +1419,16 @@
               src="public/checkin-mailbox-wall.jpg"
               alt="Lobby Mailbox Area"
               class="mailbox-thumb"
-              onclick="openModal(0)"
+              data-action="open-modal"
+              data-modal-index="0"
               tabindex="0"
             />
             <img
               src="public/checkin-mailbox-room.jpg"
               alt="Mailbox Room"
               class="mailbox-thumb"
-              onclick="openModal(1)"
+              data-action="open-modal"
+              data-modal-index="1"
               tabindex="0"
             />
           </div>
@@ -1378,7 +1443,7 @@
           >
             <span
               class="modal-close"
-              onclick="closeModal()"
+              data-action="close-modal"
               tabindex="0"
               aria-label="Close"
               >&times;</span
@@ -1386,7 +1451,7 @@
             <div class="modal-content">
               <span
                 class="modal-arrow modal-arrow-left"
-                onclick="prevModalImg()"
+                data-action="prev-modal"
                 tabindex="0"
                 aria-label="Previous image"
                 >&#10094;</span
@@ -1398,7 +1463,7 @@
               />
               <span
                 class="modal-arrow modal-arrow-right"
-                onclick="nextModalImg()"
+                data-action="next-modal"
                 tabindex="0"
                 aria-label="Next image"
                 >&#10095;</span
@@ -1413,18 +1478,16 @@
           </div>
           <div class="parking-desc">
             If you used our free parking on Level
-            -2, please ensure you keep the keys with
-            the tag until you've exited the Cevahir
-            complex.<br /><br />
+            -2, please ensure you keep the keys
+            with the tag until you've exited the
+            Cevahir complex.<br /><br />
             The same key tag is required to:<br />
             • Access Level -2 via elevators
           </div>
         </div>
       </div>
     </div>
-    
 
-    
     <div class="footer" id="footer-contact">
       <span id="footer-msg"
         >Need help? Contact Zoran, your Lynx
@@ -1478,32 +1541,47 @@
           localStorage.getItem("lynx-theme");
         setTheme(saved === "dark" || !saved);
       })();
-      
+
       // Tab switching logic
-      const tabBtns = document.querySelectorAll(".tab-btn");
-      const tabContents = document.querySelectorAll(".tab-content");
+      const tabBtns =
+        document.querySelectorAll(".tab-btn");
+      const tabContents =
+        document.querySelectorAll(".tab-content");
 
       tabBtns.forEach((btn, idx) => {
-        btn.addEventListener("click", function () {
-          tabBtns.forEach(b => b.classList.remove("active"));
-          tabContents.forEach(c => c.classList.remove("active"));
-          
-          btn.classList.add("active");
-          tabContents[idx].classList.add("active");
-          
-          btn.setAttribute("aria-selected", "true");
-          btn.setAttribute("tabindex", "0");
-          
-          tabBtns.forEach((b, i) => {
-            if (i !== idx) {
-              b.setAttribute("aria-selected", "false");
-              b.setAttribute("tabindex", "-1");
-            }
-          });
-        });
-      });
-      
+        btn.addEventListener(
+          "click",
+          function () {
+            tabBtns.forEach(b =>
+              b.classList.remove("active")
+            );
+            tabContents.forEach(c =>
+              c.classList.remove("active")
+            );
 
+            btn.classList.add("active");
+            tabContents[idx].classList.add(
+              "active"
+            );
+
+            btn.setAttribute(
+              "aria-selected",
+              "true"
+            );
+            btn.setAttribute("tabindex", "0");
+
+            tabBtns.forEach((b, i) => {
+              if (i !== idx) {
+                b.setAttribute(
+                  "aria-selected",
+                  "false"
+                );
+                b.setAttribute("tabindex", "-1");
+              }
+            });
+          }
+        );
+      });
 
       // Modal gallery logic
       const mailboxImgs = [
@@ -1591,5 +1669,6 @@
           }
         );
     </script>
+    <script src="js/event-handlers.js"></script>
   </body>
 </html>
