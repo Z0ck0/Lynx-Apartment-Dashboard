@@ -998,14 +998,120 @@
         );
       }
 
+      /* Copy button styles */
+      .copy-button {
+        position: relative;
+        background: rgba(255, 224, 102, 0.8);
+        border: 1px solid rgba(255, 224, 102, 0.6);
+        border-radius: 6px;
+        padding: 6px 10px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        color: var(--lynx-dark);
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin-left: 10px;
+        min-width: 80px;
+        justify-content: center;
+        text-decoration: none;
+      }
+
+      .copy-button:hover {
+        background: rgba(255, 224, 102, 1);
+        border-color: rgba(255, 224, 102, 0.9);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .copy-button:active {
+        transform: translateY(0);
+      }
+
+      .copy-button.copied {
+        background: rgba(34, 197, 94, 0.8);
+        border-color: rgba(34, 197, 94, 0.6);
+        color: white;
+      }
+
+      .copy-button.copied:hover {
+        background: rgba(34, 197, 94, 1);
+        border-color: rgba(34, 197, 94, 0.9);
+      }
+
+      body.dark-mode .copy-button {
+        background: rgba(255, 224, 102, 0.9);
+        border-color: rgba(255, 224, 102, 0.7);
+        color: var(--lynx-dark);
+      }
+
+      body.dark-mode .copy-button:hover {
+        background: rgba(255, 224, 102, 1);
+        border-color: rgba(255, 224, 102, 0.9);
+      }
+
+      body.dark-mode .copy-button.copied {
+        background: rgba(34, 197, 94, 0.9);
+        border-color: rgba(34, 197, 94, 0.7);
+        color: white;
+      }
+
+      body.dark-mode .copy-button.copied:hover {
+        background: rgba(34, 197, 94, 1);
+        border-color: rgba(34, 197, 94, 0.9);
+      }
+
+      /* Instruction title row for better button alignment */
+      .instruction-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 18px;
+      }
+
+      .instruction-title {
+        font-family: "Poppins", Arial, sans-serif;
+        font-size: 1.2rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex: 1;
+      }
+
       @media (max-width: 600px) {
-        .dropdown-button {
-          font-size: 0.95rem;
-          padding: 10px 14px;
+        .instruction-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
         }
-        .dropdown-text {
-          font-size: 0.95rem;
+        
+        .copy-button {
+          align-self: flex-start;
+          margin-left: 0;
+          font-size: 0.8rem;
+          padding: 5px 8px;
         }
+      }
+
+      /* Smooth scroll for anchor links */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Highlight animation for linked section */
+      .instruction-card.highlight {
+        animation: highlight 2s ease-in-out;
+      }
+
+      @keyframes highlight {
+        0% { box-shadow: 0 0 0 0 rgba(255, 224, 102, 0.4); }
+        50% { box-shadow: 0 0 20px 10px rgba(255, 224, 102, 0.4); }
+        100% { box-shadow: 0 0 0 0 rgba(255, 224, 102, 0.4); }
       }
       .carousel-slider {
         width: 100%;
@@ -1076,9 +1182,14 @@
       </div>
     </section>
     <div class="main-content">
-      <div class="card">
-        <div class="card-title">
-          🚗 Garage Access & Parking Info!
+      <div class="card instruction-card" id="garage-access">
+        <div class="instruction-header">
+          <div class="instruction-title">
+            🚗 Garage Access & Parking Info!
+          </div>
+          <button class="copy-button" onclick="copyInstructionLink('garage-access')">
+            📋 Copy Link
+          </button>
         </div>
         <div class="dropdown-container">
           <button
@@ -1362,9 +1473,14 @@
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-title">
-          🗑️ Where to Throw the Trash
+      <div class="card instruction-card" id="trash-disposal">
+        <div class="instruction-header">
+          <div class="instruction-title">
+            🗑️ Where to Throw the Trash
+          </div>
+          <button class="copy-button" onclick="copyInstructionLink('trash-disposal')">
+            📋 Copy Link
+          </button>
         </div>
         <div class="dropdown-container">
           <button
@@ -1680,9 +1796,14 @@
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-title">
-          📺 TV & Mini-Bar Mood Lighting
+      <div class="card instruction-card" id="tv-minibar">
+        <div class="instruction-header">
+          <div class="instruction-title">
+            📺 TV & Mini-Bar Mood Lighting
+          </div>
+          <button class="copy-button" onclick="copyInstructionLink('tv-minibar')">
+            📋 Copy Link
+          </button>
         </div>
         <div class="dropdown-container">
           <button
@@ -1717,9 +1838,14 @@
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-title">
-          🛏️ Sofa Bed Assembly
+      <div class="card instruction-card" id="sofa-bed">
+        <div class="instruction-header">
+          <div class="instruction-title">
+            🛏️ Sofa Bed Assembly
+          </div>
+          <button class="copy-button" onclick="copyInstructionLink('sofa-bed')">
+            📋 Copy Link
+          </button>
         </div>
         <div class="dropdown-container">
           <button
