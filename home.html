@@ -11,13 +11,17 @@
       name="description"
       content="Lynx Apartment Dashboard - Your stylish stay in Skopje's iconic Cevahir Sky City"
     />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self';"
+    />
 
     <!-- Preload fonts for performance -->
     <link
       rel="preload"
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
       as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
+      id="font-preload"
     />
     <noscript
       ><link
@@ -731,7 +735,16 @@
       // Initialize on load
       document.addEventListener(
         "DOMContentLoaded",
-        initializeTheme
+        function() {
+          initializeTheme();
+          
+          // Handle font loading
+          const fontPreload = document.getElementById('font-preload');
+          if (fontPreload) {
+            fontPreload.onload = null;
+            fontPreload.rel = 'stylesheet';
+          }
+        }
       );
 
       // Add keyboard navigation support

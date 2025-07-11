@@ -7,6 +7,10 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0"
     />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self';"
+    />
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -609,8 +613,8 @@
             "
           ></ul>
           <button
+            id="add-shopping-btn"
             class="add-btn"
-            onclick="addShoppingItem()"
           >
             + Додади ставка
           </button>
@@ -625,13 +629,17 @@
       >
         <button
           id="save-checklist-global"
-          onclick="saveChecklist()"
         >
           Зачувај листа
         </button>
       </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script 
+      src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+      integrity="sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer">
+    </script>
     <script src="DejaVuSans-normal.js"></script>
     <script>
       // --- Tab Switching & Theme Logic ---
@@ -731,13 +739,13 @@
           );
         }
       }
-      themeToggle.onclick = function () {
+      themeToggle.addEventListener('click', function () {
         setTheme(
           !document.body.classList.contains(
             "dark-mode"
           )
         );
-      };
+      });
       (function () {
         const saved =
           localStorage.getItem("lynx-theme");
@@ -918,7 +926,7 @@
           // Conditionally add the "add-to-shopping-btn" button
           const addToShoppingBtn =
             activeTab === "tab-consumables"
-              ? `<button class="add-to-shopping-btn" data-item="${item}" onclick="addToShoppingList('${item}')">🛒</button>`
+              ? `<button class="add-to-shopping-btn" data-item="${item}">🛒</button>`
               : "";
 
           label.innerHTML = `<span><input type="checkbox" data-section="${sectionKey}" data-idx="${idx}"> ${displayText}</span>`;
@@ -926,7 +934,7 @@
             "input[type='checkbox']"
           );
           checkbox.checked = checkedArr[idx];
-          checkbox.onchange = function () {
+          checkbox.addEventListener('change', function () {
             checkedArr[idx] = checkbox.checked;
             localStorage.setItem(
               "checked_" + sectionKey,
@@ -935,21 +943,21 @@
             if (onProgressChange) {
               onProgressChange();
             }
-          };
+          });
           ul.appendChild(label);
         });
 
         sectionDiv.appendChild(ul);
 
         // Make header clickable for collapse/expand
-        header.onclick = function (e) {
+        header.addEventListener('click', function (e) {
           if (e.target.tagName === "INPUT")
             return;
           ul.style.display =
             ul.style.display === "none"
               ? "block"
               : "none";
-        };
+        });
 
         return sectionDiv;
       }
@@ -967,8 +975,8 @@
         controlsDiv.className =
           "section-controls";
         controlsDiv.innerHTML = `
-          <button class="view-all-btn" onclick="toggleAllSections(true)">Expand All</button>
-          <button class="view-all-btn" onclick="toggleAllSections(false)">Collapse All</button>
+          <button class="view-all-btn expand-all-btn">Expand All</button>
+          <button class="view-all-btn collapse-all-btn">Collapse All</button>
         `;
         container.appendChild(controlsDiv);
 
@@ -1049,7 +1057,7 @@
           container.appendChild(acc);
 
           // Accordion toggle
-          header.onclick = function (e) {
+          header.addEventListener('click', function (e) {
             if (e.target.tagName === "INPUT")
               return;
             acc.classList.toggle("active");
@@ -1057,7 +1065,7 @@
               content.style.display === "none"
                 ? "block"
                 : "none";
-          };
+          });
         });
       }
 
@@ -1102,7 +1110,7 @@
         });
 
       // --- Initial Render on Load ---
-      window.onload = function () {
+      window.addEventListener('DOMContentLoaded', function () {
         populateDateDropdown();
         renderCleaningAccordions();
         renderConsumablesAccordions();
@@ -1116,7 +1124,37 @@
           document.getElementById("notes").value =
             savedNotes;
         }
-      };
+        
+        // Add event listeners for buttons
+        document.getElementById('add-shopping-btn').addEventListener('click', addShoppingItem);
+        document.getElementById('save-checklist-global').addEventListener('click', saveChecklist);
+        
+        // Add event listeners for expand/collapse buttons and shopping items (delegated)
+        document.addEventListener('click', function(e) {
+          if (e.target.classList.contains('expand-all-btn')) {
+            toggleAllSections(true);
+          } else if (e.target.classList.contains('collapse-all-btn')) {
+            toggleAllSections(false);
+          } else if (e.target.classList.contains('add-to-shopping-btn')) {
+            const item = e.target.getAttribute('data-item');
+            addToShoppingList(item);
+          } else if (e.target.classList.contains('edit-item-btn')) {
+            const index = parseInt(e.target.getAttribute('data-shopping-index'));
+            editShoppingItem(index);
+          } else if (e.target.classList.contains('delete-item-btn')) {
+            const index = parseInt(e.target.getAttribute('data-shopping-index'));
+            deleteShoppingItem(index);
+          }
+        });
+        
+        // Add event listener for shopping item checkboxes (delegated)
+        document.addEventListener('change', function(e) {
+          if (e.target.type === 'checkbox' && e.target.hasAttribute('data-shopping-index')) {
+            const index = parseInt(e.target.getAttribute('data-shopping-index'));
+            toggleShoppingItemPurchase(index);
+          }
+        });
+      });
       function populateDateDropdown() {
         const select =
           document.getElementById("date");
@@ -2118,16 +2156,14 @@
           li.innerHTML = `
             <span><input type="checkbox" ${
               item.purchased ? "checked" : ""
-            } onchange="toggleShoppingItemPurchase(${shoppingList.indexOf(
-            item
-          )})"> ${displayText}</span>
+            } data-shopping-index="${shoppingList.indexOf(item)}"> ${displayText}</span>
             <div style="display: flex; gap: 4px;">
-              <button class="edit-item-btn" onclick="editShoppingItem(${shoppingList.indexOf(
+              <button class="edit-item-btn" data-shopping-index="${shoppingList.indexOf(
                 item
-              )})" style="background: none; border: none; cursor: pointer; font-size: 16px;">✏️</button>
-              <button class="delete-item-btn" onclick="deleteShoppingItem(${shoppingList.indexOf(
+              )}" style="background: none; border: none; cursor: pointer; font-size: 16px;">✏️</button>
+              <button class="delete-item-btn" data-shopping-index="${shoppingList.indexOf(
                 item
-              )})" style="background: none; border: none; cursor: pointer; font-size: 16px;">🗑️</button>
+              )}" style="background: none; border: none; cursor: pointer; font-size: 16px;">🗑️</button>
             </div>
             `;
           ul.appendChild(li);
@@ -2197,23 +2233,7 @@
           );
         });
 
-      // Load notes on page load
-      window.onload = function () {
-        populateDateDropdown();
-        renderCleaningAccordions();
-        renderConsumablesAccordions();
-        renderInventoryFilterDropdown();
-        renderInventoryAccordions();
-        renderShoppingList();
-
-        // Load saved notes
-        const savedNotes =
-          localStorage.getItem("notes");
-        if (savedNotes) {
-          document.getElementById("notes").value =
-            savedNotes;
-        }
-      };
+      // Load notes on page load - This is handled in the main DOMContentLoaded listener above
 
       // Modify the renderConsumablesAccordions function
       function renderConsumablesAccordions() {
@@ -2228,8 +2248,8 @@
         controlsDiv.className =
           "section-controls";
         controlsDiv.innerHTML = `
-      <button class="view-all-btn" onclick="toggleAllSections(true)">Expand All</button>
-      <button class="view-all-btn" onclick="toggleAllSections(false)">Collapse All</button>
+      <button class="view-all-btn expand-all-btn">Expand All</button>
+      <button class="view-all-btn collapse-all-btn">Collapse All</button>
     `;
         container.appendChild(controlsDiv);
 
@@ -2323,7 +2343,7 @@
           container.appendChild(acc);
 
           // Accordion toggle
-          header.onclick = function (e) {
+          header.addEventListener('click', function (e) {
             if (e.target.tagName === "INPUT")
               return;
             acc.classList.toggle("active");
@@ -2331,103 +2351,11 @@
               content.style.display === "none"
                 ? "block"
                 : "none";
-          };
+          });
         });
       }
 
-      // Modify renderSectionWithProgress to add shopping cart icon
-      function renderSectionWithProgress(
-        title,
-        items,
-        sectionKey,
-        onProgressChange
-      ) {
-        const sectionDiv =
-          document.createElement("div");
-        sectionDiv.className = "section";
-
-        // Section header
-        const header =
-          document.createElement("div");
-        header.className = "section-header";
-        header.innerHTML = `<label>${title}</label>`;
-        sectionDiv.appendChild(header);
-
-        // Items list
-        const ul = document.createElement("div");
-        ul.className =
-          "checkbox-group section-items";
-
-        // Load checked state from localStorage
-        let checkedArr = JSON.parse(
-          localStorage.getItem(
-            "checked_" + sectionKey
-          ) || "[]"
-        );
-        if (
-          !Array.isArray(checkedArr) ||
-          checkedArr.length !== items.length
-        ) {
-          checkedArr = Array(items.length).fill(
-            false
-          );
-        }
-
-        items.forEach((item, idx) => {
-          const label =
-            document.createElement("label");
-          label.style.display = "flex";
-          label.style.alignItems = "center";
-          label.style.justifyContent =
-            "space-between";
-          // Fix: Always display correct item text
-          let displayText = "";
-          if (typeof item === "string") {
-            displayText = item;
-          } else if (
-            item &&
-            typeof item === "object"
-          ) {
-            displayText =
-              item.text ||
-              item.name ||
-              JSON.stringify(item);
-          }
-          label.innerHTML = `<span><input type="checkbox" data-section="${sectionKey}" data-idx="${idx}"> ${displayText}</span>
-                          <button class="add-to-shopping-btn" data-item="${item}" onclick="addToShoppingList('${item}')">
-                              🛒
-                          </button>`;
-          const checkbox = label.querySelector(
-            "input[type='checkbox']"
-          );
-          checkbox.checked = checkedArr[idx];
-          checkbox.onchange = function () {
-            checkedArr[idx] = checkbox.checked;
-            localStorage.setItem(
-              "checked_" + sectionKey,
-              JSON.stringify(checkedArr)
-            );
-            if (onProgressChange) {
-              onProgressChange();
-            }
-          };
-          ul.appendChild(label);
-        });
-
-        sectionDiv.appendChild(ul);
-
-        // Make header clickable for collapse/expand
-        header.onclick = function (e) {
-          if (e.target.tagName === "INPUT")
-            return;
-          ul.style.display =
-            ul.style.display === "none"
-              ? "block"
-              : "none";
-        };
-
-        return sectionDiv;
-      }
+      // This function is now handled by the main renderSectionWithProgress function above
 
       function addToShoppingList(item) {
         // Add item to the shopping list array with purchased: false
