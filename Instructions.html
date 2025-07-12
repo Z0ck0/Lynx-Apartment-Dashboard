@@ -678,6 +678,7 @@
         top: 0;
         left: 0;
         right: 0;
+        width: 100%;
         height: var(--nav-height);
         background: var(--nav-bg);
         color: var(--nav-text);
@@ -688,12 +689,35 @@
         box-shadow: var(--nav-shadow);
         padding: 0 24px;
         backdrop-filter: blur(8px);
+        box-sizing: border-box;
       }
+
       .nav-left {
         display: flex;
         align-items: center;
         gap: 18px;
       }
+
+      /* Burger Menu Styles */
+      .burger-menu {
+        background: none;
+        border: none;
+        color: var(--nav-accent);
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        display: none;
+      }
+
+      .burger-menu:hover,
+      .burger-menu:focus {
+        background: var(--nav-accent);
+        color: var(--lynx-dark);
+        outline: none;
+      }
+
       .nav-home {
         background: none;
         border: none;
@@ -712,10 +736,103 @@
         color: #23272a;
         outline: none;
       }
+
+      /* Mobile Navigation Menu */
+      .mobile-nav-menu {
+        position: fixed;
+        top: var(--nav-height);
+        left: 0;
+        right: 0;
+        background: var(--nav-bg);
+        backdrop-filter: blur(8px);
+        box-shadow: var(--nav-shadow);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
+        z-index: 999;
+        max-height: calc(100vh - var(--nav-height));
+        overflow-y: auto;
+      }
+
+      .mobile-nav-menu.active {
+        transform: translateY(0);
+      }
+
+      .mobile-nav-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .mobile-nav-item {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .mobile-nav-item:last-child {
+        border-bottom: none;
+      }
+
+      .mobile-nav-link {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 24px;
+        color: var(--nav-text);
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+
+      .mobile-nav-link:hover,
+      .mobile-nav-link:focus {
+        background: rgba(255, 224, 102, 0.1);
+        color: var(--nav-accent);
+        outline: none;
+      }
+
+      .mobile-nav-icon {
+        font-size: 1.2rem;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Responsive Design for Mobile Menu */
+      @media (max-width: 768px) {
+        .burger-menu {
+          display: block;
+        }
+
+        .nav-home {
+          display: none;
+        }
+      }
+
       .nav-right {
         display: flex;
         align-items: center;
         gap: 12px;
+      }
+
+      .theme-toggle {
+        background: none;
+        border: none;
+        color: var(--nav-accent);
+        font-size: 1.25rem;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+      }
+
+      .theme-toggle:hover,
+      .theme-toggle:focus {
+        background: var(--nav-accent);
+        color: var(--lynx-dark);
+        outline: none;
       }
       /* Theme Toggle Button */
       #theme-toggle {
@@ -1138,11 +1255,24 @@
     </style>
   </head>
   <body>
-    <nav class="navbar">
+    <nav
+      class="navbar"
+      role="navigation"
+      aria-label="Main navigation"
+    >
       <div class="nav-left">
+        <button
+          class="burger-menu"
+          id="burger-menu"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+        >
+          ☰
+        </button>
         <button
           class="nav-home"
           data-action="home"
+          aria-label="Go to home page"
         >
           Home
         </button>
@@ -1150,12 +1280,67 @@
       <div class="nav-right">
         <button
           id="theme-toggle"
+          class="theme-toggle"
           aria-label="Toggle dark mode"
         >
           🌙
         </button>
       </div>
     </nav>
+
+    <!-- Mobile Navigation Menu -->
+    <div class="mobile-nav-menu" id="mobile-nav-menu">
+      <ul class="mobile-nav-list">
+        <li class="mobile-nav-item">
+          <a href="home.html" class="mobile-nav-link">
+            <span class="mobile-nav-icon">🏠</span>
+            <span>Home</span>
+          </a>
+        </li>
+        <li class="mobile-nav-item">
+          <a href="food.html" class="mobile-nav-link">
+            <span class="mobile-nav-icon">🍽️</span>
+            <span>Food Delivery</span>
+          </a>
+        </li>
+        <li class="mobile-nav-item">
+          <a href="taxi.html" class="mobile-nav-link">
+            <span class="mobile-nav-icon">🚗</span>
+            <span>Taxi Services</span>
+          </a>
+        </li>
+        <li class="mobile-nav-item">
+          <a href="Instructions.html" class="mobile-nav-link">
+            <span class="mobile-nav-icon">📋</span>
+            <span>Instructions & How-To</span>
+          </a>
+        </li>
+        <li class="mobile-nav-item">
+          <a href="wellness-spa.html" class="mobile-nav-link">
+            <span class="mobile-nav-icon">🧘</span>
+            <span>Wellness & Spa Access</span>
+          </a>
+        </li>
+        <li class="mobile-nav-item">
+          <a href="guidebooks.html" class="mobile-nav-link">
+            <span class="mobile-nav-icon">📚</span>
+            <span>What to Do Around</span>
+          </a>
+        </li>
+        <li class="mobile-nav-item">
+          <a href="check-out.html" class="mobile-nav-link">
+            <span class="mobile-nav-icon">🔑</span>
+            <span>Check-in & Checkout</span>
+          </a>
+        </li>
+        <li class="mobile-nav-item">
+          <a href="house-rules.html" class="mobile-nav-link">
+            <span class="mobile-nav-icon">📋</span>
+            <span>House Rules</span>
+          </a>
+        </li>
+      </ul>
+    </div>
     <section class="hero-section">
       <div class="hero-bg-full">
         <div class="hero-overlay-full">
@@ -2084,6 +2269,51 @@
           localStorage.getItem("lynx-theme");
         setTheme(saved === "dark" || !saved);
       })();
+
+      // Burger menu functionality
+      const burgerMenu = document.getElementById("burger-menu");
+      const mobileNavMenu = document.getElementById("mobile-nav-menu");
+
+      function toggleMobileMenu() {
+        const isOpen = mobileNavMenu.classList.contains("active");
+        
+        if (isOpen) {
+          mobileNavMenu.classList.remove("active");
+          burgerMenu.setAttribute("aria-expanded", "false");
+          burgerMenu.setAttribute("aria-label", "Open navigation menu");
+          burgerMenu.textContent = "☰";
+        } else {
+          mobileNavMenu.classList.add("active");
+          burgerMenu.setAttribute("aria-expanded", "true");
+          burgerMenu.setAttribute("aria-label", "Close navigation menu");
+          burgerMenu.textContent = "✕";
+        }
+      }
+
+      burgerMenu.addEventListener("click", toggleMobileMenu);
+
+      // Close mobile menu when clicking outside
+      document.addEventListener("click", (event) => {
+        if (!burgerMenu.contains(event.target) && !mobileNavMenu.contains(event.target)) {
+          if (mobileNavMenu.classList.contains("active")) {
+            toggleMobileMenu();
+          }
+        }
+      });
+
+      // Close mobile menu when pressing escape key
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && mobileNavMenu.classList.contains("active")) {
+          toggleMobileMenu();
+        }
+      });
+
+      // Close mobile menu when clicking on a link
+      mobileNavMenu.addEventListener("click", (event) => {
+        if (event.target.tagName === "A") {
+          toggleMobileMenu();
+        }
+      });
 
       // Image modal functionality
       const modal =
