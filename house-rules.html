@@ -1,4 +1,4 @@
-THIS SHOULD BE A LINTER ERROR<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -880,6 +880,14 @@ THIS SHOULD BE A LINTER ERROR<!DOCTYPE html>
     >
       <div class="nav-left">
         <button
+          class="burger-menu"
+          id="burger-menu"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+        >
+          ☰
+        </button>
+        <button
           class="nav-home"
           data-action="home"
           aria-label="Go to home page"
@@ -897,6 +905,54 @@ THIS SHOULD BE A LINTER ERROR<!DOCTYPE html>
         </button>
       </div>
     </nav>
+
+    <!-- Mobile Navigation Menu -->
+    <div class="mobile-nav-menu" id="mobile-nav-menu">
+      <ul class="mobile-nav-list">
+        <li class="mobile-nav-item">
+          <a href="home.html" class="mobile-nav-link">
+            <span class="mobile-nav-icon">🏠</span>
+            <span>Home</span>
+          </a>
+        </li>
+        <li class="mobile-nav-item">
+          <a href="food.html" class="mobile-nav-link">
+            <span class="mobile-nav-icon">🍽️</span>
+            <span>Food Delivery</span>
+          </a>
+        </li>
+        <li class="mobile-nav-item">
+          <a href="taxi.html" class="mobile-nav-link">
+            <span class="mobile-nav-icon">🚗</span>
+            <span>Taxi Services</span>
+          </a>
+        </li>
+        <li class="mobile-nav-item">
+          <a href="Instructions.html" class="mobile-nav-link">
+            <span class="mobile-nav-icon">📋</span>
+            <span>Instructions & How-To</span>
+          </a>
+        </li>
+        <li class="mobile-nav-item">
+          <a href="wellness-spa.html" class="mobile-nav-link">
+            <span class="mobile-nav-icon">🧘</span>
+            <span>Wellness & Spa Access</span>
+          </a>
+        </li>
+        <li class="mobile-nav-item">
+          <a href="guidebooks.html" class="mobile-nav-link">
+            <span class="mobile-nav-icon">📚</span>
+            <span>What to Do Around</span>
+          </a>
+        </li>
+        <li class="mobile-nav-item">
+          <a href="check-out.html" class="mobile-nav-link">
+            <span class="mobile-nav-icon">🔑</span>
+            <span>Check-in & Checkout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
 
     <main class="main-container">
       <!-- <header class="header">
