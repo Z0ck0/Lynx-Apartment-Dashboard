@@ -2008,10 +2008,10 @@
           // Show toast message first
           showToast("You're sharing the Airbnb listing for this apartment.");
           
-          // Open share functionality after 2 seconds
+          // Open share functionality immediately after toast
           setTimeout(() => {
             handleShare();
-          }, 2000);
+          }, 100); // Small delay to ensure toast appears first
         }
 
         // Share Functions
