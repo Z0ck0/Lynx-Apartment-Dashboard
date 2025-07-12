@@ -1034,5 +1034,477 @@
       });
     </script>
     <script src="js/event-handlers.js"></script>
+
+    <!-- Share Button (Fixed Position) -->
+    <button
+      id="share-btn"
+      class="share-btn"
+      aria-label="Share"
+      title="Share"
+    >
+      <svg
+        class="share-icon"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path
+          d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"
+        />
+      </svg>
+    </button>
+
+    <!-- Visible Tooltip Component -->
+    <div
+      id="share-tooltip"
+      class="share-tooltip"
+      role="tooltip"
+      aria-live="polite"
+    >
+      <div class="share-tooltip-content">
+        <span class="share-tooltip-title">Share Apartment</span>
+        <button
+          id="share-tooltip-close"
+          class="share-tooltip-close"
+          aria-label="Close tooltip"
+          title="Close tooltip"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path
+              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+            />
+          </svg>
+        </button>
+      </div>
+      <div class="share-tooltip-arrow"></div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div
+      id="share-toast"
+      class="share-toast"
+      role="alert"
+      aria-live="polite"
+    >
+      <span id="share-toast-message"></span>
+    </div>
+
+    <style>
+      /* Share Button Styles */
+      .share-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          #ffe066 0%,
+          #ffd700 100%
+        );
+        border: none;
+        box-shadow: 0 4px 12px
+          rgba(255, 224, 102, 0.3);
+        cursor: pointer;
+        z-index: 1000;
+        transition: all 0.3s
+          cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #1a1a1a;
+        font-size: 24px;
+      }
+
+      .share-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px
+          rgba(255, 224, 102, 0.4);
+        background: linear-gradient(
+          135deg,
+          #ffd700 0%,
+          #ffcc00 100%
+        );
+      }
+
+      .share-btn:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 8px
+          rgba(255, 224, 102, 0.3);
+      }
+
+      .share-btn:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px
+            rgba(255, 224, 102, 0.5),
+          0 4px 12px rgba(255, 224, 102, 0.3);
+      }
+
+      .share-icon {
+        width: 24px;
+        height: 24px;
+      }
+
+      /* Dark mode support */
+      .dark-mode .share-btn {
+        background: linear-gradient(
+          135deg,
+          #ffe066 0%,
+          #ffd700 100%
+        );
+        color: #1a1a1a;
+      }
+
+      /* Visible Tooltip Styles */
+      .share-tooltip {
+        position: fixed;
+        bottom: 84px;
+        right: 20px;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        padding: 0;
+        z-index: 1002;
+        opacity: 1;
+        transform: scale(1);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        backdrop-filter: blur(8px);
+        max-width: 200px;
+        animation: tooltipSlideIn 0.3s ease-out;
+      }
+
+      .share-tooltip.hidden {
+        opacity: 0;
+        transform: scale(0.8);
+        pointer-events: none;
+      }
+
+      .share-tooltip-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px;
+        gap: 8px;
+      }
+
+      .share-tooltip-title {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #1f2937;
+        white-space: nowrap;
+        flex: 1;
+      }
+
+      .share-tooltip-close {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 6px;
+        color: #6b7280;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .share-tooltip-close:hover {
+        background: #f3f4f6;
+        color: #374151;
+      }
+
+      .share-tooltip-close svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .share-tooltip-arrow {
+        position: absolute;
+        bottom: -6px;
+        right: 20px;
+        width: 12px;
+        height: 12px;
+        background: #ffffff;
+        border-right: 1px solid #e5e7eb;
+        border-bottom: 1px solid #e5e7eb;
+        transform: rotate(45deg);
+      }
+
+      /* Dark mode support for tooltip */
+      .dark-mode .share-tooltip {
+        background: #1f2937;
+        border-color: #374151;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      }
+
+      .dark-mode .share-tooltip-title {
+        color: #f9fafb;
+      }
+
+      .dark-mode .share-tooltip-close {
+        color: #9ca3af;
+      }
+
+      .dark-mode .share-tooltip-close:hover {
+        background: #374151;
+        color: #f3f4f6;
+      }
+
+      .dark-mode .share-tooltip-arrow {
+        background: #1f2937;
+        border-color: #374151;
+      }
+
+      /* Tooltip animations */
+      @keyframes tooltipSlideIn {
+        0% {
+          opacity: 0;
+          transform: translateY(10px) scale(0.95);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      /* Toast Notification */
+      .share-toast {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%) translateY(-20px);
+        background: rgba(34, 197, 94, 0.95);
+        color: #ffffff;
+        padding: 16px 24px;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        z-index: 1003;
+        opacity: 0;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        max-width: 400px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        text-align: center;
+        line-height: 1.4;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .share-toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      .dark-mode .share-toast {
+        background: rgba(34, 197, 94, 0.9);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Mobile Responsiveness */
+      @media (max-width: 600px) {
+        .share-btn {
+          bottom: 16px;
+          right: 16px;
+          width: 52px;
+          height: 52px;
+        }
+
+        .share-toast {
+          top: 16px;
+          left: 16px;
+          right: 16px;
+          transform: translateY(-20px);
+          max-width: none;
+        }
+        
+        .share-toast.show {
+          transform: translateY(0);
+        }
+
+        .share-tooltip {
+          right: 16px;
+          bottom: 80px;
+          max-width: 160px;
+        }
+        
+        .share-tooltip-content {
+          padding: 10px 12px;
+        }
+        
+        .share-tooltip-title {
+          font-size: 0.8rem;
+        }
+        
+        .share-tooltip-arrow {
+          right: 16px;
+        }
+      }
+    </style>
+
+    <script>
+      // Mobile Share Dialog - JavaScript
+      (function () {
+        "use strict";
+
+        // Configuration
+        const CONFIG = {
+          AIRBNB_URL:
+            "https://airbnb.com/h/lynx-apartment",
+          AIRBNB_TITLE:
+            "Lynx Apartment - Amazing Stay in Skopje",
+          AIRBNB_DESCRIPTION:
+            "Check out this beautiful apartment I'm staying at in Skopje! Perfect location, modern amenities, and amazing host.",
+          DEFAULT_MESSAGE:
+            "Check out this amazing apartment I'm staying at! 🏠✨",
+          TOAST_DURATION: 3000,
+        };
+
+        // DOM Elements
+        const shareBtn =
+          document.getElementById("share-btn");
+        const shareToast =
+          document.getElementById("share-toast");
+        const shareToastMessage =
+          document.getElementById(
+            "share-toast-message"
+          );
+        const shareTooltip =
+          document.getElementById("share-tooltip");
+        const shareTooltipClose =
+          document.getElementById(
+            "share-tooltip-close"
+          );
+
+        // Initialize
+        function init() {
+          if (!shareBtn) return;
+
+          // Event Listeners
+          shareBtn.addEventListener(
+            "click",
+            handleShareButtonClick
+          );
+
+          // Tooltip event listeners
+          if (shareTooltipClose) {
+            shareTooltipClose.addEventListener(
+              "click",
+              hideTooltip
+            );
+          }
+
+          // Show tooltip initially (it reappears on page refresh/navigation)
+          showTooltip();
+        }
+
+        // Share Button Click Handler
+        function handleShareButtonClick() {
+          // Show toast message first
+          showToast("You're sharing the Airbnb listing for this apartment.");
+          
+          // Open share functionality immediately after toast
+          setTimeout(() => {
+            handleShare();
+          }, 100); // Small delay to ensure toast appears first
+        }
+
+        // Share Functions
+        function handleShare() {
+          const message = CONFIG.DEFAULT_MESSAGE;
+          const shareText = `${message}\n\n${CONFIG.AIRBNB_URL}`;
+          
+          // Try Web Share API first (works on mobile browsers)
+          if (navigator.share) {
+            navigator.share({
+              title: CONFIG.AIRBNB_TITLE,
+              text: message,
+              url: CONFIG.AIRBNB_URL
+            }).then(() => {
+              showToast("Share dialog opened");
+            }).catch((error) => {
+              console.log('Error sharing:', error);
+              // If Web Share API fails, fall back to copy link
+              fallbackShare(shareText);
+            });
+            return;
+          }
+          
+          // Fallback for browsers that don't support Web Share API
+          fallbackShare(shareText);
+        }
+        
+        function fallbackShare(shareText) {
+          // Copy link to clipboard as fallback
+          if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(shareText).then(() => {
+              showToast("Link copied to clipboard! You can now paste it anywhere to share.");
+            }).catch(() => {
+              fallbackCopyTextToClipboard(shareText);
+            });
+          } else {
+            fallbackCopyTextToClipboard(shareText);
+          }
+        }
+
+        function fallbackCopyTextToClipboard(text) {
+          const textArea = document.createElement("textarea");
+          textArea.value = text;
+          textArea.style.position = "fixed";
+          textArea.style.left = "-999999px";
+          textArea.style.top = "-999999px";
+          document.body.appendChild(textArea);
+          textArea.focus();
+          textArea.select();
+
+          try {
+            document.execCommand("copy");
+            showToast("Link copied to clipboard! You can now paste it anywhere to share.");
+          } catch (err) {
+            showToast("Unable to copy link. Please copy this URL manually: " + CONFIG.AIRBNB_URL);
+          }
+
+          document.body.removeChild(textArea);
+        }
+
+        // Tooltip Functions
+        function showTooltip() {
+          if (!shareTooltip) return;
+          shareTooltip.classList.remove("hidden");
+        }
+
+        function hideTooltip() {
+          if (!shareTooltip) return;
+          shareTooltip.classList.add("hidden");
+        }
+
+        function showToast(message) {
+          if (!shareToast || !shareToastMessage)
+            return;
+
+          shareToastMessage.textContent = message;
+          shareToast.classList.add("show");
+
+          setTimeout(() => {
+            shareToast.classList.remove("show");
+          }, CONFIG.TOAST_DURATION);
+        }
+
+        // Initialize when DOM is ready
+        if (document.readyState === "loading") {
+          document.addEventListener(
+            "DOMContentLoaded",
+            init
+          );
+        } else {
+          init();
+        }
+      })();
+    </script>
   </body>
 </html>
