@@ -1245,6 +1245,51 @@
         setTheme(saved === "dark" || !saved);
       })();
 
+      // Burger menu functionality
+      const burgerMenu = document.getElementById("burger-menu");
+      const mobileNavMenu = document.getElementById("mobile-nav-menu");
+
+      function toggleMobileMenu() {
+        const isOpen = mobileNavMenu.classList.contains("active");
+        
+        if (isOpen) {
+          mobileNavMenu.classList.remove("active");
+          burgerMenu.setAttribute("aria-expanded", "false");
+          burgerMenu.setAttribute("aria-label", "Open navigation menu");
+          burgerMenu.textContent = "☰";
+        } else {
+          mobileNavMenu.classList.add("active");
+          burgerMenu.setAttribute("aria-expanded", "true");
+          burgerMenu.setAttribute("aria-label", "Close navigation menu");
+          burgerMenu.textContent = "✕";
+        }
+      }
+
+      burgerMenu.addEventListener("click", toggleMobileMenu);
+
+      // Close mobile menu when clicking outside
+      document.addEventListener("click", (event) => {
+        if (!burgerMenu.contains(event.target) && !mobileNavMenu.contains(event.target)) {
+          if (mobileNavMenu.classList.contains("active")) {
+            toggleMobileMenu();
+          }
+        }
+      });
+
+      // Close mobile menu when pressing escape key
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && mobileNavMenu.classList.contains("active")) {
+          toggleMobileMenu();
+        }
+      });
+
+      // Close mobile menu when clicking on a link
+      mobileNavMenu.addEventListener("click", (event) => {
+        if (event.target.tagName === "A") {
+          toggleMobileMenu();
+        }
+      });
+
       // Form handling for time and guest inputs
       document.addEventListener(
         "DOMContentLoaded",
