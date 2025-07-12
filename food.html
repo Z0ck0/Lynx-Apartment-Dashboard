@@ -2567,9 +2567,78 @@
         }
 
         function shareInstagram(message) {
-          showToast(
-            "Instagram sharing requires the mobile app. Please copy the link and share manually."
-          );
+          const shareText = `${message}\n\n${CONFIG.AIRBNB_URL}`;
+          
+          // Try Web Share API first (works on mobile browsers)
+          if (navigator.share) {
+            navigator.share({
+              title: CONFIG.AIRBNB_TITLE,
+              text: message,
+              url: CONFIG.AIRBNB_URL
+            }).then(() => {
+              showToast("Share dialog opened");
+            }).catch((error) => {
+              console.log('Error sharing:', error);
+              fallbackInstagramShare(shareText);
+            });
+            return;
+          }
+          
+          // Try Instagram native URL scheme (works on mobile devices with Instagram app)
+          if (isMobile()) {
+            const instagramUrl = `instagram://library?AssetPath=${encodeURIComponent(CONFIG.AIRBNB_URL)}`;
+            const fallbackUrl = `https://www.instagram.com/`;
+            
+            // Try to open Instagram app
+            const startTime = Date.now();
+            window.location.href = instagramUrl;
+            
+            // If Instagram app doesn't open within 2 seconds, fall back to web version
+            setTimeout(() => {
+              if (Date.now() - startTime < 2000) {
+                fallbackInstagramShare(shareText);
+              }
+            }, 2000);
+            
+            return;
+          }
+          
+          // Desktop fallback
+          fallbackInstagramShare(shareText);
+        }
+        
+        function fallbackInstagramShare(shareText) {
+          // Copy link to clipboard
+          if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(shareText).then(() => {
+              showToast("Link copied! Open Instagram app and paste to share.");
+            }).catch(() => {
+              showToast("Open Instagram app and copy this link manually: " + CONFIG.AIRBNB_URL);
+            });
+          } else {
+            // Fallback clipboard copy
+            const textArea = document.createElement("textarea");
+            textArea.value = shareText;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-999999px";
+            textArea.style.top = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+              document.execCommand("copy");
+              showToast("Link copied! Open Instagram app and paste to share.");
+            } catch (err) {
+              showToast("Open Instagram app and copy this link manually: " + CONFIG.AIRBNB_URL);
+            }
+            
+            document.body.removeChild(textArea);
+          }
+        }
+        
+        function isMobile() {
+          return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         }
 
         function shareTikTok(message) {
